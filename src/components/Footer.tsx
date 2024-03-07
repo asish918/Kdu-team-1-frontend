@@ -3,7 +3,7 @@ import styled from 'styled-components';
 
 // Styled components for the footer
 const FooterContainer = styled.footer`
- background-color: ${props=>props.theme.colors.primaryDeepBlue};
+ background-color: ${props => props.theme.colors.primaryDeepBlue};
  padding: 15px;
  display: flex;
  justify-content: space-between;
@@ -15,7 +15,7 @@ const FooterContainer = styled.footer`
  color: white;
 `;
 
-const FirstPart = styled.div`
+const CompanyTitle = styled.div`
  h1 {
     margin-right: 10px;
     font-size: 24px;
@@ -24,7 +24,7 @@ const FirstPart = styled.div`
  }
 `;
 
-const SecondPart = styled.div`
+const LegalInfo = styled.div`
  text-align: right;
  p {
     margin: 5px 0;
@@ -39,17 +39,17 @@ const SecondPart = styled.div`
 
 // Footer component
 const Footer: React.FC = () => {
- return (
-    <FooterContainer>
-      <FirstPart>
-        <h1>Kickdrum</h1>
-      </FirstPart>
-      <SecondPart>
-        <p>&copy; Kickdrum Technology Group LLC.</p>
-        <p>All rights reserved.</p>
-      </SecondPart>
-    </FooterContainer>
- );
+   return (
+      <FooterContainer>
+         <CompanyTitle>
+            <h1>Kickdrum</h1>
+         </CompanyTitle>
+         <LegalInfo>
+            <p>&copy; Kickdrum Technology Group LLC.</p>
+            <p>All rights reserved.</p>
+         </LegalInfo>
+      </FooterContainer>
+   );
 };
 
 export default Footer;

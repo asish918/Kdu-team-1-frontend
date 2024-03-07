@@ -1,9 +1,9 @@
 
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { AppDispatch } from './store';
-import { login, logout } from './slices/authSlice';
-import { RootState } from './store';
+import { AppDispatch } from '../store';
+import { login, logout } from '../slices/authSlice';
+import { RootState } from '../store';
 import styled from 'styled-components';
 import LanguageIcon from '@mui/icons-material/Language';
 
@@ -14,15 +14,15 @@ const HeaderContainer = styled.header`
  align-items: center;
  padding: 10px 20px;
  background-color: white;
- color: ${props=>props.theme.colors.primaryDeepBlue};
+ color: ${props => props.theme.colors.primaryDeepBlue};
 `;
 
-const FirstPart = styled.div`
+const Info = styled.div`
  display: flex;
  flex-direction: column;
 `;
 
-const SecondPart = styled.div`
+const NavbarActions = styled.div`
  display: flex;
  align-items: center;
 `;
@@ -39,7 +39,7 @@ const StyledH2 = styled.h2`
  margin: 5px 0;
  font-size: 18px;
  margin-top: 12px;
- color:${props=>props.theme.colors.primaryNavyBlue};
+ color:${props => props.theme.colors.primaryNavyBlue};
 `;
 
 const StyledH3 = styled.h3`
@@ -54,7 +54,7 @@ const StyledSelect = styled.select`
  font-size: 14px;
  cursor: pointer;
  background-color: white;
- color: ${props=>props.theme.colors.primaryDeepBlue};
+ color: ${props => props.theme.colors.primaryDeepBlue};
  border: none;
  border-radius: 4px;
 `;
@@ -64,7 +64,7 @@ const StyledButton = styled.button`
  padding: 8px 12px;
  font-size: 14px;
  cursor: pointer;
- background-color: ${props=>props.theme.colors.primaryNavyBlue};
+ background-color: ${props => props.theme.colors.primaryNavyBlue};
  color: #fff;
  border: none;
  border-radius: 4px;
@@ -76,39 +76,39 @@ const StyledLanguageIcon = styled(LanguageIcon)`
 
 // Header component
 const Header: React.FC = () => {
- const dispatch: AppDispatch = useDispatch();
- const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const dispatch: AppDispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
- return (
+  return (
     <HeaderContainer>
-      <FirstPart>
+      <Info>
         <Heading>
           <StyledH1>Kickdrum </StyledH1>
           <StyledH2>Internet Booking Engine</StyledH2>
         </Heading>
-      </FirstPart>
-      <SecondPart>
+      </Info>
+      <NavbarActions>
         <StyledH3>MY BOOKINGS</StyledH3>
-        
-        
+
+
         <StyledLanguageIcon fontSize="small" />
-        <StyledSelect style={{ marginLeft: '0px'}}>
+        <StyledSelect style={{ marginLeft: '0px' }}>
           <option value="en">En</option>
           <option value="fr">Fr</option>
           <option value="in">Hn</option>
         </StyledSelect>
-        
+
         <StyledSelect>
-          <option value="usd">$USD</option>
-          <option value="eur">$EUR</option>
-          <option value="inr">$INR</option>
+          <option value="usd">$ USD</option>
+          <option value="eur">€ EUR</option>
+          <option value="inr">₹ INR</option>
         </StyledSelect>
         <StyledButton onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
           {isLoggedIn ? 'Logout' : 'Login'}
         </StyledButton>
-      </SecondPart>
+      </NavbarActions>
     </HeaderContainer>
- );
+  );
 };
 
 export default Header;
