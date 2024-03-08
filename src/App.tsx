@@ -6,6 +6,8 @@ import Header from "./components/Header";
 import Footer from "./components/Footer";
 import { Provider } from "react-redux";
 import { store } from "./store";
+import { I18nextProvider } from 'react-i18next';
+import i18n from './i18next';
 
 
 function App() {
@@ -15,7 +17,9 @@ function App() {
       <CustomThemeProvider theme={appTheme}>
         <GlobalStyle />
         <Provider store={store}>
-          <Header />
+        <I18nextProvider i18n={i18n}>
+        <Header/>
+        </I18nextProvider>
           <Footer />
         </Provider>
       </CustomThemeProvider>

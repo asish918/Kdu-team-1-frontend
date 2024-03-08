@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 // Styled components for the footer
 const FooterContainer = styled.footer`
@@ -39,14 +40,15 @@ const LegalInfo = styled.div`
 
 // Footer component
 const Footer: React.FC = () => {
+   const { t } = useTranslation();
    return (
       <FooterContainer>
          <CompanyTitle>
-            <h1>Kickdrum</h1>
+            <h1>{t('footer.title')}</h1>
          </CompanyTitle>
          <LegalInfo>
-            <p>&copy; Kickdrum Technology Group LLC.</p>
-            <p>All rights reserved.</p>
+            <p>{t('footer.copyright')}</p>
+            <p>{t('footer.rights')}</p>
          </LegalInfo>
       </FooterContainer>
    );

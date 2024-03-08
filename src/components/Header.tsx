@@ -6,6 +6,7 @@ import { RootState } from '../store';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from '@mui/icons-material/Language';
+import { useTranslation } from 'react-i18next';
 
 
 const HeaderContainer = styled.header`
@@ -121,6 +122,15 @@ const Header: React.FC = () => {
  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
+ const { t,i18n } = useTranslation();
+ const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
+
+ const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const language = event.target.value;
+    setSelectedLanguage(language);
+    i18n.changeLanguage(language);
+ };
+
  const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
  };
@@ -129,18 +139,18 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Info>
         <Heading>
-          <StyledH1>Kickdrum </StyledH1>
-          <StyledH2>Internet Booking Engine</StyledH2>
+          <StyledH1>{i18n.t('header.title')} </StyledH1>
+          <StyledH2>{i18n.t('header.subtitle')}</StyledH2>
         </Heading>
       </Info>
       <NavbarActions>
         
-        <StyledH3 view="desktop">MY BOOKINGS</StyledH3>
+        <StyledH3 view="desktop">{i18n.t('header.myBookings')}</StyledH3>
         <StyledLanguageIcon fontSize="small" />
-        <StyledSelect style={{ marginLeft: '0px' }}>
+        <StyledSelect style={{ marginLeft: '0px' }} value={selectedLanguage} onChange={handleLanguageChange}>
           <option value="en">En</option>
           <option value="fr">Fr</option>
-          <option value="in">Hn</option>
+          <option value="hn">Hn</option>
         </StyledSelect>
         <StyledSelect>
           <option value="usd">$ USD</option>
@@ -148,14 +158,15 @@ const Header: React.FC = () => {
           <option value="inr">₹ INR</option>
         </StyledSelect>
         <StyledButton view="desktop" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
-            {isLoggedIn ? 'Logout' : 'Login'}
+            {isLoggedIn ? t('header.logout') : t('header.login')}
         </StyledButton>
         <MobileMenuButton onClick={toggleMobileMenu} />
 
         <MobileMenu isOpen={isMobileMenuOpen}>
-          <StyledH3 view="mobile">MY BOOKINGS</StyledH3>
+          <StyledH3 view="mobile">{i18n.t('header.myBookings')}</StyledH3>
           <StyledButton view="mobile" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
-            {isLoggedIn ? 'Logout' : 'Login'}
+            
+            {isLoggedIn ? t('header.logout') : t('header.login')}
           </StyledButton>
         </MobileMenu>
         
