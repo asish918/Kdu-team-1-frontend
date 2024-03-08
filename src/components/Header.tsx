@@ -1,13 +1,13 @@
-
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
 import { login, logout } from '../slices/authSlice';
 import { RootState } from '../store';
 import styled from 'styled-components';
+import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from '@mui/icons-material/Language';
 
-// Styled components for the Header
+
 const HeaderContainer = styled.header`
  display: flex;
  justify-content: space-between;
@@ -42,10 +42,14 @@ const StyledH2 = styled.h2`
  color:${props => props.theme.colors.primaryNavyBlue};
 `;
 
-const StyledH3 = styled.h3`
+const StyledH3 = styled.h3<{view: "desktop" | "mobile";}>`
  margin-right: 10px;
-`;
+ display: ${props => props.view === "mobile" ? "none" : "block"};
 
+ @media (max-width: 570px) {
+   display: ${props => props.view === "desktop" ? "none" : "block"}
+ }
+`;
 
 const StyledSelect = styled.select`
  margin-right: 10px;
@@ -59,7 +63,7 @@ const StyledSelect = styled.select`
  border-radius: 4px;
 `;
 
-const StyledButton = styled.button`
+const StyledButton = styled.button<{view: "desktop" | "mobile";}>`
  margin-left: 10px;
  padding: 8px 12px;
  font-size: 14px;
@@ -68,18 +72,60 @@ const StyledButton = styled.button`
  color: #fff;
  border: none;
  border-radius: 4px;
+ display: ${props => props.view === "mobile" ? "none" : "block"};
+
+ @media (max-width: 570px) {
+   display: ${props => props.view === "desktop" ? "none" : "block"}
+ }
 `;
 
 const StyledLanguageIcon = styled(LanguageIcon)`
  margin-left: 12px;
 `;
+interface MobileMenuProps {
+  isOpen: boolean;
+ }
+
+
+const MobileMenuButton = styled(MenuIcon)`
+ display: none !important;
+
+ @media (max-width: 570px) {
+    display: block !important;
+    cursor: pointer;
+ }
+`;
+
+
+const MobileMenu = styled.div<MobileMenuProps>`
+ display: none;
+ flex-direction: column;
+ align-items: flex-end;
+
+ @media (max-width: 768px) {
+    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background-color: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+ }
+`;
 
 // Header component
 const Header: React.FC = () => {
-  const dispatch: AppDispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+ const dispatch: AppDispatch = useDispatch();
+ const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+ const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  return (
+ const toggleMobileMenu = () => {
+    setMobileMenuOpen(!isMobileMenuOpen);
+ };
+
+ return (
     <HeaderContainer>
       <Info>
         <Heading>
@@ -88,28 +134,43 @@ const Header: React.FC = () => {
         </Heading>
       </Info>
       <NavbarActions>
-        <StyledH3>MY BOOKINGS</StyledH3>
-
-
+        
+        <StyledH3 view="desktop">MY BOOKINGS</StyledH3>
         <StyledLanguageIcon fontSize="small" />
         <StyledSelect style={{ marginLeft: '0px' }}>
           <option value="en">En</option>
           <option value="fr">Fr</option>
           <option value="in">Hn</option>
         </StyledSelect>
-
         <StyledSelect>
           <option value="usd">$ USD</option>
           <option value="eur">€ EUR</option>
           <option value="inr">₹ INR</option>
         </StyledSelect>
-        <StyledButton onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
-          {isLoggedIn ? 'Logout' : 'Login'}
+        <StyledButton view="desktop" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
+            {isLoggedIn ? 'Logout' : 'Login'}
         </StyledButton>
+        <MobileMenuButton onClick={toggleMobileMenu} />
+
+        <MobileMenu isOpen={isMobileMenuOpen}>
+          <StyledH3 view="mobile">MY BOOKINGS</StyledH3>
+          <StyledButton view="mobile" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
+            {isLoggedIn ? 'Logout' : 'Login'}
+          </StyledButton>
+        </MobileMenu>
+        
       </NavbarActions>
     </HeaderContainer>
-  );
+ );
 };
 
 export default Header;
+
+
+
+
+
+
+
+
 
