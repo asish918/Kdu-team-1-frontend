@@ -9,14 +9,14 @@ export default defineConfig(({ mode }) => {
       'process.env': env
     },
     //plugins: [react(), sentryVitePlugin({
-      //org: "kickdrum-d3",
-      //project: "javascript-react"
+    //org: "kickdrum-d3",
+    //project: "javascript-react"
     //})],
 
     plugins: [react()],
 
     //build: {
-      //sourcemap: true
+    //sourcemap: true
     //}
   }
 })
