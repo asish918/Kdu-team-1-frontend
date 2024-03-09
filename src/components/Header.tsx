@@ -43,12 +43,12 @@ const StyledH2 = styled.h2`
  color:${props => props.theme.colors.primaryNavyBlue};
 `;
 
-const StyledH3 = styled.h3<{view: "desktop" | "mobile";}>`
+const StyledH3 = styled.h3<{ $view: "desktop" | "mobile"; }>`
  margin-right: 10px;
- display: ${props => props.view === "mobile" ? "none" : "block"};
+ display: ${props => props.$view === "mobile" ? "none" : "block"};
 
  @media (max-width: 570px) {
-   display: ${props => props.view === "desktop" ? "none" : "block"}
+   display: ${props => props.$view === "desktop" ? "none" : "block"}
  }
 `;
 
@@ -64,7 +64,7 @@ const StyledSelect = styled.select`
  border-radius: 4px;
 `;
 
-const StyledButton = styled.button<{view: "desktop" | "mobile";}>`
+const StyledButton = styled.button<{ $view: "desktop" | "mobile"; }>`
  margin-left: 10px;
  padding: 8px 12px;
  font-size: 14px;
@@ -73,20 +73,16 @@ const StyledButton = styled.button<{view: "desktop" | "mobile";}>`
  color: #fff;
  border: none;
  border-radius: 4px;
- display: ${props => props.view === "mobile" ? "none" : "block"};
+ display: ${props => props.$view === "mobile" ? "none" : "block"};
 
  @media (max-width: 570px) {
-   display: ${props => props.view === "desktop" ? "none" : "block"}
+   display: ${props => props.$view === "desktop" ? "none" : "block"}
  }
 `;
 
 const StyledLanguageIcon = styled(LanguageIcon)`
  margin-left: 12px;
 `;
-interface MobileMenuProps {
-  isOpen: boolean;
- }
-
 
 const MobileMenuButton = styled(MenuIcon)`
  display: none !important;
@@ -98,13 +94,13 @@ const MobileMenuButton = styled(MenuIcon)`
 `;
 
 
-const MobileMenu = styled.div<MobileMenuProps>`
+const MobileMenu = styled.div<{ $isOpen: boolean; }>`
  display: none;
  flex-direction: column;
  align-items: flex-end;
 
  @media (max-width: 768px) {
-    display: ${({ isOpen }) => (isOpen ? 'flex' : 'none')};
+    display: ${props => (props.$isOpen ? 'flex' : 'none')};
     position: fixed;
     top: 70px;
     right: 20px;
@@ -118,24 +114,24 @@ const MobileMenu = styled.div<MobileMenuProps>`
 
 // Header component
 const Header: React.FC = () => {
- const dispatch: AppDispatch = useDispatch();
- const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
- const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const dispatch: AppDispatch = useDispatch();
+  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
+  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
- const { t,i18n } = useTranslation();
- const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
+  const { t, i18n } = useTranslation();
+  const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
 
- const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.target.value;
     setSelectedLanguage(language);
     i18n.changeLanguage(language);
- };
+  };
 
- const toggleMobileMenu = () => {
+  const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
- };
+  };
 
- return (
+  return (
     <HeaderContainer>
       <Info>
         <Heading>
@@ -144,8 +140,8 @@ const Header: React.FC = () => {
         </Heading>
       </Info>
       <NavbarActions>
-        
-        <StyledH3 view="desktop">{i18n.t('header.myBookings')}</StyledH3>
+
+        <StyledH3 $view="desktop">{i18n.t('header.myBookings')}</StyledH3>
         <StyledLanguageIcon fontSize="small" />
         <StyledSelect style={{ marginLeft: '0px' }} value={selectedLanguage} onChange={handleLanguageChange}>
           <option value="en">En</option>
@@ -157,22 +153,22 @@ const Header: React.FC = () => {
           <option value="eur">€ EUR</option>
           <option value="inr">₹ INR</option>
         </StyledSelect>
-        <StyledButton view="desktop" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
-            {isLoggedIn ? t('header.logout') : t('header.login')}
+        <StyledButton $view="desktop" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
+          {isLoggedIn ? t('header.logout') : t('header.login')}
         </StyledButton>
         <MobileMenuButton onClick={toggleMobileMenu} />
 
-        <MobileMenu isOpen={isMobileMenuOpen}>
-          <StyledH3 view="mobile">{i18n.t('header.myBookings')}</StyledH3>
-          <StyledButton view="mobile" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
-            
+        <MobileMenu $isOpen={isMobileMenuOpen}>
+          <StyledH3 $view="mobile">{i18n.t('header.myBookings')}</StyledH3>
+          <StyledButton $view="mobile" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
+
             {isLoggedIn ? t('header.logout') : t('header.login')}
           </StyledButton>
         </MobileMenu>
-        
+
       </NavbarActions>
     </HeaderContainer>
- );
+  );
 };
 
 export default Header;

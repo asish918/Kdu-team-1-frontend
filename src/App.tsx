@@ -8,18 +8,47 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import { I18nextProvider } from 'react-i18next';
 import i18n from './i18next';
+import { useEffect } from "react";
+import { gql, useQuery } from "@apollo/client";
 
+// GraphQL Query to fetch a room by it's ID
+const ROOMS_QUERY = gql`
+ {
+  roomById(id: 1){
+    room_id
+    name
+    tenant {
+      tenant_id
+      firstName
+      lastName
+    }
+  }
+ }
+`;
 
 function App() {
+  const { data, loading, error } = useQuery(ROOMS_QUERY);
+
+  useEffect(() => {
+    if (!loading) {
+      console.log(data)
+    }
+
+    if (error) {
+      throw error
+    }
+
+  }, [loading, error])
+
 
   return (
     <ThemeProvider theme={muiTheme}>
       <CustomThemeProvider theme={appTheme}>
         <GlobalStyle />
         <Provider store={store}>
-        <I18nextProvider i18n={i18n}>
-        <Header/>
-        </I18nextProvider>
+          <I18nextProvider i18n={i18n}>
+            <Header />
+          </I18nextProvider>
           <Footer />
         </Provider>
       </CustomThemeProvider>
