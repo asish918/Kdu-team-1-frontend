@@ -1,4 +1,4 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
+//import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
 
@@ -8,13 +8,15 @@ export default defineConfig(({ mode }) => {
     define: {
       'process.env': env
     },
-    plugins: [react(), sentryVitePlugin({
-      org: "kickdrum-d3",
-      project: "javascript-react"
-    })],
+    //plugins: [react(), sentryVitePlugin({
+      //org: "kickdrum-d3",
+      //project: "javascript-react"
+    //})],
 
-    build: {
-      sourcemap: true
-    }
+    plugins: [react()],
+
+    //build: {
+      //sourcemap: true
+    //}
   }
 })

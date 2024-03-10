@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
 import ErrorPage from './pages/ErrorPage.tsx';
-import { sentryConfig } from './utils/sentryConfig.ts';
+// import { sentryConfig } from './utils/sentryConfig.ts';
 
 const client = new ApolloClient({
   uri: `${process.env.GRAPHQL_URL}`,
@@ -16,7 +16,7 @@ const client = new ApolloClient({
 const isProduction = process.env.NODE_ENV === 'production';
 
 if (isProduction) {
-  sentryConfig();
+  // sentryConfig();
 }
 
 
