@@ -3,34 +3,40 @@ import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
 
 interface HeaderTranslation {
- title: string;
- subtitle: string;
- myBookings: string;
- currency: string;
- login: string;
- logout: string;
- changeLanguage: string;
+  title: string;
+  subtitle: string;
+  myBookings: string;
+  currency: string;
+  login: string;
+  logout: string;
+  changeLanguage: string;
 }
 
 interface FooterTranslation {
- title: string;
- copyright: string;
- rights: string;
+  title: string;
+  copyright: string;
+  rights: string;
+}
+
+interface ErrorTranslation {
+  title: string;
+  subtitle: string;
 }
 
 interface Translation {
- header: HeaderTranslation;
- footer: FooterTranslation;
+  header: HeaderTranslation;
+  footer: FooterTranslation;
+  error: ErrorTranslation;
 }
 
 interface I18nResources {
- [key: string]: {
+  [key: string]: {
     translation: Translation;
- };
+  };
 }
 
 const resources: I18nResources = {
- en: {
+  en: {
     translation: {
       header: {
         title: 'Kickdrum',
@@ -46,9 +52,13 @@ const resources: I18nResources = {
         copyright: '© Kickdrum Technology Group LLC.',
         rights: 'All rights reserved.',
       },
+      error: {
+        title: 'Oops!',
+        subtitle: "Sorry, an unexpected error has occurred."
+      }
     },
- },
- fr: {
+  },
+  fr: {
     translation: {
       header: {
         title: 'Kickdrum',
@@ -64,9 +74,13 @@ const resources: I18nResources = {
         copyright: '© Kickdrum Groupe de Technologie S.A.S.',
         rights: 'Tous droits réservés.',
       },
+      error: {
+        title: 'Oops!',
+        subtitle: "Désolé, une erreur inattendue s'est produite."
+      }
     },
- },
- hn: {
+  },
+  hn: {
     translation: {
       header: {
         title: 'Kickdrum',
@@ -82,20 +96,24 @@ const resources: I18nResources = {
         copyright: '© किकड्रम टेक्नोलॉजी ग्रूप एलसीएलसी.',
         rights: 'सभी अधिकार सुरक्षित।',
       },
+      error: {
+        title: 'उफ़!',
+        subtitle: "क्षमा करें, एक अप्रत्याशित त्रुटि उत्पन्न हुई है."
+      }
     },
- },
- 
+  },
+
 };
 
 i18n
- .use(initReactI18next)
- .init({
+  .use(initReactI18next)
+  .init({
     resources,
-    lng: 'en', 
+    lng: 'en',
     fallbackLng: 'en',
     interpolation: {
       escapeValue: false,
     },
- });
+  });
 
 export default i18n;

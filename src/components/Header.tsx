@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch } from '../store';
-import { login, logout } from '../slices/authSlice';
+import { login, logout, setActiveCurrency } from '../slices/authSlice';
 import { RootState } from '../store';
 import styled from 'styled-components';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -120,6 +120,12 @@ const Header: React.FC = () => {
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
+  const [currency, setCurrency] = useState('USD');
+
+  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    dispatch(setActiveCurrency(e.target.value));
+    setCurrency(e.target.value);
+  };
 
   const handleLanguageChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const language = event.target.value;
@@ -148,10 +154,10 @@ const Header: React.FC = () => {
           <option value="fr">Fr</option>
           <option value="hn">Hn</option>
         </StyledSelect>
-        <StyledSelect>
-          <option value="usd">$ USD</option>
-          <option value="eur">€ EUR</option>
-          <option value="inr">₹ INR</option>
+        <StyledSelect value={currency} onChange={handleCurrencyChange}>
+          <option value="INR">₹ INR</option>
+          <option value="USD">$ USD</option>
+          <option value="EUR">€ EUR</option>
         </StyledSelect>
         <StyledButton $view="desktop" onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}>
           {isLoggedIn ? t('header.logout') : t('header.login')}
@@ -165,7 +171,6 @@ const Header: React.FC = () => {
             {isLoggedIn ? t('header.logout') : t('header.login')}
           </StyledButton>
         </MobileMenu>
-
       </NavbarActions>
     </HeaderContainer>
   );
