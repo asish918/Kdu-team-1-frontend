@@ -21,4 +21,4 @@ export const GlobalStyle = createGlobalStyle`
     outline: none;
     background-color: transparent;
   }
-`
+`;

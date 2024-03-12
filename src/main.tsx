@@ -1,31 +1,31 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.tsx";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
-import ErrorPage from './pages/ErrorPage.tsx';
-// import { sentryConfig } from './utils/sentryConfig.ts';
+import ErrorPage from "./pages/ErrorPage.tsx";
+import { sentryConfig } from "./utils/sentryConfig.ts";
+import { urlGenerator } from "./utils/util.ts";
 
 const client = new ApolloClient({
-  uri: `${process.env.GRAPHQL_URL}`,
-  cache: new InMemoryCache()
+  uri: urlGenerator(`${process.env.GRAPHQL_PATH}`),
+  cache: new InMemoryCache(),
 });
 
 // Check if the environment is production
-const isProduction = process.env.NODE_ENV === 'production';
+const isProduction = process.env.NODE_ENV === "production";
 
 if (isProduction) {
-  // sentryConfig();
+  sentryConfig();
 }
-
 
 // React Router DOM Router Config
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />
+    errorElement: <ErrorPage />,
   },
 ]);
 

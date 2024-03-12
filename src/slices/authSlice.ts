@@ -1,5 +1,5 @@
 // src/slices/authSlice.ts
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice } from "@reduxjs/toolkit";
 
 interface AuthState {
   isLoggedIn: boolean;
@@ -10,11 +10,11 @@ interface AuthState {
 const initialState: AuthState = {
   isLoggedIn: false,
   price: 100,
-  currency: "USD"
+  currency: "USD",
 };
 
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     login: (state) => {
@@ -24,21 +24,21 @@ export const authSlice = createSlice({
       state.isLoggedIn = false;
     },
     setActiveCurrency: (state, action) => {
-      state.currency = action.payload
+      state.currency = action.payload;
 
       switch (action.payload) {
-        case 'USD':
-          state.price = 100
+        case "USD":
+          state.price = 100;
           break;
 
-        case 'INR':
-          state.price = 8000
+        case "INR":
+          state.price = 8000;
           break;
 
-        case 'EUR':
-          state.price = 93
+        case "EUR":
+          state.price = 93;
       }
-    }
+    },
   },
 });
 
