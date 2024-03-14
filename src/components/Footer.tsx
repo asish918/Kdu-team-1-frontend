@@ -9,7 +9,7 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: fixed;
+  position: sticky;
   bottom: 0;
   left: 0;
   width: 100%;
@@ -33,9 +33,7 @@ const LegalInfo = styled.div`
     opacity: 0.8;
     color: white;
   }
-  p:last-child {
-    margin-bottom: 0;
-  }
+ 
 `;
 
 // Footer component

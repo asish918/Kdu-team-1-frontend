@@ -15,6 +15,7 @@ const HeaderContainer = styled.header`
   padding: 10px 20px;
   background-color: white;
   color: ${(props) => props.theme.colors.primaryDeepBlue};
+  position: sticky;
 `;
 
 const Info = styled.div`
