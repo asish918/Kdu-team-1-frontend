@@ -1,6 +1,7 @@
 // src/components/SearchForm.tsx
 import React, { useState } from 'react';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import PropertyName from './PropertyName';
 import NumberOfGuests from './NumberOfGuests';
 import NumberOfRooms from './NumberOfRooms';

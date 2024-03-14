@@ -13,35 +13,9 @@ const StyledP = styled.p`
 `;
 
 function App() {
-  // const { data, loading, error } = useQuery(ROOMS_QUERY);
-  // const [apiText, setApi] = useState("");
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${process.env.API_URL}`)
-  //     .then((res) => {
-  //       console.log(res.data);
-  //       setApi(res.data);
-  //     })
-  //     .catch((error) => console.log(error));
-  // }, []);
-
-  // useEffect(() => {
-  //   if (!loading) {
-  //     console.log(data);
-  //   }
-
-  //   if (error) {
-  //     throw error;
-  //   }
-  // }, [loading, error]);
-
   return (
     <AppProvider>
-      {/* <StyledP>{apiText}</StyledP> */}
-      {/* <Content /> */}
-      {/* <SearchForm /> */}
-      <LandingPage/>
+      <LandingPage />
     </AppProvider>
   );
 }

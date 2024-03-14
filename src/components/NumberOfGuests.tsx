@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchHotelPolicies } from '../slices/hotelPoliciesSlice'; 
 import { RootState } from '../store';
 import { useAppDispatch } from '../slices/hook';
+ 
 
 const NumberOfGuests: React.FC = () => {
  const [guestType, setGuestType] = useState('');
@@ -115,20 +116,3 @@ const NumberOfGuests: React.FC = () => {
 };
 
 export default NumberOfGuests;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
