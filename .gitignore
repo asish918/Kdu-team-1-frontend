@@ -31,3 +31,4 @@ bun.lockb
 # Sentry Config File
 .env.sentry-build-plugin
 *.lockb
+package-lock.json

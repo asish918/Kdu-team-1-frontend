@@ -10,6 +10,11 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Lato", sans-serif;
   }
 
+  fieldset {
+    border: none;
+    outline: none;
+  }
+
   input {
     border: none;
     outline: none;

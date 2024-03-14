@@ -7,6 +7,13 @@ import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
+import {
+  Button,
+  Drawer,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -29,6 +36,8 @@ const NavbarActions = styled.div`
 
 const Heading = styled.div`
   display: flex;
+  align-items: center;
+  height: 100%;
 `;
 
 const StyledH1 = styled.h1`
@@ -42,40 +51,26 @@ const StyledH2 = styled.h2`
   color: ${(props) => props.theme.colors.primaryNavyBlue};
 `;
 
-const StyledH3 = styled.h3<{ $view: "desktop" | "mobile" }>`
+const StyledH3 = styled.h3`
   margin-right: 10px;
-  display: ${(props) => (props.$view === "mobile" ? "none" : "block")};
-
+  text-align: center;
   @media (max-width: 570px) {
-    display: ${(props) => (props.$view === "desktop" ? "none" : "block")};
+    margin-top: 50px;
   }
 `;
 
-const StyledSelect = styled.select`
-  margin-right: 10px;
-  margin-left: 10px;
-  padding: 0px;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: white;
-  color: ${(props) => props.theme.colors.primaryDeepBlue};
-  border: none;
-  border-radius: 4px;
-`;
+const StyledSelect = styled(Select)`
+  &.MuiInputBase-root {
+    margin-left: -5px;
 
-const StyledButton = styled.button<{ $view: "desktop" | "mobile" }>`
-  margin-left: 10px;
-  padding: 8px 12px;
-  font-size: 14px;
-  cursor: pointer;
-  background-color: ${(props) => props.theme.colors.primaryNavyBlue};
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  display: ${(props) => (props.$view === "mobile" ? "none" : "block")};
+    @media (max-width: 570px) {
+      margin-left: 0px;
+    }
+  }
 
-  @media (max-width: 570px) {
-    display: ${(props) => (props.$view === "desktop" ? "none" : "block")};
+  fieldset {
+    border: none;
+    outline: none;
   }
 `;
 
@@ -83,30 +78,37 @@ const StyledLanguageIcon = styled(LanguageIcon)`
   margin-left: 12px;
 `;
 
-const MobileMenuButton = styled(MenuIcon)`
-  display: none !important;
+const MobileMenuButton = styled(Button)`
+  display: none;
 
   @media (max-width: 570px) {
-    display: block !important;
+    display: flex;
+    align-items: center;
     cursor: pointer;
   }
 `;
 
-const MobileMenu = styled.div<{ $isOpen: boolean }>`
-  display: none;
-  flex-direction: column;
-  align-items: flex-end;
+const DesktopActions = styled.div`
+  display: flex;
+  align-items: center;
 
-  @media (max-width: 768px) {
-    display: ${(props) => (props.$isOpen ? "flex" : "none")};
-    position: fixed;
-    top: 70px;
-    right: 20px;
-    background-color: white;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
+  @media (max-width: 570px) {
+    display: none;
+  }
+`;
+
+const MobileContainer = styled.div`
+  display: flex;
+  align-items: center;
+  width: 80%;
+  justify-content: flex-start;
+`;
+
+const MobileDrawer = styled(Drawer)`
+  .MuiDrawer-paper {
+    width: 200px;
+    padding-inline: 20px;
+    gap: 20px;
   }
 `;
 
@@ -114,27 +116,26 @@ const MobileMenu = styled.div<{ $isOpen: boolean }>`
 const Header: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
-  const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const [open, setOpen] = React.useState(false);
+
+  const toggleDrawer = (newOpen: boolean) => () => {
+    setOpen(newOpen);
+  };
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
   const [currency, setCurrency] = useState("USD");
 
-  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setActiveCurrency(e.target.value));
-    setCurrency(e.target.value);
+  const handleCurrencyChange = (e: SelectChangeEvent<unknown>) => {
+    dispatch(setActiveCurrency(e.target.value as string));
+    setCurrency(e.target.value as string);
   };
 
-  const handleLanguageChange = (
-    event: React.ChangeEvent<HTMLSelectElement>,
-  ) => {
-    const language = event.target.value;
+  const handleLanguageChange = (event: SelectChangeEvent<unknown>) => {
+    const language = event.target.value as string;
     setSelectedLanguage(language);
     i18n.changeLanguage(language);
-  };
-
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen(!isMobileMenuOpen);
   };
 
   return (
@@ -146,41 +147,72 @@ const Header: React.FC = () => {
         </Heading>
       </Info>
       <NavbarActions>
-        <StyledH3 $view="desktop">{i18n.t("header.myBookings")}</StyledH3>
-        <StyledLanguageIcon fontSize="small" />
-        <StyledSelect
-          style={{ marginLeft: "0px" }}
-          value={selectedLanguage}
-          onChange={handleLanguageChange}
-        >
-          <option value="en">En</option>
-          <option value="fr">Fr</option>
-          <option value="hn">Hn</option>
-        </StyledSelect>
-        <StyledSelect value={currency} onChange={handleCurrencyChange}>
-          <option value="INR">₹ INR</option>
-          <option value="USD">$ USD</option>
-          <option value="EUR">€ EUR</option>
-        </StyledSelect>
-        <StyledButton
-          $view="desktop"
-          onClick={() => (isLoggedIn ? dispatch(logout()) : dispatch(login()))}
-        >
-          {isLoggedIn ? t("header.logout") : t("header.login")}
-        </StyledButton>
-        <MobileMenuButton onClick={toggleMobileMenu} />
+        <DesktopActions>
+          <StyledH3>{i18n.t("header.myBookings")}</StyledH3>
+          <StyledLanguageIcon fontSize="small" />
 
-        <MobileMenu $isOpen={isMobileMenuOpen}>
-          <StyledH3 $view="mobile">{i18n.t("header.myBookings")}</StyledH3>
-          <StyledButton
-            $view="mobile"
+          <StyledSelect
+            value={selectedLanguage}
+            onChange={handleLanguageChange}
+          >
+            <MenuItem value="en">En</MenuItem>
+            <MenuItem value="fr">Fr</MenuItem>
+            <MenuItem value="hn">Hn</MenuItem>
+          </StyledSelect>
+
+          <StyledSelect value={currency} onChange={handleCurrencyChange}>
+            <MenuItem value="INR">₹ INR</MenuItem>
+            <MenuItem value="USD">$ USD</MenuItem>
+            <MenuItem value="EUR">€ EUR</MenuItem>
+          </StyledSelect>
+
+          <Button
+            sx={{ width: 100 }}
             onClick={() =>
               isLoggedIn ? dispatch(logout()) : dispatch(login())
             }
+            variant="contained"
           >
             {isLoggedIn ? t("header.logout") : t("header.login")}
-          </StyledButton>
-        </MobileMenu>
+          </Button>
+        </DesktopActions>
+
+        <MobileMenuButton onClick={toggleDrawer(true)}>
+          <MenuIcon />
+        </MobileMenuButton>
+
+        <MobileDrawer open={open} anchor="right" onClose={toggleDrawer(false)}>
+          <StyledH3>{i18n.t("header.myBookings")}</StyledH3>
+
+          <MobileContainer>
+            <StyledLanguageIcon fontSize="small" />
+            <StyledSelect
+              value={selectedLanguage}
+              onChange={handleLanguageChange}
+            >
+              <MenuItem value="en">En</MenuItem>
+              <MenuItem value="fr">Fr</MenuItem>
+              <MenuItem value="hn">Hn</MenuItem>
+            </StyledSelect>
+          </MobileContainer>
+
+          <MobileContainer>
+            <StyledSelect value={currency} onChange={handleCurrencyChange}>
+              <MenuItem value="INR">₹ INR</MenuItem>
+              <MenuItem value="USD">$ USD</MenuItem>
+              <MenuItem value="EUR">€ EUR</MenuItem>
+            </StyledSelect>
+          </MobileContainer>
+
+          <Button
+            onClick={() =>
+              isLoggedIn ? dispatch(logout()) : dispatch(login())
+            }
+            variant="contained"
+          >
+            {isLoggedIn ? t("header.logout") : t("header.login")}
+          </Button>
+        </MobileDrawer>
       </NavbarActions>
     </HeaderContainer>
   );

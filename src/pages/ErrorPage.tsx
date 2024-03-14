@@ -2,7 +2,6 @@
 import styled from "styled-components";
 import { useRouteError } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
 import Content from "../components/Content";
 import AppProvider from "../providers/AppProvider";
 
@@ -24,7 +23,6 @@ export default function ErrorPage() {
 
   return (
     <AppProvider>
-      <Header />
       <ErrorDiv id="error-page">
         <h1>{i18n.t("error.title")}</h1>
         <p>{i18n.t("error.subtitle")}</p>
