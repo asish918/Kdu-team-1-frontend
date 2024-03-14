@@ -18,6 +18,11 @@ export const GlobalStyle = createGlobalStyle`
     height: 100%;
     position: relative;
   }
+  
+  fieldset {
+    border: none;
+    outline: none;
+  }
 
   input {
     border: none;
