@@ -8,8 +8,9 @@ import NumberOfRooms from './NumberOfRooms';
 import WheelchairAccessible from './WheelchairAccessible';
 import SearchButton from './SearchButton';
 import BookingDateRange from './BookingDateRange';
-import { RootState } from '../store'; 
+import { RootState } from '../store';
 import { useSelector } from 'react-redux';
+import { DatePicker } from './datepicker/DatePicker';
 
 const SearchForm: React.FC = () => {
    const [property, setProperty] = useState('');
@@ -43,7 +44,8 @@ const SearchForm: React.FC = () => {
          }}
       >
          <PropertyName onPropertyChange={handlePropertyChange} />
-         <BookingDateRange />
+         {/* <BookingDateRange /> */}
+         <DatePicker />
          <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
             <Box sx={{ width: '70%' }}>
                <NumberOfGuests />
@@ -52,7 +54,7 @@ const SearchForm: React.FC = () => {
                <NumberOfRooms />
             </Box>
          </Box>
-         
+
          {wheelchairAccessible && <WheelchairAccessible />}
          <Box sx={{ width: '100%', display: "flex", justifyContent: 'center' }}> {/* Center the SearchButton */}
             <SearchButton isDisabled={isDisabled} onClick={handleSearch} />

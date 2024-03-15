@@ -7,6 +7,7 @@ import { ROOMS_QUERY } from "./graphql/queries";
 import AppProvider from "./providers/AppProvider";
 import SearchForm from "./components/SearchForm";
 import LandingPage from "./components/LandingPage";
+import { DatePicker } from "./components/datepicker/DatePicker";
 
 const StyledP = styled.p`
   text-align: center;
