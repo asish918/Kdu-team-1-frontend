@@ -4,40 +4,39 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
+import { Property } from '../types';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
+import { useTranslation } from 'react-i18next';
+import { setPropertyName } from '../redux/reducers/landingPageReducer';
 
-interface PropertyNameProps {
-  onPropertyChange: (property: string) => void;
-}
+const PropertyName: React.FC = () => {
+  const properties: Property[] = useSelector((state: RootState) => state.propertyList.propertyList)
+  const propertyName = useSelector((state: RootState) => state.landingPage.propertyName);
 
-const PropertyName: React.FC<PropertyNameProps> = ({ onPropertyChange }) => {
-  const [propertyName, setPropertyName] = useState<string>('');
+  const dispatch = useDispatch();
+
+  const { i18n } = useTranslation();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setPropertyName(event.target.value);
-    onPropertyChange(event.target.value);
+    dispatch(setPropertyName(event.target.value))
   };
-
-
-  const properties = ['property1', 'property2', 'property3'];
 
   return (
     <Box sx={{ marginBottom: 2 }}>
-      <FormControl fullWidth required>
-        <InputLabel id="propertyName-label" required>Property Name</InputLabel>
+      <FormControl fullWidth>
+        <InputLabel id="propertyName-label" required>{i18n.t("landingPageForm.propertyName")}</InputLabel>
         <Select
           labelId="propertyName-label"
           id="propertyName"
           value={propertyName}
           onChange={handleChange}
-          label="Property Name"
+          label={i18n.t("landingPageForm.propertyName")}
           aria-label="Property Name Selection"
         >
-          <MenuItem value="">
-            <em>Select a property</em>
-          </MenuItem>
-          {properties.map((property) => (
-            <MenuItem key={property} value={property}>
-              {property}
+          {properties?.map((property) => (
+            <MenuItem disabled={property.property_id !== 1} key={property.property_id} value={property.property_name}>
+              {property.property_name}
             </MenuItem>
           ))}
         </Select>

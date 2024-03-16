@@ -11,6 +11,20 @@ export const hn: LanguageType = {
       logout: "लॉग आउट करें",
       changeLanguage: "भाषा बदलें",
     },
+    landingPageForm: {
+      propertyName: "संपत्ति का नाम",
+      checkIn: "चेक-इन",
+      checkOut: "चेक-आउट",
+      guestType: "ग्राहक प्रकार",
+      rooms: "कमरे",
+      selectDate: "तारीख चुनें",
+      age: "उम्र",
+      search: "खोज",
+      kids: "बच्चे",
+      adult: "वयस्क",
+      teens: "किशोर",
+      accessibility: "मुझे एक पहुंचने योग्य कमरा चाहिए"
+    },
     footer: {
       title: "Kickdrum",
       copyright: "© किकड्रम टेक्नोलॉजी ग्रूप एलसीएलसी.",

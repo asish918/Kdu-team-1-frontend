@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch } from "../store";
-import { login, logout, setActiveCurrency } from "../slices/authSlice";
-import { RootState } from "../store";
+import { AppDispatch } from "../redux/store";
+import { login, logout } from "../redux/reducers/authReducer";
+import { RootState } from "../redux/store";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
+import { Currency } from "../utils/util";
+import { setActiveCurrency } from "../redux/reducers/intelReducer";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -119,11 +121,11 @@ const Header: React.FC = () => {
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
-  const [currency, setCurrency] = useState("USD");
+  // const [currency, setCurrency] = useState(Currency.USD);
+  const activeCurrency = useSelector((state: RootState) => state.intel.activeCurrency)
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     dispatch(setActiveCurrency(e.target.value));
-    setCurrency(e.target.value);
   };
 
   const handleLanguageChange = (
@@ -158,10 +160,10 @@ const Header: React.FC = () => {
           <option value="fr">Fr</option>
           <option value="hn">Hn</option>
         </StyledSelect>
-        <StyledSelect value={currency} onChange={handleCurrencyChange}>
-          <option value="INR">₹ INR</option>
-          <option value="USD">$ USD</option>
-          <option value="EUR">€ EUR</option>
+        <StyledSelect value={activeCurrency} onChange={handleCurrencyChange}>
+          <option value={Currency.INR}>₹ INR</option>
+          <option value={Currency.USD}>$ USD</option>
+          <option value={Currency.EUR}>€ EUR</option>
         </StyledSelect>
         <StyledButton
           $view="desktop"

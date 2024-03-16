@@ -11,6 +11,20 @@ export const fr: LanguageType = {
       logout: "Déconnexion",
       changeLanguage: "Changer de langue",
     },
+    landingPageForm: {
+      propertyName: "Nom de la propriété",
+      checkIn: "Arrivée",
+      checkOut: "Départ",
+      guestType: "Type de client",
+      rooms: "Chambres",
+      selectDate: "Sélectionner une date",
+      age: "Âge",
+      search: "Rechercher",
+      kids: "Enfants",
+      adult: "Adulte",
+      teens: "Adolescents",
+      accessibility: "J'ai besoin d'une chambre accessible"
+    },
     footer: {
       title: "Kickdrum",
       copyright: "© Kickdrum Groupe de Technologie S.A.S.",

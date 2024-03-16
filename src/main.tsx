@@ -7,6 +7,7 @@ import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import ErrorPage from "./pages/ErrorPage.tsx";
 import { sentryConfig } from "./utils/sentryConfig.ts";
 import { urlGenerator } from "./utils/util.ts";
+import AppProvider from "./providers/AppProvider.tsx";
 
 const client = new ApolloClient({
   uri: urlGenerator(`${process.env.GRAPHQL_PATH}`),
@@ -32,7 +33,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
-      <RouterProvider router={router} />
+      <AppProvider>
+        <RouterProvider router={router} />
+      </AppProvider>
     </ApolloProvider>
   </React.StrictMode>,
 );

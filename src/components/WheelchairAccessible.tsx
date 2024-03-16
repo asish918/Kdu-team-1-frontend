@@ -2,6 +2,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import AccessibleIcon from '@mui/icons-material/Accessible';
+import { useTranslation } from 'react-i18next';
 
 // Styled components
 const StyledLabel = styled.label`
@@ -21,15 +22,17 @@ const IconContainer = styled.div`
 `;
 
 const WheelchairAccessible: React.FC = () => {
- return (
+  const { i18n } = useTranslation();
+
+  return (
     <div>
       <IconContainer>
-        <AccessibleIcon style={{ fontSize: '16px' }}/>
-        <StyledLabel htmlFor="wheelchairAccessible">I need an Accessible Room</StyledLabel>
         <StyledCheckbox id="wheelchairAccessible" name="wheelchairAccessible" />
+        <AccessibleIcon style={{ fontSize: '16px' }} />
+        <StyledLabel htmlFor="wheelchairAccessible">{i18n.t("landingPageForm.accessibility")}</StyledLabel>
       </IconContainer>
     </div>
- );
+  );
 };
 
 export default WheelchairAccessible;

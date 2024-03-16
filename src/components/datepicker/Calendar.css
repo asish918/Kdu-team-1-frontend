@@ -159,7 +159,7 @@ abbr[title] {
 
 .react-calendar__tile {
   max-width: 100%;
-  padding: 10px 6.6667px;
+  padding: 1px 0px;
   background: none;
   text-align: center;
   line-height: 16px;
@@ -167,6 +167,7 @@ abbr[title] {
   font: inherit;
   font-size: 0.833em;
   border: 3px solid white;
+  word-wrap: break-word;
 }
 
 .react-calendar__tile:disabled {
@@ -217,4 +218,8 @@ abbr[title] {
 
 .react-calendar--selectRange .react-calendar__tile--hover {
   background-color: #e6e6e6;
+}
+
+.room-price {
+  font-size: 0.7em;
 }

@@ -1,23 +1,24 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
-import Content from "./components/Content";
-import axios from "axios";
-import { ROOMS_QUERY } from "./graphql/queries";
-import AppProvider from "./providers/AppProvider";
-import SearchForm from "./components/SearchForm";
-import LandingPage from "./components/LandingPage";
-import { DatePicker } from "./components/datepicker/DatePicker";
-
-const StyledP = styled.p`
-  text-align: center;
-`;
+import LandingPage from "./pages/LandingPage";
+import { AppDispatch } from "./redux/store";
+import { useDispatch } from "react-redux";
+import { useEffect } from "react";
+import { fetchPropertyConfig } from "./redux/thunks/fetchPropertyConfig";
+import { fetchPropertyList } from "./redux/thunks/fetchPropertyList";
+import { fetchCalendarDates } from "./redux/thunks/fetchCalendarDates";
+import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
 
 function App() {
+  const dispatch: AppDispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchPropertyConfig());
+    dispatch(fetchPropertyList());
+    dispatch(fetchCalendarDates());
+    dispatch(fetchExchangeRates());
+  }, [])
+
   return (
-    <AppProvider>
-      <LandingPage />
-    </AppProvider>
+    <LandingPage />
   );
 }
 

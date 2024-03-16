@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Calendar from "react-calendar";
 import { isBefore, isAfter, isSameDay, addDays } from "date-fns";
 import "./Calendar.css";
 import "./DatePickerStyles.css";
 import { Typography } from "@mui/material";
-import rightArrowIcon from "../../../Images/DateArrow.png";
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
-import calendarIcon from "../../../Images/Calendar.png";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { formatCurrency, parseDateString } from "../../utils/util";
+import { DateList, ExchangeRateData } from "../../types";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { useTranslation } from "react-i18next";
 
 type ValuePiece = Date;
 type Value = ValuePiece | [ValuePiece, ValuePiece];
-interface RoomPrice {
-    date: Date;
-    price: number;
-}
+
 export function DatePicker() {
-    const currentDate = new Date();
     const [value, setValue] = useState<Value>(new Date());
     const [startDate, setStartDate] = useState<ValuePiece | null>(null);
     const [endDate, setEndDate] = useState<ValuePiece | null>(null);
@@ -25,34 +24,31 @@ export function DatePicker() {
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
     const [message, setMessage] = useState<string>("");
 
-    const roomPrices: RoomPrice[] = [
-        { date: new Date(2024, 3, 1), price: 100 },
-        { date: new Date(2024, 3, 5), price: 150 },
-        { date: new Date(2024, 3, 10), price: 200 },
-    ];
+    const { t, i18n } = useTranslation();
 
-    useEffect(() => {
-        console.log(roomPrices)
-    }, [])
+    const roomPrices: DateList[] = useSelector((state: RootState) => state.calendar.dateList);
+    const maxLengthStay: number = useSelector((state: RootState) => state.propertyConfig.property.maxLengthStay);
+    const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
+    const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
 
     const handleDateClick = (date: Date) => {
         if (!startDate) {
-            setMessage("Please select end date. Max. length of stay: 14 days");
+            setMessage(`Please select end date. Max. length of stay: ${maxLengthStay} day(s)`);
             setStartDate(date);
             setEndDate(null);
-            setMaxDate(addDays(date, 10));
+            setMaxDate(addDays(date, maxLengthStay));
             setMinDate(date);
         } else if (!endDate && !isBefore(date, startDate)) {
             setEndDate(date);
             setMaxDate(null);
             setMinDate(null);
-            setMessage("Minimum nightly rate over stay is $100");
+            setMessage("Minimum nightly rate over stay is $50");
         } else {
             setStartDate(date);
             setEndDate(null);
-            setMaxDate(addDays(date, 10));
+            setMaxDate(addDays(date, maxLengthStay));
             setMinDate(date);
-            setMessage("Please select end date. Max. length of stay: 14 days");
+            setMessage(`Please select end date. Max. length of stay: ${maxLengthStay} day(s)`);
         }
     };
 
@@ -105,10 +101,10 @@ export function DatePicker() {
     function tileContent({ date, view }) {
         if (view === "month") {
             const roomPrice = roomPrices.find((roomPrice) =>
-                isSameDay(date, roomPrice.date)
+                isSameDay(date, parseDateString(roomPrice.date))
             );
             if (roomPrice) {
-                return <div className="room-price">{roomPrice.price}</div>;
+                return <div className="room-price">{formatCurrency(roomPrice.price, activeCurrency, exchangeRates, i18n)}</div>;
             }
         }
         return null;
@@ -121,22 +117,20 @@ export function DatePicker() {
                 component="div"
                 className="date-dropdown-label"
             >
-                Select dates
+                {i18n.t("landingPageForm.selectDate")}
             </Typography>
             <button
                 className="selected-dates"
-                onClick={() => setShowCalendar((prev) => !prev)}
+                onClick={() => setShowCalendar(prev => !prev)}
             >
-                {startDate === null && <div className="DateValue">Check-in</div>}
+                {startDate === null && <div className="DateValue">{i18n.t("landingPageForm.checkIn")}</div>}
                 {startDate && (
                     <div className="DateValue">{startDate.toDateString()}</div>
                 )}
                 <ArrowForwardIcon />
-                {/* <img src={rightArrowIcon} alt="date arrow Icon" /> */}
-                {endDate === null && <div className="DateValue">Check-out</div>}
+                {endDate === null && <div className="DateValue">{i18n.t("landingPageForm.checkOut")}</div>}
                 {endDate && <div className="DateValue">{endDate.toDateString()}</div>}
                 <CalendarMonthIcon />
-                {/* <img src={calendarIcon} alt="Calendar Icon" /> */}
             </button>
             <div className="dateSelectorContainer">
                 {showCalendar && (
