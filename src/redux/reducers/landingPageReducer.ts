@@ -14,23 +14,6 @@ const initialState: LandingPageState = {
     totalGuests: 1,
 };
 
-// Utility function to validate conditions
-const validateConditions = (state: LandingPageState): boolean => {
-    // Check if the number of adults is less than 1
-    if (state.adults < 1) {
-        return false;
-    }
-    // Check if the number of rooms is less than 1
-    if (state.numberOfRooms < 1) {
-        return false;
-    }
-    // Check if the number of rooms is greater than the number of adults
-    if (state.numberOfRooms > state.adults) {
-        return false;
-    }
-    return true;
-};
-
 export const landingPageReducer = createSlice({
     name: "landingPage",
     initialState,

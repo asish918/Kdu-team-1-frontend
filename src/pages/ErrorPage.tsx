@@ -2,10 +2,6 @@
 import styled from "styled-components";
 import { useRouteError } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import Header from "../components/Header";
-import Content from "../components/Content";
-import AppProvider from "../providers/AppProvider";
-
 interface ErrorInterface {
   statusText: string;
   message: string;

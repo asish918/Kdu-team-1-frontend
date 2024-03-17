@@ -1,7 +1,7 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { APIStatus, ExchangeRateData } from "../../types";
 import { fetchExchangeRates } from "../thunks/fetchExchangeRates";
-import { Currency } from "../../utils/util";
+import { Currency } from "../../utils/enums";
 
 interface IntelState {
     exchangeRates: ExchangeRateData | null;
