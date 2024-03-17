@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Calendar from 'react-calendar';
 import { isBefore, isAfter, isSameDay, addDays } from 'date-fns';
 import { Typography } from '@mui/material';
@@ -24,6 +24,8 @@ export function DatePicker() {
     const [minDate, setMinDate] = useState<ValuePiece | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
     const [message, setMessage] = useState<string>('');
+
+    const datePickerRef = useRef<HTMLDivElement>(null);
 
     const { t, i18n } = useTranslation();
 
@@ -95,6 +97,21 @@ export function DatePicker() {
         return null;
     };
 
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (datePickerRef.current && !datePickerRef.current.contains(event.target)) {
+                setShowCalendar(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
+
     return (
         <div className="datePickerContainer">
             <Typography variant="subtitle1" gutterBottom component="div" className="date-dropdown-label">
@@ -110,7 +127,7 @@ export function DatePicker() {
             </button>
             <div className="dateSelectorContainer">
                 {showCalendar && (
-                    <div className="CalendarContainer">
+                    <div ref={datePickerRef} className="CalendarContainer">
                         <div className="Calendar-box">
                             <Calendar
                                 onChange={setValue}

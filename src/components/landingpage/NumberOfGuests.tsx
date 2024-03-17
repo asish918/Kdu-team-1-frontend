@@ -10,6 +10,7 @@ import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
 import { setAdults, setTotalGuests } from '../../redux/reducers/landingPageReducer';
 import { GuestType } from '../../utils/enums';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const NumberOfGuests: React.FC = () => {
@@ -33,11 +34,18 @@ const NumberOfGuests: React.FC = () => {
 
   const handleGuestCountChange = (type: string, change: number): void => {
     const newTotal = totalGuests + change;
+    if (newTotal > hotelProperty.maxGuests + 1) {
+      toast.error(`Max guests allowed are ${hotelProperty.maxGuests + 1}`)
+    }
+
     if (newTotal <= hotelProperty.maxGuests + 1) {
       switch (type) {
         case GuestType.adult:
           dispatch(setAdults(Math.max(0, adults + change)))
-          if (Math.max(0, adults + change) < numberOfRooms) break;
+          if (Math.max(0, adults + change) < numberOfRooms) {
+            toast.error("Adults can't be less than rooms")
+            break;
+          }
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
           break;
         case GuestType.teen:
@@ -70,6 +78,7 @@ const NumberOfGuests: React.FC = () => {
 
   return (
     <Box sx={{ marginBottom: 2, marginRight: 1 }}>
+      <Toaster />
       <FormControl fullWidth>
         <InputLabel id="guest-type-label">{i18n.t("landingPageForm.guestType")}</InputLabel>
         <Select

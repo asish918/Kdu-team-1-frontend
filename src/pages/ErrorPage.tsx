@@ -22,7 +22,6 @@ export default function ErrorPage() {
 
   return (
     <>
-    <AppProvider>
       <ErrorDiv id="error-page">
         <h1>{i18n.t("error.title")}</h1>
         <p>{i18n.t("error.subtitle")}</p>
@@ -30,7 +29,6 @@ export default function ErrorPage() {
           <i>{error.statusText || error.message}</i>
         </p>
       </ErrorDiv>
-      </AppProvider>
     </>
   );
 }
