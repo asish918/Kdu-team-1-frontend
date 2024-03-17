@@ -9,11 +9,14 @@ const FooterContainer = styled.footer`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* position: sticky; */
   bottom: 0;
   left: 0;
   width: 100%;
   color: white;
+
+  @media (max-width: 450px) {
+    position: sticky;
+  }
 `;
 
 const CompanyTitle = styled.div`

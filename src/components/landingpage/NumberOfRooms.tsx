@@ -5,9 +5,9 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
-import { setNumberOfRooms } from '../redux/reducers/landingPageReducer';
+import { setNumberOfRooms } from '../../redux/reducers/landingPageReducer';
 
 const NumberOfRooms: React.FC = () => {
   const numberOfRooms = useSelector((state: RootState) => state.landingPage.numberOfRooms);
@@ -15,7 +15,6 @@ const NumberOfRooms: React.FC = () => {
 
   const { i18n } = useTranslation();
 
-  // Access max_rooms from Redux store
   const maxRooms = useSelector((state: RootState) => state.propertyConfig.property.numberOfRooms);
 
   const handleChange = (event: SelectChangeEvent) => {

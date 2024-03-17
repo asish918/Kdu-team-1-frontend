@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { AppDispatch } from "../redux/store";
-import { login, logout } from "../redux/reducers/authReducer";
-import { RootState } from "../redux/store";
+import { AppDispatch } from "../../redux/store";
+import { login, logout } from "../../redux/reducers/authReducer";
+import { RootState } from "../../redux/store";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
 import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
-import { Currency } from "../utils/util";
-import { setActiveCurrency } from "../redux/reducers/intelReducer";
+import { setActiveCurrency } from "../../redux/reducers/intelReducer";
+import { Currency } from "../../utils/enums";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -121,7 +121,6 @@ const Header: React.FC = () => {
 
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
-  // const [currency, setCurrency] = useState(Currency.USD);
   const activeCurrency = useSelector((state: RootState) => state.intel.activeCurrency)
 
   const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {

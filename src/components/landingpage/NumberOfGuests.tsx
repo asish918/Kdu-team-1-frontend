@@ -6,9 +6,10 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
-import { setAdults, setTotalGuests } from '../redux/reducers/landingPageReducer';
+import { setAdults, setTotalGuests } from '../../redux/reducers/landingPageReducer';
+import { GuestType } from '../../utils/enums';
 
 
 const NumberOfGuests: React.FC = () => {
@@ -20,7 +21,7 @@ const NumberOfGuests: React.FC = () => {
   const [kids, setKids] = useState(0);
   const [selectOpen, setSelectOpen] = useState(false);
 
-  const hotelPolicies = useSelector((state: RootState) => state.propertyConfig.property);
+  const hotelProperty = useSelector((state: RootState) => state.propertyConfig.property);
 
   const dispatch = useDispatch();
 
@@ -32,19 +33,19 @@ const NumberOfGuests: React.FC = () => {
 
   const handleGuestCountChange = (type: string, change: number): void => {
     const newTotal = totalGuests + change;
-    if (newTotal <= hotelPolicies.maxGuests + 1) {
+    if (newTotal <= hotelProperty.maxGuests + 1) {
       switch (type) {
-        case 'adults':
+        case GuestType.adult:
           dispatch(setAdults(Math.max(0, adults + change)))
           if (Math.max(0, adults + change) < numberOfRooms) break;
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
           break;
-        case 'teens':
+        case GuestType.teen:
           setTeens(prev => Math.max(0, prev + change));
           if (Math.max(0, teens + change) < 0) break;
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
           break;
-        case 'kids':
+        case GuestType.kids:
           setKids(prev => Math.max(0, prev + change));
           if (Math.max(0, kids + change) < 0) break;
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
@@ -68,7 +69,7 @@ const NumberOfGuests: React.FC = () => {
   };
 
   return (
-    <Box sx={{ marginBottom: 2 }}>
+    <Box sx={{ marginBottom: 2, marginRight: 1 }}>
       <FormControl fullWidth>
         <InputLabel id="guest-type-label">{i18n.t("landingPageForm.guestType")}</InputLabel>
         <Select
@@ -82,33 +83,33 @@ const NumberOfGuests: React.FC = () => {
           onClose={handleSelectClose}
           renderValue={(value) => `Guests: ${value}`}
         >
-          {hotelPolicies.guests.adults && (
-            <MenuItem disableRipple value="adults">
+          {hotelProperty.guests.adults && (
+            <MenuItem disableRipple value={GuestType.adult}>
               {i18n.t("landingPageForm.adult")}<br></br> ({i18n.t("landingPageForm.age")} 18+)
               <div style={{ marginLeft: '20px' }}>
-                <Button onClick={() => handleGuestCountChange('adults', -1)}>-</Button>
+                <Button onClick={() => handleGuestCountChange(GuestType.adult, -1)}>-</Button>
                 {adults}
-                <Button onClick={() => handleGuestCountChange('adults', 1)}>+</Button>
+                <Button onClick={() => handleGuestCountChange(GuestType.adult, 1)}>+</Button>
               </div>
             </MenuItem>
           )}
-          {hotelPolicies.guests.teens && (
-            <MenuItem value="teens">
+          {hotelProperty.guests.teens && (
+            <MenuItem value={GuestType.teen}>
               {i18n.t("landingPageForm.teens")} <br></br> ({i18n.t("landingPageForm.age")} 13-17)
               <div style={{ marginLeft: '7px' }}>
-                <Button onClick={() => handleGuestCountChange('teens', -1)}>-</Button>
+                <Button onClick={() => handleGuestCountChange(GuestType.teen, -1)}>-</Button>
                 {teens}
-                <Button onClick={() => handleGuestCountChange('teens', 1)}>+</Button>
+                <Button onClick={() => handleGuestCountChange(GuestType.teen, 1)}>+</Button>
               </div>
             </MenuItem>
           )}
-          {hotelPolicies.guests.children && (
-            <MenuItem value="kids">
+          {hotelProperty.guests.children && (
+            <MenuItem value={GuestType.kids}>
               {i18n.t("landingPageForm.kids")} <br></br>({i18n.t("landingPageForm.age")} 0-12)
               <div style={{ marginLeft: '18px' }}>
-                <Button onClick={() => handleGuestCountChange('kids', -1)}>-</Button>
+                <Button onClick={() => handleGuestCountChange(GuestType.kids, -1)}>-</Button>
                 {kids}
-                <Button onClick={() => handleGuestCountChange('kids', 1)}>+</Button>
+                <Button onClick={() => handleGuestCountChange(GuestType.kids, 1)}>+</Button>
               </div>
             </MenuItem>
           )}

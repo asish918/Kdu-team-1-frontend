@@ -1,19 +1,20 @@
-import { useState } from "react";
-import Calendar from "react-calendar";
-import { isBefore, isAfter, isSameDay, addDays } from "date-fns";
-import "./Calendar.css";
-import "./DatePickerStyles.css";
-import { Typography } from "@mui/material";
+import React, { useState } from 'react';
+import Calendar from 'react-calendar';
+import { isBefore, isAfter, isSameDay, addDays } from 'date-fns';
+import { Typography } from '@mui/material';
 import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import { formatCurrency, parseDateString } from "../../utils/util";
-import { DateList, ExchangeRateData } from "../../types";
-import { useSelector } from "react-redux";
-import { RootState } from "../../redux/store";
-import { useTranslation } from "react-i18next";
+import { parseDateString } from '../../utils/util';
+import { DateList, ExchangeRateData } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { useTranslation } from 'react-i18next';
+import { formatCurrency } from '../../utils/i18next';
+import "./Calendar.css";
+import "./DatePickerStyles.css";
 
 type ValuePiece = Date;
-type Value = ValuePiece | [ValuePiece, ValuePiece];
+type Value = ValuePiece | [ValuePiece, ValuePiece] | null;
 
 export function DatePicker() {
     const [value, setValue] = useState<Value>(new Date());
@@ -22,7 +23,7 @@ export function DatePicker() {
     const [maxDate, setMaxDate] = useState<ValuePiece | null>(null);
     const [minDate, setMinDate] = useState<ValuePiece | null>(null);
     const [showCalendar, setShowCalendar] = useState<boolean>(false);
-    const [message, setMessage] = useState<string>("");
+    const [message, setMessage] = useState<string>('');
 
     const { t, i18n } = useTranslation();
 
@@ -42,7 +43,7 @@ export function DatePicker() {
             setEndDate(date);
             setMaxDate(null);
             setMinDate(null);
-            setMessage("Minimum nightly rate over stay is $50");
+            setMessage('Minimum nightly rate over stay is $50');
         } else {
             setStartDate(date);
             setEndDate(null);
@@ -52,83 +53,58 @@ export function DatePicker() {
         }
     };
 
-    function handelApplyButtonClick() {
+    const handelApplyButtonClick = () => {
         setShowCalendar(false);
-    }
+    };
 
-    function tileDisabled({ date, view }) {
+    const tileDisabled = ({ date, view }: { date: Date; view: string }) => {
         const currentDate = new Date();
         const yesterday = new Date(currentDate);
         yesterday.setDate(currentDate.getDate() - 1);
-        const firstDayOfMonth = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth(),
-            1
-        );
-        const lastDayOfMonth = new Date(
-            currentDate.getFullYear(),
-            currentDate.getMonth() + 1,
-            0
-        );
-        if (view === "month") {
+        const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+        const lastDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
+        if (view === 'month') {
             return (
                 (minDate && isBefore(date, minDate)) ||
                 isBefore(date, yesterday) ||
                 (maxDate && isAfter(date, maxDate))
             );
         }
-        if (
-            (view === "double" && isBefore(date, firstDayOfMonth)) ||
-            isAfter(date, lastDayOfMonth)
-        ) {
+        if ((view === 'double' && isBefore(date, firstDayOfMonth)) || isAfter(date, lastDayOfMonth)) {
             return true;
         }
-    }
-    function tileClassName({ date }) {
+    };
+
+    const tileClassName = ({ date }: { date: Date }) => {
         if (startDate && isSameDay(date, startDate)) {
-            return "start-end-date";
+            return 'start-end-date';
         } else if (endDate && isSameDay(date, endDate)) {
-            return "start-end-date";
-        } else if (
-            startDate &&
-            endDate &&
-            isBefore(date, endDate) &&
-            isAfter(date, startDate)
-        ) {
-            return "range-date";
+            return 'start-end-date';
+        } else if (startDate && endDate && isBefore(date, endDate) && isAfter(date, startDate)) {
+            return 'range-date';
         }
-    }
-    function tileContent({ date, view }) {
-        if (view === "month") {
-            const roomPrice = roomPrices.find((roomPrice) =>
-                isSameDay(date, parseDateString(roomPrice.date))
-            );
+    };
+
+    const tileContent = ({ date, view }: { date: Date; view: string }) => {
+        if (view === 'month') {
+            const roomPrice = roomPrices.find((roomPrice) => isSameDay(date, parseDateString(roomPrice.date)));
             if (roomPrice) {
                 return <div className="room-price">{formatCurrency(roomPrice.price, activeCurrency, exchangeRates, i18n)}</div>;
             }
         }
         return null;
-    }
+    };
+
     return (
         <div className="datePickerContainer">
-            <Typography
-                variant="subtitle1"
-                gutterBottom
-                component="div"
-                className="date-dropdown-label"
-            >
-                {i18n.t("landingPageForm.selectDate")}
+            <Typography variant="subtitle1" gutterBottom component="div" className="date-dropdown-label">
+                {t('landingPageForm.selectDate')}
             </Typography>
-            <button
-                className="selected-dates"
-                onClick={() => setShowCalendar(prev => !prev)}
-            >
-                {startDate === null && <div className="DateValue">{i18n.t("landingPageForm.checkIn")}</div>}
-                {startDate && (
-                    <div className="DateValue">{startDate.toDateString()}</div>
-                )}
+            <button className="selected-dates" onClick={() => setShowCalendar(prev => !prev)}>
+                {startDate === null && <div className="DateValue">{t('landingPageForm.checkIn')}</div>}
+                {startDate && <div className="DateValue">{startDate.toDateString()}</div>}
                 <ArrowForwardIcon />
-                {endDate === null && <div className="DateValue">{i18n.t("landingPageForm.checkOut")}</div>}
+                {endDate === null && <div className="DateValue">{t('landingPageForm.checkOut')}</div>}
                 {endDate && <div className="DateValue">{endDate.toDateString()}</div>}
                 <CalendarMonthIcon />
             </button>
@@ -153,13 +129,12 @@ export function DatePicker() {
                             />
                         </div>
                         <div className="calendarBottom-box">
-                            <button onClick={handelApplyButtonClick} className={`apply-dates-btn ${startDate && endDate ? "apply-dates-btn-active" : "apply-dates-btn-disabled"}`} disabled={!startDate && !endDate}>Apply Dates</button>
-                            <span className={`${startDate && endDate ? "rate-label" : "warning-label"}`}>{message}</span>
+                            <button onClick={handelApplyButtonClick} className={`apply-dates-btn ${startDate && endDate ? 'apply-dates-btn-active' : 'apply-dates-btn-disabled'}`} disabled={!startDate && !endDate}>Apply Dates</button>
+                            <span className={`${startDate && endDate ? 'rate-label' : 'warning-label'}`}>{message}</span>
                         </div>
                     </div>
-                )
-                }
-            </div >
-        </div >
+                )}
+            </div>
+        </div>
     );
-} 
+}
