@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import Spinner from '../components/Spinner';
 import toast, { Toaster } from 'react-hot-toast';
+import { ConfigError } from '../constants/errorContants';
 
 // Styled component for the landing page container div
 const LandingPageContainer = styled.div<{ $backgroundImageUrl: string; }>`
@@ -24,18 +25,17 @@ const LandingPageContainer = styled.div<{ $backgroundImageUrl: string; }>`
 
 const LandingPage: React.FC = () => {
   const bannerImageUrl = useSelector((state: RootState) => state.propertyConfig.property.bannerImageUrl);
-  const loading = useSelector((state: RootState) => state.propertyConfig.status)
+  const loading = useSelector((state: RootState) => state.propertyConfig.status);
 
   useEffect(() => {
     if (loading === "error") {
-      toast.error("Something went wrong")
+      throw new Error(ConfigError)
     }
   }, [loading])
 
   return (
     loading === "loading" ? <Spinner size={100} /> :
       <LandingPageContainer $backgroundImageUrl={bannerImageUrl}>
-        <Toaster />
         <SearchForm />
       </LandingPageContainer>
   );
