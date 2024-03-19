@@ -1,0 +1,7 @@
+.step-active .MuiStepLabel-root {
+    color: red !important; /* Current step color */
+   }
+   
+   .step-completed .MuiStepLabel-root {
+    color: blue !important; /* Previous steps color */
+   }

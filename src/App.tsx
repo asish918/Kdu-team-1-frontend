@@ -6,6 +6,7 @@ import { fetchPropertyConfig } from "./redux/thunks/fetchPropertyConfig";
 import { fetchPropertyList } from "./redux/thunks/fetchPropertyList";
 import { fetchCalendarDates } from "./redux/thunks/fetchCalendarDates";
 import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   const dispatch: AppDispatch = useDispatch();
@@ -18,7 +19,7 @@ function App() {
   }, [])
 
   return (
-    <LandingPage />
+    <SearchPage/>
   );
 }
 

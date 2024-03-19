@@ -9,7 +9,7 @@ import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
 import { setNumberOfRooms } from '../../redux/reducers/landingPageReducer';
 
-const NumberOfRooms: React.FC = () => {
+const NumberOfRooms: React.FC = ({}) => {
   const numberOfRooms = useSelector((state: RootState) => state.landingPage.numberOfRooms);
   const dispatch = useDispatch();
 
