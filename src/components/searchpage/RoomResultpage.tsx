@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import Banner from './Banner'; 
 import Stepper from './Stepper'; 
 import SearchForm from './Searchbox'; 
+import RoomResultsPanel from './Roompanel';
+
 
 // Define the type for the onSearch function
 interface RoomResultsPageProps {
@@ -21,7 +23,7 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
       <Banner imageUrl="https://picsum.photos/200/200" />
       <Stepper  />
       <SearchForm onSearch={handleSearch} />
-      
+      <RoomResultsPanel/>     
     </div>
  );
 }
