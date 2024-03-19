@@ -24,12 +24,11 @@ export default defineConfig(({ mode }) => {
       environment: 'jsdom',
       setupFiles: './src/test/setup.ts',
       css: true,
-    },
-
-    // plugins: [react()],
-
-    build: {
-      // sourcemap: true
+      coverage: {
+        enabled: true,
+        provider: "v8",
+        reporter: ['text', 'json', 'html']
+      }
     },
   };
 });
