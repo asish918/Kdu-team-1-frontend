@@ -32,3 +32,4 @@ bun.lockb
 .env.sentry-build-plugin
 *.lockb
 package-lock.json
+coverage
