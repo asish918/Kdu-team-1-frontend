@@ -8,17 +8,27 @@ const RoomCardsContainer = styled.div`
  display: flex;
  flex-wrap: wrap;
  justify-content: space-between;
- gap: 10px; /* Adjust the gap between cards */
+ gap: 10px;
 `;
 
 const RoomCardWrapper = styled.div`
- flex: 0 0 calc(25% - 10px); /* Adjust the width of the cards and account for the gap */
- margin-bottom: 20px; /* Space between rows */
+ flex: 0 0 calc(33.33% - 10px); 
+ margin-bottom: 20px; 
 `;
 
 const RoomResultsPanel: React.FC = () => {
  // Example room data
  const rooms = [
+    {
+      title: 'Deluxe Room',
+      images: [hotelImage1, hotelImage2],
+      ratings: 4.5,
+      reviews: ['Great room!', 'Clean and comfortable.'],
+      location: 'Building A, Floor 2',
+      roomDetails: { size: 500, beds: 2, occupancy: 4 },
+      deals: ['Free Wi-Fi', 'Complimentary breakfast'],
+      averagePrice: 150,
+    },
     {
       title: 'Deluxe Room',
       images: [hotelImage1, hotelImage2],

@@ -3,9 +3,8 @@ import Banner from './Banner';
 import Stepper from './Stepper'; 
 import SearchForm from './Searchbox'; 
 import RoomResultsPanel from './Roompanel';
+import AccordionWithCheckboxes from './Roomfilter';
 
-
-// Define the type for the onSearch function
 interface RoomResultsPageProps {
  onSearch: (params: { dateRange: Date[]; beds: number }) => void;
 }
@@ -21,9 +20,17 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
  return (
     <div>
       <Banner imageUrl="https://picsum.photos/200/200" />
-      <Stepper  />
+      <Stepper />
       <SearchForm onSearch={handleSearch} />
-      <RoomResultsPanel/>     
+      <div style={{ display: 'flex', flexDirection: 'row' }}> {/* Wrap AccordionWithCheckboxes and RoomResultsPanel in a flex container */}
+        <div style={{ flex: '0 0 20%', overflow: 'auto' }}> {/* 20% width for AccordionWithCheckboxes */}
+          <AccordionWithCheckboxes />
+        </div>
+        <div style={{ flex: '0 0 80%', overflow: 'auto' }}> {/* 80% width for RoomResultsPanel */}
+          <RoomResultsPanel />
+        </div>
+      </div>
+      
     </div>
  );
 }
