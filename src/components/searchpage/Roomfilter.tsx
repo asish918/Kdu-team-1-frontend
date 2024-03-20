@@ -10,17 +10,23 @@ import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
+
 const Accordion = styled((props: AccordionProps) => (
  <MuiAccordion disableGutters elevation={0} square {...props} />
 ))(({ theme }) => ({
  border: `1px solid ${theme.palette.divider}`,
+ borderTop: 'none', 
+ borderRight: 'none',
+ borderLeft:'none', 
  '&:not(:last-child)': {
-    borderBottom: 0,
+    
+    borderBottom: `1px solid ${theme.palette.divider}`,
  },
  '&::before': {
     display: 'none',
  },
 }));
+
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
  <MuiAccordionSummary
@@ -32,7 +38,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     theme.palette.mode === 'dark'
       ? 'rgba(255, 255, 255, .05)'
       : 'rgba(0, 0, 0, .03)',
- flexDirection: 'row', // Ensures the expand icon is after the text
+ flexDirection: 'row', 
  '& .MuiAccordionSummary-expandIconWrapper.Mui-expanded': {
     transform: 'rotate(90deg)',
  },
@@ -40,6 +46,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     marginLeft: theme.spacing(1),
  },
 }));
+
 
 const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
  padding: theme.spacing(2),
@@ -64,43 +71,48 @@ export default function CustomizedAccordions() {
  };
 
  return (
-    <div style={{ padding: '10px' }}> 
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Filter name</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.panel1} onChange={handleCheckboxChange('panel1')} />}
-            label="option-1"
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Filter name</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2} onChange={handleCheckboxChange('panel2')} />}
-            label="option-1"
-          />
-        </AccordionDetails>
-      </Accordion>
-      <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Filter name</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.panel3} onChange={handleCheckboxChange('panel3')} />}
-            label="option-1"
-          />
-        </AccordionDetails>
-      </Accordion>
-    </div>
+  <div style={{ padding: '10px', border: '1px solid #ccc', backgroundColor: '#f7f7f7', marginTop: '20px', marginLeft: '20px' }}> {/* Added marginTop and marginLeft */}
+  <Typography variant="h6" gutterBottom sx={{ marginLeft: '23px' }}>
+   Narrow your results
+  </Typography>
+  <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
+    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+      <Typography>Filter name</Typography>
+    </AccordionSummary>
+    <AccordionDetails>
+      <FormControlLabel
+        control={<Checkbox checked={checkedState.panel1} onChange={handleCheckboxChange('panel1')} />}
+        label="option-1"
+      />
+    </AccordionDetails>
+  </Accordion>
+  <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
+    <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+      <Typography>Filter name</Typography>
+    </AccordionSummary>
+    <AccordionDetails>
+      <FormControlLabel
+        control={<Checkbox checked={checkedState.panel2} onChange={handleCheckboxChange('panel2')} />}
+        label="option-1"
+      />
+    </AccordionDetails>
+  </Accordion>
+  <Accordion expanded={expanded === 'panel3'} onChange={handleChange('panel3')}>
+    <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
+      <Typography>Filter name</Typography>
+    </AccordionSummary>
+    <AccordionDetails>
+      <FormControlLabel
+        control={<Checkbox checked={checkedState.panel3} onChange={handleCheckboxChange('panel3')} />}
+        label="option-1"
+      />
+    </AccordionDetails>
+  </Accordion>
+</div>
  );
 }
+
+
 
 
 
