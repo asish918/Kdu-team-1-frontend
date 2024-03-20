@@ -22,7 +22,8 @@ export const StyledButton = styled(Button)`
 export const StyledBox = styled(Box)`
   max-width: 450px;
   margin: 10px 25px 0px 25px;
-  padding: 10px;
+  padding-block: 20px;
+  padding-inline: 10px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 1px;

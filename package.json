@@ -34,6 +34,7 @@
     "@mui/styled-engine-sc": "^6.0.0-alpha.17",
     "@reduxjs/toolkit": "^2.2.1",
     "@sentry/vite-plugin": "^2.14.2",
+    "aws-amplify": "^6.0.21",
     "axios": "^1.6.7",
     "date-fns": "^3.4.0",
     "env-cmd": "^10.1.0",
