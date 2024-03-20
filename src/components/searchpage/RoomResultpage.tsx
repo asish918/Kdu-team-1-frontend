@@ -4,6 +4,7 @@ import Stepper from './Stepper';
 import SearchForm from './Searchbox'; 
 import RoomResultsPanel from './Roompanel';
 
+
 // Define the type for the onSearch function
 interface RoomResultsPageProps {
  onSearch: (params: { dateRange: Date[]; beds: number }) => void;

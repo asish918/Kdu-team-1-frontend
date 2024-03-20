@@ -4,6 +4,7 @@ import 'react-multi-carousel/lib/styles.css';
 import styled from 'styled-components';
 import { Card, CardContent, Typography, Button, CardActions, IconButton, Avatar, Collapse, Box } from '@mui/material';
 import { Favorite as FavoriteIcon, Share as ShareIcon, ExpandMore as ExpandMoreIcon, MoreVert as MoreVertIcon } from '@mui/icons-material';
+import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } from '@mui/icons-material';
 
 // Define styled components
 const RoomCardContainer = styled(Card)`
@@ -20,6 +21,13 @@ const StyledImage = styled.img`
  height: auto;
  object-fit: cover;
  border-radius: 5px;
+`;
+
+// Styled component for aligning icon and text
+const IconTextContainer = styled.div`
+ display: flex;
+ align-items: center;
+ margin-bottom: 8px;
 `;
 
 interface RoomCardProps {
@@ -100,37 +108,48 @@ const RoomCard: React.FC<RoomCardProps> = ({
         </Carousel>
       </CarouselContainer>
       <CardContent>
-        <Typography variant="h5" component="div">
-          {title}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Location: {location}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Size: {roomDetails.size} sq.ft.
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Beds: {roomDetails.beds}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Occupancy: {roomDetails.occupancy}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Average Price: ${averagePrice}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Ratings: {ratings}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Reviews: {reviews.join(', ')}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          Deals: {deals.join(', ')}
-        </Typography>
-        <Button variant="contained" color="primary" onClick={() => setShowModal(true)}>
-          Select Room
-        </Button>
-      </CardContent>
+          
+          <Typography variant="h6" component="div">
+            {title}
+          </Typography>
+          
+          <IconTextContainer>
+            <LocationIcon fontSize="small" sx={{ marginRight: 1, color: 'grey' }} />
+            <Typography variant="body1" color="text.secondary">
+              {location}
+            </Typography>
+          </IconTextContainer>
+          <Typography variant="body1" color="text.secondary">
+            Size: {roomDetails.size} sq.ft.
+          </Typography>
+          <IconTextContainer>
+            <BedIcon fontSize="small" sx={{ marginRight: 1, color: 'grey' }} />
+            <Typography variant="body1" color="text.secondary">
+              {roomDetails.beds}
+            </Typography>
+          </IconTextContainer>
+          <IconTextContainer>
+            <OccupancyIcon fontSize="small" sx={{ marginRight: 1, color: 'grey' }} />
+            <Typography variant="body1" color="text.secondary">
+              {roomDetails.occupancy}
+            </Typography>
+          </IconTextContainer>
+          <Typography variant="body1" color="text.secondary">
+            Average Price: ${averagePrice}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Ratings: {ratings}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Reviews: {reviews.length}
+          </Typography>
+          <Typography variant="body1" color="text.secondary">
+            Deals: {deals.join(', ')}
+          </Typography>
+          <Button variant="contained" color="primary" onClick={() => setShowModal(true)}>
+            Select Room
+          </Button>
+        </CardContent>
       <CardActions disableSpacing>
         <IconButton aria-label="add to favorites">
           <FavoriteIcon />
@@ -156,5 +175,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
 };
 
 export default RoomCard;
+
+
 
 
