@@ -22,8 +22,8 @@ export const StyledButton = styled(Button)`
 export const StyledBox = styled(Box)`
   max-width: 450px;
   margin: 10px 25px 0px 25px;
-  padding-block: 20px;
-  padding-inline: 10px;
+  padding-block: 30px;
+  padding-inline: 20px;
   border: 1px solid #ddd;
   border-radius: 5px;
   box-shadow: 1px;
@@ -46,10 +46,42 @@ export const FlexContainer = styled.div`
 
 export const GuestsContainer = styled.div`
   width: 70%;
+
+   .MuiInputLabel-root {
+    font-size: 1.2rem;
+    color: black;
+    position: inherit;
+    margin-bottom: -10px;
+    margin-left: -10px;
+  }
+
+  .MuiOutlinedInput-root {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
 `;
 
 export const RoomsContainer = styled.div`
   width: 30%;
+
+  .MuiInputLabel-root {
+    font-size: 1.2rem;
+    color: black;
+    position: inherit;
+    margin-bottom: -10px;
+    margin-left: -10px;
+  }
+
+  .MuiOutlinedInput-root {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
 `;
 
 export const CenteredContainer = styled.div`

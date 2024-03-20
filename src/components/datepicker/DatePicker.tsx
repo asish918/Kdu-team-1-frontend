@@ -6,12 +6,13 @@ import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 import { parseDateString } from '../../utils/util';
 import { DateList, ExchangeRateData } from '../../types';
-import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/store';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
 import { formatCurrency } from '../../utils/i18next';
 import "./Calendar.css";
 import "./DatePickerStyles.css";
+import { setEndDatePick, setStartDatePick } from '../../redux/reducers/searchFormReducer';
 
 type ValuePiece = Date;
 type Value = ValuePiece | [ValuePiece, ValuePiece] | null;
@@ -26,6 +27,7 @@ export function DatePicker() {
     const [message, setMessage] = useState<string>('');
 
     const { t, i18n } = useTranslation();
+    const dispatch: AppDispatch = useDispatch();
 
     const roomPrices: DateList[] = useSelector((state: RootState) => state.calendar.dateList);
     const maxLengthStay: number = useSelector((state: RootState) => state.propertyConfig.property.maxLengthStay);
@@ -36,11 +38,13 @@ export function DatePicker() {
         if (!startDate) {
             setMessage(`Please select end date. Max. length of stay: ${maxLengthStay} day(s)`);
             setStartDate(date);
+            dispatch(setStartDatePick(date));
             setEndDate(null);
             setMaxDate(addDays(date, maxLengthStay));
             setMinDate(date);
         } else if (!endDate && !isBefore(date, startDate)) {
             setEndDate(date);
+            dispatch(setEndDatePick(date));
             setMaxDate(null);
             setMinDate(null);
             setMessage('Minimum nightly rate over stay is $50');

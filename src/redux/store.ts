@@ -6,6 +6,7 @@ import propertyListReducer from "./reducers/propertyListReducer";
 import calendarReducer from "./reducers/calendarReducer";
 import intelReducer from "./reducers/intelReducer";
 import landingPageReducer from "./reducers/landingPageReducer";
+import searchFormReducer from "./reducers/searchFormReducer";
 
 export const store = configureStore({
   reducer: {
@@ -14,7 +15,8 @@ export const store = configureStore({
     propertyList: propertyListReducer,
     calendar: calendarReducer,
     intel: intelReducer,
-    landingPage: landingPageReducer
+    landingPage: landingPageReducer,
+    searchForm: searchFormReducer
   },
 });
 
