@@ -1,5 +1,5 @@
 import LandingPage from "./pages/LandingPage";
-import { AppDispatch } from "./redux/store";
+import { AppDispatch, store } from "./redux/store";
 import { useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { fetchPropertyConfig } from "./redux/thunks/fetchPropertyConfig";
@@ -7,19 +7,22 @@ import { fetchPropertyList } from "./redux/thunks/fetchPropertyList";
 import { fetchCalendarDates } from "./redux/thunks/fetchCalendarDates";
 import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
 import SearchPage from "./pages/SearchPage";
+import AppProvider from "./providers/AppProvider";
 
 function App() {
-  const dispatch: AppDispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchPropertyConfig());
-    dispatch(fetchPropertyList());
-    dispatch(fetchCalendarDates());
-    dispatch(fetchExchangeRates());
+    store.dispatch(fetchPropertyConfig());
+    store.dispatch(fetchPropertyList());
+    store.dispatch(fetchCalendarDates());
+    store.dispatch(fetchExchangeRates());
   }, [])
 
   return (
-    <SearchPage/>
+    <AppProvider>
+      <SearchPage />
+      <LandingPage />
+    </AppProvider>
   );
 }
 

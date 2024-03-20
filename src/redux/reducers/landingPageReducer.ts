@@ -9,7 +9,7 @@ interface LandingPageState {
 
 const initialState: LandingPageState = {
     adults: 1,
-    propertyName: "",
+    propertyName: "Team 1 Hotel",
     numberOfRooms: 1,
     totalGuests: 1,
 };

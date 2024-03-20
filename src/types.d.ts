@@ -76,3 +76,8 @@ export type ExchangeRateData = {
     [key in Currency]: number;
   };
 }
+
+export type SearchFieldParams = {
+  startDate?: Date,
+  endDate?: Date,
+}

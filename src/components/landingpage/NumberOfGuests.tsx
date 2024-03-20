@@ -10,6 +10,7 @@ import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
 import { setAdults, setTotalGuests } from '../../redux/reducers/landingPageReducer';
 import { GuestType } from '../../utils/enums';
+import { generateDescription } from '../../utils/util';
 
 
 const NumberOfGuests: React.FC = () => {
@@ -81,7 +82,7 @@ const NumberOfGuests: React.FC = () => {
           open={selectOpen}
           onOpen={handleSelectOpen}
           onClose={handleSelectClose}
-          renderValue={(value) => `Guests: ${value}`}
+          renderValue={() => generateDescription(adults, kids, teens)}
         >
           {hotelProperty.guests.adults && (
             <MenuItem disableRipple value={GuestType.adult}>

@@ -9,6 +9,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
 import { setActiveCurrency } from "../../redux/reducers/intelReducer";
 import { Currency } from "../../utils/enums";
+
 import {
   Button,
   Drawer,
@@ -16,6 +17,7 @@ import {
   Select,
   SelectChangeEvent,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -50,6 +52,7 @@ const StyledHeaderLogo = styled.img`
   height: 100%;
   width: 90px;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 const StyledH2 = styled.h2`
@@ -95,6 +98,7 @@ const MobileMenuButton = styled(Button)`
 const DesktopActions = styled.div`
   display: flex;
   align-items: center;
+  gap: 40px;
 
   @media (max-width: 570px) {
     display: none;
@@ -120,13 +124,19 @@ const BookingButton = styled(Button)`
   &.MuiButtonBase-root {
     font-size: 1.2rem;
     font-weight: 500;
+    letter-spacing: -0.5px;
   }
 
   @media (max-width: 570px) {
-    &.MuiButtonBase-root {;
+    &.MuiButtonBase-root {
       margin-top: 20px;
     }
   }
+`;
+
+const LanguageContainer = styled.div`
+  display: flex;
+  align-items: center;
 `
 
 // Header component
@@ -135,6 +145,8 @@ const Header: React.FC = () => {
   const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const [open, setOpen] = React.useState(false);
+
+  const navigate = useNavigate();
 
   const toggleDrawer = (newOpen: boolean) => () => {
     setOpen(newOpen);
@@ -155,28 +167,33 @@ const Header: React.FC = () => {
     i18n.changeLanguage(language);
   };
 
+  const handleAuth = () => {
+    navigate("/login");
+  }
+
   return (
     <HeaderContainer>
       <Info>
         <Heading>
-          {/* <StyledH1>{i18n.t("header.title")} </StyledH1> */}
-          <StyledHeaderLogo src={hotelProperties.siteLogoUrl} />
+          <StyledHeaderLogo onClick={() => navigate("/")} src={hotelProperties.siteLogoUrl} />
           <StyledH2>{i18n.t("header.subtitle")}</StyledH2>
         </Heading>
       </Info>
       <NavbarActions>
         <DesktopActions>
           <BookingButton>{i18n.t("header.myBookings")}</BookingButton>
-          <StyledLanguageIcon fontSize="small" />
 
-          <StyledSelect
-            value={selectedLanguage}
-            onChange={handleLanguageChange}
-          >
-            <MenuItem value="en">En</MenuItem>
-            <MenuItem value="fr">Fr</MenuItem>
-            <MenuItem value="hn">Hn</MenuItem>
-          </StyledSelect>
+          <LanguageContainer>
+            <StyledLanguageIcon fontSize="small" />
+            <StyledSelect
+              value={selectedLanguage}
+              onChange={handleLanguageChange}
+            >
+              <MenuItem value="en">En</MenuItem>
+              <MenuItem value="fr">Fr</MenuItem>
+              <MenuItem value="hn">Hn</MenuItem>
+            </StyledSelect>
+          </LanguageContainer>
 
           <StyledSelect value={activeCurrency} onChange={handleCurrencyChange}>
             <MenuItem value={Currency.INR}>₹ INR</MenuItem>
@@ -186,9 +203,7 @@ const Header: React.FC = () => {
 
           <Button
             sx={{ width: 100 }}
-            onClick={() =>
-              isLoggedIn ? dispatch(logout()) : dispatch(login())
-            }
+            onClick={handleAuth}
             variant="contained"
           >
             {isLoggedIn ? t("header.logout") : t("header.login")}
@@ -223,9 +238,7 @@ const Header: React.FC = () => {
           </MobileContainer>
 
           <Button
-            onClick={() =>
-              isLoggedIn ? dispatch(logout()) : dispatch(login())
-            }
+            onClick={handleAuth}
             variant="contained"
           >
             {isLoggedIn ? t("header.logout") : t("header.login")}
