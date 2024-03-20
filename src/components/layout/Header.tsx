@@ -21,10 +21,13 @@ const HeaderContainer = styled.header`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 20px;
+  padding-inline: 20px;
   background-color: white;
   color: ${(props) => props.theme.colors.primaryDeepBlue};
-  position: sticky;
+
+  @media (max-width: 570px) {
+    padding-block: 20px;
+  }
 `;
 
 const Info = styled.div`
@@ -43,23 +46,17 @@ const Heading = styled.div`
   height: 100%;
 `;
 
-const StyledH1 = styled.h1`
+const StyledHeaderLogo = styled.img`
+  height: 100%;
+  width: 90px;
   margin-right: 10px;
 `;
 
 const StyledH2 = styled.h2`
   margin: 5px 0;
   font-size: 18px;
-  margin-top: 12px;
+  margin-top: 6px;
   color: ${(props) => props.theme.colors.primaryNavyBlue};
-`;
-
-const StyledH3 = styled.h3`
-  margin-right: 10px;
-  text-align: center;
-  @media (max-width: 570px) {
-    margin-top: 50px;
-  }
 `;
 
 const StyledSelect = styled(Select)`
@@ -82,12 +79,16 @@ const StyledLanguageIcon = styled(LanguageIcon)`
 `;
 
 const MobileMenuButton = styled(Button)`
-  display: none;
+  &.MuiButtonBase-root {
+    display: none;
+  }
 
   @media (max-width: 570px) {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
+     &.MuiButtonBase-root {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+    }
   }
 `;
 
@@ -115,6 +116,19 @@ const MobileDrawer = styled(Drawer)`
   }
 `;
 
+const BookingButton = styled(Button)`
+  &.MuiButtonBase-root {
+    font-size: 1.2rem;
+    font-weight: 500;
+  }
+
+  @media (max-width: 570px) {
+    &.MuiButtonBase-root {;
+      margin-top: 20px;
+    }
+  }
+`
+
 // Header component
 const Header: React.FC = () => {
   const dispatch: AppDispatch = useDispatch();
@@ -129,9 +143,10 @@ const Header: React.FC = () => {
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
   const activeCurrency = useSelector((state: RootState) => state.intel.activeCurrency)
+  const hotelProperties = useSelector((state: RootState) => state.propertyConfig.property)
 
-  const handleCurrencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    dispatch(setActiveCurrency(e.target.value));
+  const handleCurrencyChange = (e: SelectChangeEvent<unknown>) => {
+    dispatch(setActiveCurrency(e.target.value as string));
   };
 
   const handleLanguageChange = (event: SelectChangeEvent<unknown>) => {
@@ -144,13 +159,14 @@ const Header: React.FC = () => {
     <HeaderContainer>
       <Info>
         <Heading>
-          <StyledH1>{i18n.t("header.title")} </StyledH1>
+          {/* <StyledH1>{i18n.t("header.title")} </StyledH1> */}
+          <StyledHeaderLogo src={hotelProperties.siteLogoUrl} />
           <StyledH2>{i18n.t("header.subtitle")}</StyledH2>
         </Heading>
       </Info>
       <NavbarActions>
         <DesktopActions>
-          <StyledH3>{i18n.t("header.myBookings")}</StyledH3>
+          <BookingButton>{i18n.t("header.myBookings")}</BookingButton>
           <StyledLanguageIcon fontSize="small" />
 
           <StyledSelect
@@ -184,7 +200,7 @@ const Header: React.FC = () => {
         </MobileMenuButton>
 
         <MobileDrawer open={open} anchor="right" onClose={toggleDrawer(false)}>
-          <StyledH3>{i18n.t("header.myBookings")}</StyledH3>
+          <BookingButton>{i18n.t("header.myBookings")}</BookingButton>
 
           <MobileContainer>
             <StyledLanguageIcon fontSize="small" />

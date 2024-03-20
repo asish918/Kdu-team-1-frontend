@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 // Styled components for the footer
 const FooterContainer = styled.footer`
   background-color: ${(props) => props.theme.colors.primaryDeepBlue};
-  padding: 15px;
+  padding-inline: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -14,10 +14,8 @@ const FooterContainer = styled.footer`
   left: 0;
   width: 100%;
   color: white;
-
-  @media (max-width: 450px) {
-    position: sticky;
-  }
+  position: sticky;
+  padding-block: 5px;
 `;
 
 const CompanyTitle = styled.div`
