@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { Card, CardContent, Typography, Button, CardActions, IconButton, Avatar, Collapse, Box } from '@mui/material';
 import { Favorite as FavoriteIcon, Share as ShareIcon, ExpandMore as ExpandMoreIcon, MoreVert as MoreVertIcon } from '@mui/icons-material';
 import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } from '@mui/icons-material';
+import StarIcon from '@mui/icons-material/Star';
 
 // Define styled components
 const RoomCardContainer = styled(Card)`
@@ -13,7 +14,7 @@ const RoomCardContainer = styled(Card)`
 `;
 
 const CarouselContainer = styled.div`
- margin-bottom: 20px;
+ margin-bottom: 0px;
 `;
 
 const StyledImage = styled.img`
@@ -23,7 +24,7 @@ const StyledImage = styled.img`
  border-radius: 5px;
 `;
 
-// Styled component for aligning icon and text
+
 const IconTextContainer = styled.div`
  display: flex;
  align-items: center;
@@ -108,10 +109,23 @@ const RoomCard: React.FC<RoomCardProps> = ({
         </Carousel>
       </CarouselContainer>
       <CardContent>
-          
-          <Typography variant="h6" component="div">
-            {title}
-          </Typography>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+ <Typography variant="h6" component="div" sx={{ marginTop: '0px', marginLeft:'5px' }}>
+    {title}
+ </Typography>
+ <div style={{ marginLeft: 'auto' }}>
+    <IconTextContainer>
+      <StarIcon fontSize="small" sx={{ marginRight: 1, color: '#26266d',marginTop: '26px' }} />
+      <Typography variant="body1" color="text.secondary" sx={{ marginTop: '26px' }}>
+        {ratings}
+      </Typography>
+    </IconTextContainer>
+    <Typography variant="body1" color="text.secondary">
+      {reviews.length} reviews
+    </Typography>
+ </div>
+</div>
+    
           
           <IconTextContainer>
             <LocationIcon fontSize="small" sx={{ marginRight: 1, color: 'grey' }} />
@@ -119,8 +133,8 @@ const RoomCard: React.FC<RoomCardProps> = ({
               {location}
             </Typography>
           </IconTextContainer>
-          <Typography variant="body1" color="text.secondary">
-            Size: {roomDetails.size} sq.ft.
+          <Typography variant="body1" color="text.secondary" sx={{ marginLeft: '2px'}}>
+            Inclusive {roomDetails.size} ft.
           </Typography>
           <IconTextContainer>
             <BedIcon fontSize="small" sx={{ marginRight: 1, color: 'grey' }} />
@@ -134,14 +148,11 @@ const RoomCard: React.FC<RoomCardProps> = ({
               {roomDetails.occupancy}
             </Typography>
           </IconTextContainer>
-          <Typography variant="body1" color="text.secondary">
-            Average Price: ${averagePrice}
+          <Typography variant="body1" color="text.secondary" sx={{ fontWeight: 'bold', color: 'black' }}>
+           ${averagePrice}
           </Typography>
           <Typography variant="body1" color="text.secondary">
-            Ratings: {ratings}
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Reviews: {reviews.length}
+           per night
           </Typography>
           <Typography variant="body1" color="text.secondary">
             Deals: {deals.join(', ')}
