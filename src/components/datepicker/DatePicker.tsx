@@ -13,9 +13,16 @@ import { formatCurrency } from '../../utils/i18next';
 import "./Calendar.css";
 import "./DatePickerStyles.css";
 import { setEndDatePick, setStartDatePick } from '../../redux/reducers/searchFormReducer';
+import DateToggle from './DateToggle';
+import styled from 'styled-components';
 
 type ValuePiece = Date;
 type Value = ValuePiece | [ValuePiece, ValuePiece] | null;
+
+const DateContainer = styled.div`
+      position: absolute;
+  top: 80px;
+`
 
 export function DatePicker() {
     const [value, setValue] = useState<Value>(new Date());
@@ -101,7 +108,8 @@ export function DatePicker() {
 
     return (
         <div className="datePickerContainer">
-            <Typography variant="subtitle1" gutterBottom component="div" className="date-dropdown-label">
+            <DateToggle startDate={startDate} endDate={endDate} calendarToggle={setShowCalendar} />
+            {/* <Typography variant="subtitle1" gutterBottom component="div" className="date-dropdown-label">
                 {t('landingPageForm.selectDate')}
             </Typography>
             <button className="selected-dates" onClick={() => setShowCalendar(prev => !prev)}>
@@ -111,8 +119,9 @@ export function DatePicker() {
                 {endDate === null && <div className="DateValue">{t('landingPageForm.checkOut')}</div>}
                 {endDate && <div className="DateValue">{endDate.toDateString()}</div>}
                 <CalendarMonthIcon />
-            </button>
-            <div className="dateSelectorContainer">
+            </button> */}
+            {/* <div className="dateSelectorContainer"> */}
+                <DateContainer className='dateSelectorContainer'>
                 {showCalendar && (
                     <div className="CalendarContainer">
                         <div className="Calendar-box">
@@ -138,7 +147,8 @@ export function DatePicker() {
                         </div>
                     </div>
                 )}
-            </div>
+            {/* </div> */}
+            </DateContainer>
         </div>
     );
 }

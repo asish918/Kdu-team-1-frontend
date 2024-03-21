@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SearchForm from '../components/landingpage/SearchForm';
 import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
+import Footer from '../components/layout/Footer';
 
 
 // Styled component for the landing page container div
@@ -24,9 +25,12 @@ const LandingPageContainer = styled.div<{ $backgroundImageUrl: string; }>`
 const LandingPage: React.FC = () => {
   const bannerImageUrl = useSelector((state: RootState) => state.propertyConfig.property.bannerImageUrl);
   return (
-    <LandingPageContainer $backgroundImageUrl={bannerImageUrl}>
-      <SearchForm />
-    </LandingPageContainer>
+    <>
+      <LandingPageContainer $backgroundImageUrl={bannerImageUrl}>
+        <SearchForm />
+      </LandingPageContainer>
+      <Footer sticky={true} />
+    </>
   );
 };
 

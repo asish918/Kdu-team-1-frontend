@@ -44,15 +44,30 @@ export const FlexContainer = styled.div`
   gap: 2px;
 `;
 
-export const GuestsContainer = styled.div`
-  width: 70%;
+export const GuestsContainer = styled.div<{ $step: number }>`
+  width: ${props => props.$step === 0 ? "70%" : "100%"};
 
-   .MuiInputLabel-root {
+   /* .MuiInputLabel-root {
     font-size: 1.2rem;
     color: black;
     position: inherit;
     margin-bottom: -10px;
     margin-left: -10px;
+  } */
+
+   .MuiInputLabel-root {
+    font-size: 1.2rem;
+    color: black;
+    position: ${props => props.$step === 0 ? "inherit" : "absolute"};
+    top: ${props => props.$step === 0 ? "0" : "25px"};
+    left:${props => props.$step === 0 ? "0" : "8px"};
+    margin-bottom: ${props => props.$step === 0 ? "-10px" : "10px"} ;
+    margin-left: -10px;
+  }
+
+  .MuiInputBase-input {
+    padding-left: ${props => props.$step === 0 ? "14px" : "10px"};
+    padding-top: ${props => props.$step === 0 ? "16.5px" : "40px"};
   }
 
   .MuiOutlinedInput-root {
@@ -64,15 +79,34 @@ export const GuestsContainer = styled.div`
   }
 `;
 
-export const RoomsContainer = styled.div`
+export const RoomsContainer = styled.div<{ $step: number; }>`
+  @media (max-width: 570px) {
+    width: 100%;
+  }
+
   width: 30%;
 
-  .MuiInputLabel-root {
+  /* .MuiInputLabel-root {
     font-size: 1.2rem;
     color: black;
     position: inherit;
     margin-bottom: -10px;
     margin-left: -10px;
+  } */
+
+  .MuiInputLabel-root {
+    font-size: 1.2rem;
+    color: black;
+    position: ${props => props.$step === 0 ? "inherit" : "absolute"};
+    top: ${props => props.$step === 0 ? "0" : "25px"};
+    left:${props => props.$step === 0 ? "0" : "8px"};
+    margin-bottom: ${props => props.$step === 0 ? "-10px" : "10px"} ;
+    margin-left: -10px;
+  }
+
+  .MuiInputBase-input {
+    padding-left: ${props => props.$step === 0 ? "14px" : "10px"};
+    padding-top: ${props => props.$step === 0 ? "16.5px" : "40px"};
   }
 
   .MuiOutlinedInput-root {

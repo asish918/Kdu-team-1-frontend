@@ -4,41 +4,98 @@ import NumberOfGuests from '../landingpage/NumberOfGuests';
 import NumberOfRooms from '../landingpage/NumberOfRooms';
 import { DatePicker } from '../datepicker/DatePicker';
 import NumberOfBeds from './NumberOfBeds';
+import { GuestsContainer, RoomsContainer } from '../landingpage/styled-components';
+import styled from 'styled-components';
 
 interface SearchFormProps {
- onSearch: (params: { dateRange: Date[]; beds: number }) => void;
+  onSearch: (params: { dateRange: Date[]; beds: number }) => void;
 }
 
 function SearchForm({ onSearch }: SearchFormProps) {
- const [dateRange, setDateRange] = useState<Date[]>([new Date(), new Date()]);
- const [beds, setBeds] = useState<number>(1);
+  const [dateRange, setDateRange] = useState<Date[]>([new Date(), new Date()]);
+  const [beds, setBeds] = useState<number>(1);
 
- const handleSearch = () => {
+  const handleSearch = () => {
     onSearch({ dateRange, beds });
- };
+  };
 
- return (
-    <Box sx={{ display: 'flex', flexDirection: 'column', gap: 2, width: '100%', margin: '5px', padding : '8px' }}>
-      <Box display="flex" alignItems="center" justifyContent="space-between" width="100%" sx={{ gap: 4 } }>
-        <Box sx={{ height: '50px', width: '1250px', mt: 2, mb: 2 }}>
-          <NumberOfGuests/>
-        </Box>
-        <Box sx={{ height: '50px', width: '650px', mt: 2, mb: 2 }}>
-          <NumberOfRooms/>
-        </Box>
-        <Box sx={{ height: '50px', width: '650px', mt: 2, mb: 2 }}>
-          <NumberOfBeds/>
-        </Box>
-        <Box sx={{ height: '50px', width: '2650px', mt: 2, mb: 9 }}>
-          <DatePicker />
-        </Box>
-         <Box >
-          <Button variant="contained" onClick={handleSearch} sx={{ height: '50px', width: '120px',mb: 2,mt: 2 }}>Search</Button>
+  const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 5px;
+  padding: 8px;
+`;
 
-        </Box>
-      </Box>
-    </Box>
- );
+  const InnerContainer = styled.div`
+  display: flex;
+  align-items: center;
+  /* justify-content: space-between; */
+  width: 100%;
+  gap: 20px;
+
+  @media (max-width: 570px) {
+    flex-direction: column;
+  }
+`;
+
+  const ButtonStyled = styled(Button)`
+  height: 50px;
+  width: 120px;
+  margin-bottom: 2px;
+  margin-top: 2px;
+`;
+
+
+  const BedsContainer = styled.div`
+  width: 30%;
+    .MuiInputLabel-root {
+      font-size: 1.2rem;
+      color: black;
+      position: absolute;
+      top: 25px;
+      left: 8px;
+      margin-bottom: 10px;
+      margin-left: -10px;
+    }
+
+  .MuiInputBase-input {
+    padding-left: 10px;
+    padding-top: 40px;
+  }
+
+  .MuiOutlinedInput-root {
+    border: 1px solid ${props => props.theme.colors.lightGrey};
+  }
+
+  .MuiOutlinedInput-notchedOutline {
+    border: none;
+  }
+
+  @media (max-width: 570px) {
+    width: 100%;
+  }
+  `
+
+  return (
+    <Container>
+      <InnerContainer>
+        <GuestsContainer $step={1}>
+          <NumberOfGuests />
+        </GuestsContainer>
+        <RoomsContainer $step={1}>
+          <NumberOfRooms />
+        </RoomsContainer>
+        <BedsContainer>
+          <NumberOfBeds />
+        </BedsContainer>
+        <DatePicker step={1} />
+        <ButtonStyled variant="contained" onClick={handleSearch}>
+          Search
+        </ButtonStyled>
+      </InnerContainer>
+    </Container>
+  );
 }
 
 export default SearchForm;

@@ -3,18 +3,17 @@ import styled from "styled-components";
 import { useTranslation } from "react-i18next";
 
 // Styled components for the footer
-const FooterContainer = styled.footer`
+const FooterContainer = styled.footer<{ $sticky: boolean; }>`
   background-color: ${(props) => props.theme.colors.primaryDeepBlue};
   padding-inline: 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: sticky;
+  position: ${props => props.$sticky ? "sticky" : "inehrit"};
   bottom: 0;
   left: 0;
   width: 100%;
   color: white;
-  position: sticky;
   padding-block: 5px;
 `;
 
@@ -38,11 +37,15 @@ const LegalInfo = styled.div`
  
 `;
 
+interface FooterProps {
+  sticky: boolean
+}
+
 // Footer component
-const Footer: React.FC = () => {
+const Footer: React.FC<FooterProps> = ({ sticky }) => {
   const { t } = useTranslation();
   return (
-    <FooterContainer>
+    <FooterContainer $sticky={sticky}>
       <CompanyTitle>
         <h1>{t("footer.title")}</h1>
       </CompanyTitle>

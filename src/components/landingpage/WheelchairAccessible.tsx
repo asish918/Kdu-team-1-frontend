@@ -2,7 +2,11 @@ import AccessibleIcon from '@mui/icons-material/Accessible';
 import { useTranslation } from 'react-i18next';
 import { IconContainer, StyledCheckbox, StyledLabel } from './styled-components';
 
-const WheelchairAccessible: React.FC = () => {
+interface WheelchairAccessibleProps {
+  step: number;
+}
+
+const WheelchairAccessible: React.FC = ({ step }: WheelchairAccessibleProps) => {
   const { i18n } = useTranslation();
 
   return (
