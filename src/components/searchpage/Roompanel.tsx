@@ -42,7 +42,7 @@ const RoomResultsPanel: React.FC = () => {
       title: 'Deluxe Room',
       images: [hotelImage1, hotelImage2],
       ratings: 4.5,
-      reviews: ['Great room!', 'Clean and comfortable.'],
+      reviews: [],
       location: 'Building A, Floor 2',
       roomDetails: { size: 500, beds: 2, occupancy: 4 },
       deals: ['Free Wi-Fi', 'Complimentary breakfast'],

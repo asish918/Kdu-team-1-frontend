@@ -24,7 +24,6 @@ const StyledImage = styled.img`
  border-radius: 5px;
 `;
 
-
 const IconTextContainer = styled.div`
  display: flex;
  align-items: center;
@@ -109,22 +108,32 @@ const RoomCard: React.FC<RoomCardProps> = ({
         </Carousel>
       </CarouselContainer>
       <CardContent>
-      <div style={{ display: 'flex', alignItems: 'center' }}>
- <Typography variant="h6" component="div" sx={{ marginTop: '0px', marginLeft:'5px' }}>
-    {title}
- </Typography>
- <div style={{ marginLeft: 'auto' }}>
-    <IconTextContainer>
-      <StarIcon fontSize="small" sx={{ marginRight: 1, color: '#26266d',marginTop: '26px' }} />
-      <Typography variant="body1" color="text.secondary" sx={{ marginTop: '26px' }}>
-        {ratings}
-      </Typography>
-    </IconTextContainer>
-    <Typography variant="body1" color="text.secondary">
-      {reviews.length} reviews
-    </Typography>
- </div>
-</div>
+           <div style={{ display: 'flex', alignItems: 'center' }}>
+           <Typography variant="h6" component="div" sx={{ marginTop: '0px', marginLeft:'5px' }}>
+             {title}
+           </Typography>
+           <div style={{ marginLeft: 'auto' }}>
+             {reviews.length > 0 ? (
+               <>
+                 <IconTextContainer>
+                 <StarIcon fontSize="small" sx={{ marginRight: 1, color: '#26266d',marginTop: '26px' }} />
+                 <Typography variant="body1" color="text.secondary" sx={{ marginTop: '26px' }}>
+                     {ratings}
+                 </Typography>
+                 </IconTextContainer>
+                 <Typography variant="body1" color="text.secondary">
+                 {reviews.length} reviews
+                 </Typography>
+               </>
+             ) : (
+              <Box sx={{ backgroundColor: '#cdcdee', borderRadius: '4px', padding: '4px' }}>
+              <Typography variant="body1" color="black">
+                 New property
+              </Typography>
+             </Box>
+             )}
+           </div>
+         </div>
     
           
           <IconTextContainer>
@@ -148,15 +157,41 @@ const RoomCard: React.FC<RoomCardProps> = ({
               {roomDetails.occupancy}
             </Typography>
           </IconTextContainer>
+          
+          <Box sx={{ marginTop: '8px',marginLeft:'-16px' }}>
+            <svg
+              width="121"
+              height="32"
+              viewBox="0 0 121 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M120.759 0H0V32H120.759L112.775 14.9677L120.759 0Z"
+                fill="#26266D"
+              />
+              <text
+                x="50%"
+                y="50%"
+                dominantBaseline="middle"
+                textAnchor="middle"
+                fill="white"
+                fontWeight="400"
+                fontSize="16px"
+              >
+                Special Deal
+              </text>
+            </svg>
+          </Box>
+          <Typography variant="body1" color="text.secondary">
+            {deals.join(', ')}
+          </Typography>
           <Typography variant="body1" color="text.secondary" sx={{ fontWeight: 'bold', color: 'black' }}>
            ${averagePrice}
           </Typography>
-          <Typography variant="body1" color="text.secondary">
-           per night
-          </Typography>
-          <Typography variant="body1" color="text.secondary">
-            Deals: {deals.join(', ')}
-          </Typography>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+              per night
+           </Typography>
           <Button variant="contained" color="primary" onClick={() => setShowModal(true)}>
             Select Room
           </Button>
@@ -186,6 +221,7 @@ const RoomCard: React.FC<RoomCardProps> = ({
 };
 
 export default RoomCard;
+
 
 
 
