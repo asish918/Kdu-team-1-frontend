@@ -27,12 +27,12 @@ const SearchForm: React.FC = () => {
          <PropertyName />
          {propertyName === "Team 1 Hotel" && (
             <>
-               <DatePicker />
+               <DatePicker step={0} />
                <FlexContainer>
-                  <GuestsContainer>
+                  <GuestsContainer $step={0}>
                      <NumberOfGuests />
                   </GuestsContainer>
-                  <RoomsContainer>
+                  <RoomsContainer $step={0}>
                      <NumberOfRooms />
                   </RoomsContainer>
                </FlexContainer>
