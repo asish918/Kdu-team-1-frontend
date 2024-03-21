@@ -22,11 +22,11 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
       <Banner imageUrl="https://picsum.photos/200/200" />
       <Stepper />
       <SearchForm onSearch={handleSearch} />
-      <div style={{ display: 'flex', flexDirection: 'row' }}> {/* Wrap AccordionWithCheckboxes and RoomResultsPanel in a flex container */}
-        <div style={{ flex: '0 0 20%', overflow: 'auto' }}> {/* 20% width for AccordionWithCheckboxes */}
+      <div style={{ display: 'flex', flexDirection: 'row' }}> 
+        <div style={{ flex: '0 0 20%', overflow: 'auto' }}> 
           <AccordionWithCheckboxes />
         </div>
-        <div style={{ flex: '0 0 80%', overflow: 'auto' }}> {/* 80% width for RoomResultsPanel */}
+        <div style={{ flex: '0 0 80%', overflow: 'auto' }}> 
           <RoomResultsPanel />
         </div>
       </div>
