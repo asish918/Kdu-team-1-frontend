@@ -41,6 +41,7 @@ const SortDropdown: React.FC<SortDropdownProps> = ({ value, onChange }) => {
     <Dropdown value={value} onChange={(e) => onChange(e.target.value)}>
       <option value="price low">Price Low</option>
       <option value="price high">Price High</option>
+      
     </Dropdown>
  );
 };
