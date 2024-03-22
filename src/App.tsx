@@ -8,6 +8,7 @@ import { fetchCalendarDates } from "./redux/thunks/fetchCalendarDates";
 import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
 import SearchPage from "./pages/SearchPage";
 import AppProvider from "./providers/AppProvider";
+import { Outlet } from "react-router-dom";
 
 function App() {
 
@@ -20,8 +21,7 @@ function App() {
 
   return (
     <AppProvider>
-      <SearchPage />
-      {/* <LandingPage /> */}
+      <Outlet />
     </AppProvider>
   );
 }
