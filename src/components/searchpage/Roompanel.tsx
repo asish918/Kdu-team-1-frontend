@@ -21,6 +21,12 @@ const HeaderAndControlsContainer = styled.div`
  align-items: center;
  
  margin-top: 5px;
+ @media (max-width: 570px) {
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 10px; 
+    
+ }
 `;
 
 const RoomCardWrapper = styled.div`
@@ -38,14 +44,19 @@ const RoomResultsTitle = styled.h3`
 `;
 
 const RoomResultAction = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  margin-right: 22px;
+ display: flex;
+ justify-content: flex-end;
+ margin-right: 22px;
   
-  @media (max-width: 570px) {
-    justify-content: center;
-  }
-`
+ @media (max-width: 570px) {
+    justify-content: space-between;
+    width: 100%;
+    > :first-child {
+      margin-left: 28px; 
+    }
+ }
+`;
+
 
 const RoomResultsPanel: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
