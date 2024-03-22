@@ -36,7 +36,7 @@ const SearchForm: React.FC = () => {
                      <NumberOfRooms />
                   </RoomsContainer>
                </FlexContainer>
-               {wheelchairAccessible && <WheelchairAccessible />}
+               {wheelchairAccessible && <WheelchairAccessible step={0} />}
                <CenteredContainer>
                   <SearchButton isDisabled={!searchFieldParamsValidator(searchFormParams)} onClick={handleSearch} />
                </CenteredContainer>

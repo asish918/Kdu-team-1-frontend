@@ -28,9 +28,6 @@ const DateButton = styled.button`
     margin-top: 5px;
 `
 
-const DateValue = styled.div<{ $step: number; }>`
-`
-
 interface DateToggleProps {
     calendarToggle: (value: SetStateAction<boolean>) => void;
     startDate: Date | null;

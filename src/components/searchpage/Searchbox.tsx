@@ -6,6 +6,7 @@ import { DatePicker } from '../datepicker/DatePicker';
 import NumberOfBeds from './NumberOfBeds';
 import { GuestsContainer, RoomsContainer } from '../landingpage/styled-components';
 import styled from 'styled-components';
+import WheelchairAccessible from '../landingpage/WheelchairAccessible';
 
 interface SearchFormProps {
   onSearch: (params: { dateRange: Date[]; beds: number }) => void;
@@ -40,9 +41,9 @@ function SearchForm({ onSearch }: SearchFormProps) {
 `;
 
   const ButtonStyled = styled(Button)`
-  height: 50px;
-  width: 120px;
-  margin-bottom: 2px;
+  height: 80px;
+  width: 40%;
+  margin-bottom: 20px;
   margin-top: 2px;
 `;
 
@@ -90,6 +91,7 @@ function SearchForm({ onSearch }: SearchFormProps) {
           <NumberOfBeds />
         </BedsContainer>
         <DatePicker step={1} />
+        <WheelchairAccessible step={1} />
         <ButtonStyled variant="contained" onClick={handleSearch}>
           Search
         </ButtonStyled>

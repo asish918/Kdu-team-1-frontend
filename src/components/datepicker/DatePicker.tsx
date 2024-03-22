@@ -13,18 +13,26 @@ import { formatCurrency } from '../../utils/i18next';
 import "./Calendar.css";
 import "./DatePickerStyles.css";
 import { setEndDatePick, setStartDatePick } from '../../redux/reducers/searchFormReducer';
-import DateToggle from './DateToggle';
+import { default as DateToggleLandingPage } from '../landingpage/DateToggle';
+import { default as DateToggleRoomResultPage } from '../searchpage/DateToggle';
+// import DateToggle as DateToggleRoomResultPage from '../searchpage/DateToggle';
 import styled from 'styled-components';
 
 type ValuePiece = Date;
 type Value = ValuePiece | [ValuePiece, ValuePiece] | null;
 
-const DateContainer = styled.div`
-      position: absolute;
-  top: 80px;
+const DateContainer = styled.div<{ $step: number; }>`
+    position: absolute;
+    top: 85px;
+    left: ${props => props.$step === 0 ? "0px" : "auto"};
+    right: ${props => props.$step === 0 ? "auto" : "0px"};
 `
 
-export function DatePicker() {
+interface DatePickerProps {
+    step: number;
+}
+
+export function DatePicker({ step }: DatePickerProps) {
     const [value, setValue] = useState<Value>(new Date());
     const [startDate, setStartDate] = useState<ValuePiece | null>(null);
     const [endDate, setEndDate] = useState<ValuePiece | null>(null);
@@ -108,7 +116,11 @@ export function DatePicker() {
 
     return (
         <div className="datePickerContainer">
-            <DateToggle startDate={startDate} endDate={endDate} calendarToggle={setShowCalendar} />
+            {
+                step === 0 ?
+                    <DateToggleLandingPage startDate={startDate} endDate={endDate} calendarToggle={setShowCalendar} /> :
+                    <DateToggleRoomResultPage startDate={startDate} endDate={endDate} calendarToggle={setShowCalendar} />
+            }
             {/* <Typography variant="subtitle1" gutterBottom component="div" className="date-dropdown-label">
                 {t('landingPageForm.selectDate')}
             </Typography>
@@ -121,7 +133,7 @@ export function DatePicker() {
                 <CalendarMonthIcon />
             </button> */}
             {/* <div className="dateSelectorContainer"> */}
-                <DateContainer className='dateSelectorContainer'>
+            <DateContainer $step={step} className='dateSelectorContainer'>
                 {showCalendar && (
                     <div className="CalendarContainer">
                         <div className="Calendar-box">
@@ -147,7 +159,7 @@ export function DatePicker() {
                         </div>
                     </div>
                 )}
-            {/* </div> */}
+                {/* </div> */}
             </DateContainer>
         </div>
     );

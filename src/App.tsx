@@ -20,8 +20,8 @@ function App() {
 
   return (
     <AppProvider>
-      {/* <SearchPage /> */}
-      <LandingPage />
+      <SearchPage />
+      {/* <LandingPage /> */}
     </AppProvider>
   );
 }
