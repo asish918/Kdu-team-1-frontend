@@ -48,28 +48,47 @@ const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
 }));
 
 export default function CustomizedAccordions() {
-  type CheckedState = {
+ const [expanded, setExpanded] = React.useState<string | false>('BedTypes');
+ const [checkedState, setCheckedState] = React.useState<{
     [key: string]: {
-       [option: string]: boolean;
+      [option: string]: boolean;
     };
-   };
- const [expanded, setExpanded] = React.useState<string | false>('panel1');
- const [checkedState, setCheckedState] = React.useState<CheckedState>({
-    panel1: { option1: false, option2: false },
-    panel2: { option1: false,option2:false,option3:false,option4:false,option5:false,option6:false },
-    panel3: { option1: false },
+ }>({
+    BedTypes: { Single: false, Double: false },
+    RoomTypes: { GrandDeluxe: false, SuperDeluxe: false, FamilyDeluxe: false, CoupleSuite: false, GardenSuite: false, StandardSuite: false },
  });
 
- const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
-    };
+ const [activeBedTypes, setActiveBedTypes] = React.useState<string[]>([]);
+ const [activeRoomTypes, setActiveRoomTypes] = React.useState<string[]>([]);
+ 
+  // to check ActiveBedTypes and ActiveRoomTypes
+  //  console.log(activeBedTypes);
+  //  console.log(activeRoomTypes);
+
+
+ const handleChange = (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    setExpanded(newExpanded ? panel : false);
+ };
 
  const handleCheckboxChange = (panel: string, option: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setCheckedState(prevState => ({
       ...prevState,
       [panel]: { ...prevState[panel], [option]: event.target.checked },
     }));
+
+    if (panel === 'BedTypes') {
+      if (event.target.checked) {
+        setActiveBedTypes(prev => [...prev, option]);
+      } else {
+        setActiveBedTypes(prev => prev.filter(type => type !== option));
+      }
+    } else if (panel === 'RoomTypes') {
+      if (event.target.checked) {
+        setActiveRoomTypes(prev => [...prev, option]);
+      } else {
+        setActiveRoomTypes(prev => prev.filter(type => type !== option));
+      }
+    }
  };
 
  return (
@@ -77,57 +96,58 @@ export default function CustomizedAccordions() {
       <Typography variant="h6" gutterBottom sx={{ marginLeft: '23px' }}>
         Narrow your results
       </Typography>
-      <Accordion expanded={expanded === 'panel1'} onChange={handleChange('panel1')}>
-        <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+      <Accordion expanded={expanded === 'BedTypes'} onChange={handleChange('BedTypes')}>
+        <AccordionSummary aria-controls="BedTypes-content" id="BedTypes-header">
           <Typography>Bed type</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel1.option1} onChange={handleCheckboxChange('panel1', 'option1')} />}
+            control={<Checkbox checked={checkedState.BedTypes.Single} onChange={handleCheckboxChange('BedTypes', 'Single')} />}
             label="Single"
           />
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel1.option2} onChange={handleCheckboxChange('panel1', 'option2')} />}
+            control={<Checkbox checked={checkedState.BedTypes.Double} onChange={handleCheckboxChange('BedTypes', 'Double')} />}
             label="Double"
           />
         </AccordionDetails>
       </Accordion>
-      <Accordion expanded={expanded === 'panel2'} onChange={handleChange('panel2')}>
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
+      <Accordion expanded={expanded === 'RoomTypes'} onChange={handleChange('RoomTypes')}>
+        <AccordionSummary aria-controls="RoomTypes-content" id="RoomTypes-header">
           <Typography>Room type</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2.option1} onChange={handleCheckboxChange('panel2', 'option1')} />}
+            control={<Checkbox checked={checkedState.RoomTypes.GrandDeluxe} onChange={handleCheckboxChange('RoomTypes', 'GrandDeluxe')} />}
             label="Grand Deluxe"
           />
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2.option2} onChange={handleCheckboxChange('panel2', 'option2')} />}
+            control={<Checkbox checked={checkedState.RoomTypes.SuperDeluxe} onChange={handleCheckboxChange('RoomTypes', 'SuperDeluxe')} />}
             label="Super Deluxe"
           />
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2.option3} onChange={handleCheckboxChange('panel2', 'option3')} />}
+            control={<Checkbox checked={checkedState.RoomTypes.FamilyDeluxe} onChange={handleCheckboxChange('RoomTypes', 'FamilyDeluxe')} />}
             label="Family Deluxe"
           />
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2.option4} onChange={handleCheckboxChange('panel2', 'option4')} />}
+            control={<Checkbox checked={checkedState.RoomTypes.CoupleSuite} onChange={handleCheckboxChange('RoomTypes', 'CoupleSuite')} />}
             label="Couple Suite"
           />
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2.option5} onChange={handleCheckboxChange('panel2', 'option5')} />}
+            control={<Checkbox checked={checkedState.RoomTypes.GardenSuite} onChange={handleCheckboxChange('RoomTypes', 'GardenSuite')} />}
             label="Garden Suite"
           />
           <FormControlLabel
-            control={<Checkbox checked={checkedState.panel2.option6} onChange={handleCheckboxChange('panel2', 'option6')} />}
+            control={<Checkbox checked={checkedState.RoomTypes.StandardSuite} onChange={handleCheckboxChange('RoomTypes', 'StandardSuite')} />}
             label="Standard Suite"
           />
-          
         </AccordionDetails>
       </Accordion>
-      
     </div>
  );
 }
+
+
+
 
 
 
