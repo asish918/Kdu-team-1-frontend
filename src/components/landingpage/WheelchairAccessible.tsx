@@ -6,15 +6,15 @@ interface WheelchairAccessibleProps {
   step: number;
 }
 
-const WheelchairAccessible: React.FC = ({ step }: WheelchairAccessibleProps) => {
+const WheelchairAccessible: React.FC<WheelchairAccessibleProps> = ({ step }) => {
   const { i18n } = useTranslation();
 
   return (
     <div>
       <IconContainer>
         <StyledCheckbox id="wheelchairAccessible" name="wheelchairAccessible" />
-        <AccessibleIcon style={{ fontSize: '16px' }} />
-        <StyledLabel htmlFor="wheelchairAccessible">{i18n.t("landingPageForm.accessibility")}</StyledLabel>
+        <AccessibleIcon style={{ fontSize: step === 0 ? "16px" : "30px" }} />
+        {(step === 0 || screen.width <= 570) && <StyledLabel htmlFor="wheelchairAccessible">{i18n.t("landingPageForm.accessibility")}</StyledLabel>}
       </IconContainer>
     </div>
   );
