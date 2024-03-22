@@ -73,12 +73,12 @@ const StyledLocationIcon = styled(LocationIcon)`
 `;
 
 const StyledBedIcon = styled(BedIcon)`
- margin-right: 1px;
+ margin-right: 4px;
  color: grey;
 `;
 
 const StyledOccupancyIcon = styled(OccupancyIcon)`
- margin-right: 1px;
+ margin-right: 4px;
  color: grey;
 `;
 
