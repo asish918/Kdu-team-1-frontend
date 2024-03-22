@@ -11,6 +11,9 @@ import { urlGenerator } from "./utils/util.ts";
 import AppProvider from "./providers/AppProvider.tsx";
 import { authConfig } from "./auth/authConfig.ts";
 import LoginPage from "./pages/LoginPage.tsx";
+import LandingPage from "./pages/LandingPage.tsx";
+import RoomResultsPage from "./components/searchpage/RoomResultpage.tsx";
+import SearchPage from "./pages/SearchPage.tsx";
 
 const client = new ApolloClient({
   uri: urlGenerator(`${process.env.GRAPHQL_PATH}`),
@@ -32,9 +35,21 @@ const router = createBrowserRouter([
     path: "/",
     element: <App />,
     errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "/",
+        element: <LandingPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/room-result",
+        element: <SearchPage />,
+        errorElement: <ErrorPage />,
+      },
+    ]
   },
   {
-    path: "login",
+    path: "/login",
     element: <LoginPage />,
     errorElement: <ErrorPage />,
   }

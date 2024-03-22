@@ -10,7 +10,7 @@ import { DatePicker } from '../datepicker/DatePicker';
 import { CenteredContainer, FlexContainer, GuestsContainer, RoomsContainer, StyledBox } from './styled-components';
 import queryString from 'query-string';
 import { SearchFieldParams } from '../../types';
-import { useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { searchFieldParamsValidator } from '../../utils/validator';
 
 
@@ -18,8 +18,10 @@ const SearchForm: React.FC = () => {
    const { propertyName } = useSelector((state: RootState) => state.landingPage)
    const wheelchairAccessible = useSelector((state: RootState) => state.propertyConfig.property.accessibility);
    const searchFormParams = useSelector((state: RootState) => state.searchForm);
+   const navigate = useNavigate();
 
    const handleSearch = () => {
+      navigate("/room-result")
    };
 
    return (
