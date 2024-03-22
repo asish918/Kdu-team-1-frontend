@@ -202,9 +202,9 @@ const RoomCard: React.FC<RoomCardProps> = ({
         <SpecialDealText variant="body1" color="text.secondary">
           ${averagePrice}
         </SpecialDealText>
-        <Typography variant="body1" color="text.secondary">
+        <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
           per night
-        </Typography>
+         </Typography>
         <Button variant="contained" color="primary" onClick={() => setShowModal(true)}>
           Select Room
         </Button>
