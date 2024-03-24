@@ -1,6 +1,5 @@
 // src/store.ts
 import { configureStore } from "@reduxjs/toolkit";
-import authReducer from "./reducers/authReducer";
 import propertyConfigReducer from './reducers/propertyConfigReducer';
 import propertyListReducer from "./reducers/propertyListReducer";
 import calendarReducer from "./reducers/calendarReducer";
@@ -12,7 +11,6 @@ import roomResultReducer from "./reducers/roomResultReducer";
 
 export const store = configureStore({
   reducer: {
-    auth: authReducer,
     propertyConfig: propertyConfigReducer,
     propertyList: propertyListReducer,
     calendar: calendarReducer,
