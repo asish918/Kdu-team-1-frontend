@@ -5,9 +5,10 @@ import propertyConfigReducer from './reducers/propertyConfigReducer';
 import propertyListReducer from "./reducers/propertyListReducer";
 import calendarReducer from "./reducers/calendarReducer";
 import intelReducer from "./reducers/intelReducer";
-import landingPageReducer from "./reducers/landingPageReducer";
 import searchFormReducer from "./reducers/searchFormReducer";
 import navigationReducer from "./reducers/navigationReducer";
+import filterSortReducer from "./reducers/filterSortReducer";
+import roomResultReducer from "./reducers/roomResultReducer";
 
 export const store = configureStore({
   reducer: {
@@ -16,9 +17,10 @@ export const store = configureStore({
     propertyList: propertyListReducer,
     calendar: calendarReducer,
     intel: intelReducer,
-    landingPage: landingPageReducer,
     searchForm: searchFormReducer,
-    appNavigation: navigationReducer
+    appNavigation: navigationReducer,
+    filterState: filterSortReducer,
+    roomResult: roomResultReducer
   },
 });
 

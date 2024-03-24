@@ -1,20 +1,24 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useTranslation } from 'react-i18next';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { setBeds } from '../../redux/reducers/searchFormReducer';
 
 const NumberOfBeds: React.FC = () => {
- const [numberOfBeds, setNumberOfBeds] = useState<number>(1); // Default to 1 bed
- const { i18n } = useTranslation();
+  const numberOfBeds = useSelector((state: RootState) => state.searchForm.beds);
+  const dispatch = useDispatch();
+  const { i18n } = useTranslation();
 
- const handleChange = (event: SelectChangeEvent) => {
-    setNumberOfBeds(Number(event.target.value));
- };
+  const handleChange = (event: SelectChangeEvent) => {
+    dispatch(setBeds(Number(event.target.value)))
+  };
 
- return (
+  return (
     <Box marginBottom={2}>
       <FormControl fullWidth>
         <InputLabel id="numberOfBeds-label">Beds</InputLabel>
@@ -30,7 +34,7 @@ const NumberOfBeds: React.FC = () => {
         </Select>
       </FormControl>
     </Box>
- );
+  );
 };
 
 export default NumberOfBeds;

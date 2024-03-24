@@ -8,18 +8,20 @@ import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
-import { setAdults, setTotalGuests } from '../../redux/reducers/landingPageReducer';
+import { setAdults, setKids, setTeens, setTotalGuests } from '../../redux/reducers/searchFormReducer';
 import { GuestType } from '../../utils/enums';
 import { generateDescription } from '../../utils/util';
 
 
 const NumberOfGuests: React.FC = () => {
-  const adults = useSelector((state: RootState) => state.landingPage.adults);
-  const totalGuests = useSelector((state: RootState) => state.landingPage.totalGuests);
-  const numberOfRooms = useSelector((state: RootState) => state.landingPage.numberOfRooms);
+  const adults = useSelector((state: RootState) => state.searchForm.adults);
+  const totalGuests = useSelector((state: RootState) => state.searchForm.totalGuests);
+  const numberOfRooms = useSelector((state: RootState) => state.searchForm.numberOfRooms);
 
-  const [teens, setTeens] = useState(0);
-  const [kids, setKids] = useState(0);
+  // const [teens, setTeens] = useState(0);
+  const teens = useSelector((state: RootState) => state.searchForm.teens)
+  const kids = useSelector((state: RootState) => state.searchForm.kids)
+  // const [kids, setKids] = useState(0);
   const [selectOpen, setSelectOpen] = useState(false);
 
   const hotelProperty = useSelector((state: RootState) => state.propertyConfig.property);
@@ -42,12 +44,12 @@ const NumberOfGuests: React.FC = () => {
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
           break;
         case GuestType.teen:
-          setTeens(prev => Math.max(0, prev + change));
+          dispatch(setTeens(Math.max(0, teens + change)));
           if (Math.max(0, teens + change) < 0) break;
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
           break;
         case GuestType.kids:
-          setKids(prev => Math.max(0, prev + change));
+          dispatch(setKids(Math.max(0, kids + change)));
           if (Math.max(0, kids + change) < 0) break;
           dispatch(setTotalGuests(newTotal <= 0 ? 1 : newTotal))
           break;

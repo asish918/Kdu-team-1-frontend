@@ -1,11 +1,13 @@
 
 import React, { useState } from 'react';
 import RoomCard from './Roomcard';
-import hotelImage1 from './hotel-2.jpeg';
-import hotelImage2 from './hotel-image.avif';
 import styled from 'styled-components';
 import Pagination from './Pagination';
 import SortDropdown from './SortDropDown';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import Spinner from '../layout/Spinner';
+import { setPriceSort } from '../../redux/reducers/filterSortReducer';
 
 
 const RoomCardsContainer = styled.div`
@@ -33,7 +35,7 @@ const RoomCardWrapper = styled.div`
  flex-basis: calc(33.33% - 10px); 
  margin-bottom: 20px;
 
- @media (max-width: 570px) {
+ @media (max-width: 768px) {
     flex-basis: 100%;
  }
 `;
@@ -59,83 +61,43 @@ const RoomResultAction = styled.div`
 
 
 const RoomResultsPanel: React.FC = () => {
-  const [currentPage, setCurrentPage] = useState(1);
-  const [sortCriteria, setSortCriteria] = useState('default');
-  const rooms = [
-    {
-      title: 'Deluxe Room',
-      images: [hotelImage1, hotelImage2],
-      ratings: 4.5,
-      reviews: [],
-      location: 'Building A, Floor 2',
-      roomDetails: { size: 500, beds: 2, occupancy: 4 },
-      deals: ['Free Wi-Fi', 'Complimentary breakfast'],
-      averagePrice: 150,
-    },
-    {
-      title: 'Deluxe Room',
-      images: [hotelImage1, hotelImage2],
-      ratings: 4.5,
-      reviews: ['Great room!', 'Clean and comfortable.'],
-      location: 'Building A, Floor 2',
-      roomDetails: { size: 500, beds: 2, occupancy: 4 },
-      deals: ['Free Wi-Fi', 'Complimentary breakfast'],
-      averagePrice: 150,
-    },
-    {
-      title: 'Deluxe Room',
-      images: [hotelImage1, hotelImage2],
-      ratings: 4.5,
-      reviews: ['Great room!', 'Clean and comfortable.'],
-      location: 'Building A, Floor 2',
-      roomDetails: { size: 500, beds: 2, occupancy: 4 },
-      deals: ['Free Wi-Fi', 'Complimentary breakfast'],
-      averagePrice: 150,
-    }
+  const [sortCriteria, setSortCriteria] = useState('price low');
+  const { roomResults, status } = useSelector((state: RootState) => state.roomResult)
+  const dispatch = useDispatch();
 
-  ];
-
-  const itemsPerPage = 10;
-  const totalPages = Math.ceil(rooms.length / itemsPerPage);
-  const totalItems = rooms.length;
-
-  const currentRooms = rooms.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
-
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-  };
 
   const handleSortChange = (criteria: string) => {
-    setSortCriteria(criteria);
-
+    if (criteria == "price low") {
+      dispatch(setPriceSort(true))
+    }
+    else if (criteria == "price high") {
+      dispatch(setPriceSort(false))
+    }
+    setSortCriteria(criteria)
   };
   return (
     <div>
       <HeaderAndControlsContainer>
         <RoomResultsTitle>Room Results</RoomResultsTitle>
         <RoomResultAction>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            totalItems={totalItems}
-            itemsPerPage={itemsPerPage}
-            onPageChange={handlePageChange}
-          />
+          <Pagination />
           <SortDropdown value={sortCriteria} onChange={handleSortChange} />
         </RoomResultAction>
       </HeaderAndControlsContainer >
 
-      <RoomCardsContainer>
-        {currentRooms.map((room, index) => (
-          <RoomCardWrapper key={index}>
-            <RoomCard {...room} />
-          </RoomCardWrapper>
-        ))}
-      </RoomCardsContainer>
+      {status === "loading" ?
+        <Spinner size={50} />
+        :
+        <RoomCardsContainer>
+          {roomResults?.results.map((room, index) => (
+            <RoomCardWrapper key={index}>
+              <RoomCard {...room} />
+            </RoomCardWrapper>
+          ))}
+        </RoomCardsContainer>
+      }
 
-
-    </div >
+    </div>
   );
 };
 

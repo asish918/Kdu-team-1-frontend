@@ -4,13 +4,15 @@ import StarIcon from '@mui/icons-material/Star';
 import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } from '@mui/icons-material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
+import { Result } from '../../types';
+import { bedTypeTextGenerator } from '../../utils/util';
 
 // Define styled components
 const RoomCardContainer = styled(Card)`
  margin: 20px;
  width: 300px;
   
- @media (max-width: 570px) {
+ @media (max-width: 768px) {
     margin: 0 auto;
     width: 400px;
  }
@@ -82,67 +84,47 @@ const StyledOccupancyIcon = styled(OccupancyIcon)`
  color: grey;
 `;
 
-interface RoomCardProps {
- title: string;
- images: string[];
- ratings: number;
- reviews: string[];
- location: string;
- roomDetails: {
-    size: number;
-    beds: number;
-    occupancy: number;
- };
- deals: string[];
- averagePrice: number;
-}
 
-const RoomCard: React.FC<RoomCardProps> = ({
- title,
- images,
- ratings,
- reviews,
- location,
- roomDetails,
- deals,
- averagePrice,
+const RoomCard: React.FC<Result> = ({
+  room_type_name,
+  area_in_square_feet,
+  average_rate,
+  double_bed,
+  max_capacity,
+  single_bed,
+  rating,
+  reviews,
+  lowResImages
 }) => {
- const [showModal, setShowModal] = useState(false);
- const [expanded, setExpanded] = useState(false);
-
- const handleExpandClick = () => {
-    setExpanded(!expanded);
- };
-
- return (
+  return (
     <RoomCardContainer>
       <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
-        {images.map((image, index) => (
+        {lowResImages.map((image, index) => (
           <StyledImage key={index} src={image} alt={`Room ${index}`} />
         ))}
       </Carousel>
       <CardContent>
         <TitleContainer>
           <Typography variant="h6" component="div">
-            {title}
+            {room_type_name}
           </Typography>
           <ReviewsContainer>
             {reviews.length > 0 ? (
               <>
                 <IconTextContainer>
-                 <StyledStarIcon fontSize="small" />
-                 <Typography variant="body1" color="text.secondary" style={{ marginTop: '26px' }}>
-                    {ratings}
-                 </Typography>
+                  <StyledStarIcon fontSize="small" />
+                  <Typography variant="body1" color="text.secondary" style={{ marginTop: '26px' }}>
+                    {rating}
+                  </Typography>
                 </IconTextContainer>
                 <Typography variant="body1" color="text.secondary">
-                 {reviews.length} reviews
+                  {reviews.length} reviews
                 </Typography>
               </>
             ) : (
               <NewPropertyBox>
                 <Typography variant="body1" color="black">
-                 New property
+                  New property
                 </Typography>
               </NewPropertyBox>
             )}
@@ -152,26 +134,26 @@ const RoomCard: React.FC<RoomCardProps> = ({
         <IconTextContainer>
           <StyledLocationIcon fontSize="small" />
           <LocationText variant="body1" color="text.secondary">
-            {location}
+            Kickdrum
           </LocationText>
         </IconTextContainer>
         <LocationText variant="body1" color="text.secondary">
-          Inclusive {roomDetails.size} ft.
+          Inclusive {area_in_square_feet} ft.
         </LocationText>
         <IconTextContainer>
           <StyledBedIcon fontSize="small" />
           <Typography variant="body1" color="text.secondary">
-            {roomDetails.beds}
+            {bedTypeTextGenerator(double_bed, single_bed)}
           </Typography>
         </IconTextContainer>
         <IconTextContainer>
           <StyledOccupancyIcon fontSize="small" />
           <Typography variant="body1" color="text.secondary">
-            {roomDetails.occupancy}
+            1-{max_capacity}
           </Typography>
         </IconTextContainer>
 
-        <DealsContainer>
+        {/* <DealsContainer>
           <svg
             width="121"
             height="32"
@@ -198,19 +180,19 @@ const RoomCard: React.FC<RoomCardProps> = ({
         </DealsContainer>
         <Typography variant="body1" color="text.secondary">
           {deals.join(', ')}
-        </Typography>
+        </Typography> */}
         <SpecialDealText variant="body1" color="text.secondary">
-          ${averagePrice}
+          ${average_rate}
         </SpecialDealText>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
           per night
-         </Typography>
-        <Button variant="contained" color="primary" onClick={() => setShowModal(true)}>
+        </Typography>
+        <Button variant="contained" color="primary">
           Select Room
         </Button>
       </CardContent>
     </RoomCardContainer>
- );
+  );
 };
 
 export default RoomCard;

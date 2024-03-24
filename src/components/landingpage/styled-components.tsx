@@ -84,6 +84,10 @@ export const RoomsContainer = styled.div<{ $step: number; }>`
     width: 100%;
   }
 
+  @media (min-width: 570px) and (max-width: 768px) {
+    width: 48%;
+  }
+
   width: 30%;
 
   /* .MuiInputLabel-root {

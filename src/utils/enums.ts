@@ -39,3 +39,17 @@ export enum GuestType {
     teen = "teen",
     kids = "kids"
 }
+
+export enum RequestType {
+    GET = "GET",
+    POST = "POST"
+}
+
+export enum BedType {
+    GrandDeluxe = 1,
+    SuperDeluxe = 2,
+    FamilyDeluxe = 3,
+    CoupleSuite = 4,
+    GardenSuite = 5,
+    StandardSuite = 6
+}
