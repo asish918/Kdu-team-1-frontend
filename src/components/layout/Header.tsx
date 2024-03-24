@@ -1,7 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { AppDispatch } from "../../redux/store";
-import { login, logout } from "../../redux/reducers/authReducer";
 import { RootState } from "../../redux/store";
 import styled from "styled-components";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -18,6 +17,8 @@ import {
   SelectChangeEvent,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { getCurrentUser } from "aws-amplify/auth";
+import { useAuthenticator } from "@aws-amplify/ui-react";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -141,8 +142,9 @@ const LanguageContainer = styled.div`
 
 // Header component
 const Header: React.FC = () => {
+  const [authState, setAuthState] = useState<boolean>(false);
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
   const dispatch: AppDispatch = useDispatch();
-  const isLoggedIn = useSelector((state: RootState) => state.auth.isLoggedIn);
 
   const [open, setOpen] = React.useState(false);
 
@@ -168,8 +170,29 @@ const Header: React.FC = () => {
   };
 
   const handleAuth = () => {
-    navigate("/login");
+    if (authState) {
+      signOut();
+      setAuthState(false);
+    } else {
+      navigate("/login");
+    }
   }
+
+  useEffect(() => {
+    async function fetchUserSession() {
+      try {
+        const { username, userId } = await getCurrentUser();
+        console.log(`The username: ${username}`);
+        console.log(`The userId: ${userId}`);
+        setAuthState(true);
+      } catch (err) {
+        console.log(err);
+        setAuthState(false);
+      }
+    }
+
+    fetchUserSession();
+  }, [])
 
   return (
     <HeaderContainer>
@@ -181,7 +204,7 @@ const Header: React.FC = () => {
       </Info>
       <NavbarActions>
         <DesktopActions>
-          <BookingButton>{i18n.t("header.myBookings")}</BookingButton>
+          {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>}
 
           <LanguageContainer>
             <StyledLanguageIcon fontSize="small" />
@@ -206,7 +229,7 @@ const Header: React.FC = () => {
             onClick={handleAuth}
             variant="contained"
           >
-            {isLoggedIn ? t("header.logout") : t("header.login")}
+            {authState ? t("header.logout") : t("header.login")}
           </Button>
         </DesktopActions>
 
@@ -215,7 +238,7 @@ const Header: React.FC = () => {
         </MobileMenuButton>
 
         <MobileDrawer open={open} anchor="right" onClose={toggleDrawer(false)}>
-          <BookingButton>{i18n.t("header.myBookings")}</BookingButton>
+          {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>}
 
           <MobileContainer>
             <StyledLanguageIcon fontSize="small" />
@@ -241,7 +264,7 @@ const Header: React.FC = () => {
             onClick={handleAuth}
             variant="contained"
           >
-            {isLoggedIn ? t("header.logout") : t("header.login")}
+            {authState ? t("header.logout") : t("header.login")}
           </Button>
         </MobileDrawer>
       </NavbarActions>

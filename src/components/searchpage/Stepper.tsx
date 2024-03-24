@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Stepper, Step, StepLabel, Button } from '@mui/material';
+import { useState } from 'react';
+import { Stepper, Step, StepLabel } from '@mui/material';
 
 const steps = ['1.Choose room', '2.Choose add on', '3.Checkout'];
 
@@ -16,7 +16,6 @@ function BookingStepper() {
         {
           width: '30%',
           height: '100px',
-
         }
       }>
         {steps.map((label, index) => (
