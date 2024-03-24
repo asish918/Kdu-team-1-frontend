@@ -1,8 +1,8 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 
 export interface SearchFormState {
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
     adults: number;
     propertyName: string;
     numberOfRooms: number;
@@ -28,10 +28,10 @@ export const searchFormSlice = createSlice({
     name: "searchForm",
     initialState,
     reducers: {
-        setStartDatePick: (state, action: PayloadAction<Date | null>) => {
+        setStartDatePick: (state, action: PayloadAction<string | null>) => {
             state.startDate = action.payload;
         },
-        setEndDatePick: (state, action: PayloadAction<Date | null>) => {
+        setEndDatePick: (state, action: PayloadAction<string | null>) => {
             state.endDate = action.payload;
         },
         setPropertyName: (state, action: PayloadAction<string>) => {

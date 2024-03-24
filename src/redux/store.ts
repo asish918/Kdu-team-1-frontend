@@ -1,26 +1,23 @@
-// src/store.ts
-import { configureStore } from "@reduxjs/toolkit";
-import propertyConfigReducer from './reducers/propertyConfigReducer';
-import propertyListReducer from "./reducers/propertyListReducer";
-import calendarReducer from "./reducers/calendarReducer";
-import intelReducer from "./reducers/intelReducer";
-import searchFormReducer from "./reducers/searchFormReducer";
-import navigationReducer from "./reducers/navigationReducer";
-import filterSortReducer from "./reducers/filterSortReducer";
-import roomResultReducer from "./reducers/roomResultReducer";
+
+import { configureStore } from "@reduxjs/toolkit";;
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage'; // defaults to localStorage for web
+
+import rootReducer from './reducers';
+
+const persistConfig = {
+  key: 'root',
+  storage,
+  whitelist: ['filterState', 'searchForm'],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
-  reducer: {
-    propertyConfig: propertyConfigReducer,
-    propertyList: propertyListReducer,
-    calendar: calendarReducer,
-    intel: intelReducer,
-    searchForm: searchFormReducer,
-    appNavigation: navigationReducer,
-    filterState: filterSortReducer,
-    roomResult: roomResultReducer
-  },
+  reducer: persistedReducer,
 });
+
+export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;

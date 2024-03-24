@@ -30,8 +30,8 @@ const VerticalLine = styled.div`
 
 interface DateToggleProps {
     calendarToggle: (value: SetStateAction<boolean>) => void;
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
 }
 
 export default function DateToggle({ calendarToggle, startDate, endDate }: DateToggleProps) {
@@ -43,14 +43,14 @@ export default function DateToggle({ calendarToggle, startDate, endDate }: DateT
                 <DateValue>
                     <div>{t('landingPageForm.checkIn')}</div>
                     <div className="DateValue">
-                        {startDate ? startDate.toDateString() : "Any Date"}
+                        {startDate ? new Date(startDate).toDateString() : "Any Date"}
                     </div>
                 </DateValue>
                 <VerticalLine />
                 <DateValue>
                     <div>{t('landingPageForm.checkOut')}</div>
                     <div className="DateValue">
-                        {endDate ? endDate.toDateString() : "Any Date"}
+                        {endDate ? new Date(endDate).toDateString() : "Any Date"}
                     </div>
                 </DateValue>
                 <CalendarMonthIcon />

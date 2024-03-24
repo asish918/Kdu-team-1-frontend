@@ -30,8 +30,8 @@ const DateButton = styled.button`
 
 interface DateToggleProps {
     calendarToggle: (value: SetStateAction<boolean>) => void;
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
 }
 
 export default function DateToggle({ calendarToggle, startDate, endDate }: DateToggleProps) {
@@ -44,10 +44,10 @@ export default function DateToggle({ calendarToggle, startDate, endDate }: DateT
             </DateTypography>
             <DateButton onClick={() => calendarToggle(prev => !prev)}>
                 {startDate === null && <div>{t('landingPageForm.checkIn')}</div>}
-                {startDate && <div className="DateValue">{startDate.toDateString()}</div>}
+                {startDate && <div className="DateValue">{new Date(startDate).toDateString()}</div>}
                 <ArrowForwardIcon />
                 {endDate === null && <div>{t('landingPageForm.checkOut')}</div>}
-                {endDate && <div className="DateValue">{endDate.toDateString()}</div>}
+                {endDate && <div className="DateValue">{new Date(endDate).toDateString()}</div>}
                 <CalendarMonthIcon />
             </DateButton>
         </>

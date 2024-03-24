@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -10,7 +10,6 @@ import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
 import { setPropertyName } from '../../redux/reducers/searchFormReducer';
 import styled from 'styled-components';
-import queryString from "query-string";
 
 const StyledFormControl = styled(FormControl)`
   .MuiInputLabel-root {
