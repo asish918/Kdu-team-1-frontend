@@ -6,13 +6,26 @@ export function searchFieldParamsValidator(params: SearchFormState): boolean {
     return true;
 }
 
-export function searchFieldFormValidator(search: SearchFormState): boolean {
-    if (!search.startDate || !search.endDate || !search.adults || !search.beds || !search.kids || !search.numberOfRooms || !search.teens || !search.totalGuests) return false;
+export function searchFieldFormValidator(searchParams: URLSearchParams): boolean {
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
+    const adults = parseInt(searchParams.get('adults') || '0');
+    const beds = parseInt(searchParams.get('beds') || '0');
+    const kids = parseInt(searchParams.get('kids') || '0');
+    const numberOfRooms = parseInt(searchParams.get('numberOfRooms') || '0');
+    const teens = parseInt(searchParams.get('teens') || '0');
+    const totalGuests = parseInt(searchParams.get('totalGuests') || '0');
 
-    if (search.startDate! > search.endDate!) return false;
-    if (search.kids + search.adults + search.teens > search.totalGuests) return false;
-    if (search.adults < search.numberOfRooms) return false;
-    if (search.kids < 0 || search.adults < 1 || search.teens < 0 || search.totalGuests < 0 || search.numberOfRooms < 1 || search.beds < 0) return false;
+    if (startDate === null || endDate === null || adults === null || beds === null || kids === null || numberOfRooms === null || teens === null || totalGuests === null) return false;
+
+    const startDateObj = new Date(startDate);
+    const endDateObj = new Date(endDate);
+
+    if (isNaN(startDateObj.getTime()) || isNaN(endDateObj.getTime()) || startDateObj > endDateObj) return false;
+
+    if (kids + adults + teens > totalGuests) return false;
+    if (adults < numberOfRooms) return false;
+    if (kids < 0 || adults < 1 || teens < 0 || totalGuests < 0 || numberOfRooms < 1 || beds < 0) return false;
 
     return true;
 }

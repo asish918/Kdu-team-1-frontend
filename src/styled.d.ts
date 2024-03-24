@@ -12,6 +12,7 @@ declare module "styled-components" {
       secondaryBlue: string;
       textBlack: string;
       secondaryNavyBlue: string,
+      stepperGray: string
     };
   }
 }

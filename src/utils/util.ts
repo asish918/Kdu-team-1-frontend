@@ -51,7 +51,7 @@ export function generateDescription(adults: number, children: number, teens: num
   return parts.join(' ');
 }
 
-export function convertSearchParamsToQueryString(searchParams: SearchFormState): string {
+export function convertStatesToQueryString(searchParams: SearchFormState, filterParams: FilterSortState): string {
   const queryParams = new URLSearchParams();
 
   const startDate: Date = searchParams.startDate!;
@@ -70,6 +70,17 @@ export function convertSearchParamsToQueryString(searchParams: SearchFormState):
   queryParams.set('beds', searchParams.beds.toString());
 
   queryParams.set('propertyId', '1');
+
+  if (filterParams.bedTypes !== null) {
+    queryParams.set('bedTypes', filterParams.bedTypes.join(','));
+  }
+
+  if (filterParams.roomTypes !== null) {
+    queryParams.set('roomTypes', filterParams.roomTypes.join(','));
+  }
+
+
+  queryParams.set('priceSort', filterParams.priceSort.toString());
 
   return queryParams.toString();
 }
@@ -128,3 +139,20 @@ export const generateRoomTypeNumbers = (roomTypes: string[]): number[] => {
 
   return roomTypeNumbers;
 };
+
+export function roomCardNameGenerator(input: string): string {
+  return input.replace(/_/g, ' ');
+}
+
+export function setUserPreferences(key: string, object: RoomResultRequestBody): void {
+  const serializedObject = JSON.stringify(object);
+  localStorage.setItem(key, serializedObject);
+}
+
+export function getUserPreferences(key: string): RoomResultRequestBody | null {
+  const serializedObject = localStorage.getItem(key);
+  if (serializedObject) {
+    return JSON.parse(serializedObject);
+  }
+  return null;
+}

@@ -12,6 +12,7 @@ const appTheme: DefaultTheme = {
     secondaryBlue: "#006EFF",
     textBlack: "#000000",
     secondaryNavyBlue: "#c7c7de",
+    stepperGray: "#E4E4E4"
   },
 };
 

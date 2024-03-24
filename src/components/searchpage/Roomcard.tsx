@@ -5,7 +5,7 @@ import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } f
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
 import { ExchangeRateData, Result } from '../../types';
-import { bedTypeTextGenerator } from '../../utils/util';
+import { bedTypeTextGenerator, roomCardNameGenerator } from '../../utils/util';
 import { formatCurrency } from '../../utils/i18next';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
@@ -16,6 +16,12 @@ const RoomCardContainer = styled(Card)`
  margin: 20px;
  width: 300px;
  height: 561px;
+ box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+ transition: all 0.2s ease-in-out;
+
+ &:hover {
+  transform: scale(1.03);
+ }
   
  @media (max-width: 768px) {
     margin: 0 auto;
@@ -129,7 +135,7 @@ const RoomCard: React.FC<Result> = ({
       <CardContent>
         <TitleContainer>
           <RoomTypeName>
-            {room_type_name}
+            {roomCardNameGenerator(room_type_name)}
           </RoomTypeName>
           <ReviewsContainer>
             {reviews.length > 0 ? (
