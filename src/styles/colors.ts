@@ -8,4 +8,5 @@ export const appColors = {
   primaryRed: "#D0182B",
   secondaryBlue: "#006EFF",
   textBlack: "#000000",
+  stepperGray: "#E4E4E4",
 };

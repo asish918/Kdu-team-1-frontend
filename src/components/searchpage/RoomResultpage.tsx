@@ -9,12 +9,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
-import { convertSearchParamsToQueryString, requestBodyGenerator } from '../../utils/util';
+import { convertStatesToQueryString, requestBodyGenerator } from '../../utils/util';
 import { searchFieldFormValidator, validateFilters } from '../../utils/validator';
 import { setAdults, setBeds, setEndDatePick, setKids, setNumberOfRooms, setStartDatePick, setTeens, setTotalGuests } from '../../redux/reducers/searchFormReducer';
 import { RoomResultRequestBody } from '../../types';
 import { fetchRoomResult } from '../../redux/thunks/fetchRoomResults';
-import { setBedTypes, setRoomTypes } from '../../redux/reducers/filterSortReducer';
+import { setBedTypes, setPriceSort, setRoomTypes } from '../../redux/reducers/filterSortReducer';
 
 interface RoomResultsPageProps {
   onSearch: (params: { dateRange: Date[]; beds: number }) => void;
@@ -63,34 +63,50 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const queryParams = queryString.parse(location.search);
+    const searchParams = new URLSearchParams(location.search);
 
     if (!validateFilters(filterSortProps)) {
       return;
     }
 
-    if (!searchFieldFormValidator(queryParams)) throw new Error("Invalid Request")
+    if (!searchFieldFormValidator(searchParams)) throw new Error("Invalid Request");
 
-    dispatch(setStartDatePick(new Date(queryParams.startDate)));
-    dispatch(setEndDatePick(new Date(queryParams.endDate)));
-    dispatch(setAdults(parseInt(queryParams.adults)));
-    dispatch(setBeds(parseInt(queryParams.beds)));
-    dispatch(setKids(parseInt(queryParams.kids)));
-    dispatch(setTeens(parseInt(queryParams.teens)));
-    dispatch(setNumberOfRooms(parseInt(queryParams.numberOfRooms)));
-    dispatch(setTotalGuests(parseInt(queryParams.totalGuests)));
+    dispatch(setStartDatePick(new Date(searchParams.get('startDate')!)));
+    dispatch(setEndDatePick(new Date(searchParams.get('endDate')!)));
+    dispatch(setAdults(parseInt(searchParams.get('adults')!)));
+    dispatch(setBeds(parseInt(searchParams.get('beds')!)));
+    dispatch(setKids(parseInt(searchParams.get('kids')!)));
+    dispatch(setTeens(parseInt(searchParams.get('teens')!)));
+    dispatch(setNumberOfRooms(parseInt(searchParams.get('numberOfRooms')!)));
+    dispatch(setTotalGuests(parseInt(searchParams.get('totalGuests')!)));
+
+    if (!validateFilters(filterSortProps)) {
+      const roomTypes = searchParams.getAll('roomTypes');
+      const bedTypesString = searchParams.get('bedTypes') || '';
+      const bedTypes = bedTypesString.split(',');
+      dispatch(setBedTypes(bedTypes.length > 0 ? bedTypes : []));
+      dispatch(setRoomTypes(roomTypes.length > 0 ? roomTypes : []));
+    }
+
+    dispatch(setPriceSort(searchParams.get('priceSort') === 'true'));
+
+    const bedTypesString = searchParams.get('bedTypes') || '';
+    const bedTypes = bedTypesString.split(',');
 
     const requestBody: RoomResultRequestBody = {
-      startDate: "2024-03-01T00:00:00.000Z",
-      endDate: "2024-03-02T00:00:00.000Z",
-      beds: "0",
-      rooms: "1",
-      propertyId: "1",
-      totalGuests: "2",
-      roomTypes: [],
-      priceSort: true,
-      bedTypes: []
-    }
+      startDate: searchParams.get('startDate')!,
+      endDate: searchParams.get('endDate')!,
+      beds: parseInt(searchParams.get('beds')!),
+      rooms: parseInt(searchParams.get('numberOfRooms')!),
+      propertyId: parseInt(searchParams.get('propertyId')!),
+      totalGuests: parseInt(searchParams.get('totalGuests')!),
+      roomTypes: searchParams.getAll('roomTypes').length > 0 ? searchParams.getAll('roomTypes') : [],
+      priceSort: searchParams.get('priceSort') === 'true',
+      bedTypes: bedTypes.length > 0 ? bedTypes : []
+    };
+
+
+    console.log(requestBody);
 
     dispatch(fetchRoomResult({
       url: `api/roomresult/search?page=${currentPage}&size=2`,
@@ -105,32 +121,32 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
     }
 
     const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
+    const searchParams = convertStatesToQueryString(searchFormProps, filterSortProps);
 
     dispatch(fetchRoomResult({
       url: `api/roomresult/search?page=${currentPage}&size=2`,
       requestBody
     }));
 
+    navigate(`/room-result?${searchParams}`);
   }, [filterSortProps, currentPage])
 
 
   const handleSearch = () => {
-    const searchParams = convertSearchParamsToQueryString(searchFormProps);
+    const searchParams = convertStatesToQueryString(searchFormProps, filterSortProps);
     const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
     dispatch(fetchRoomResult({
       url: `api/roomresult/search?page=${currentPage}&size=2`,
       requestBody
     }));
-    dispatch(setBedTypes(null));
-    dispatch(setRoomTypes(null));
     navigate(`/room-result?${searchParams}`);
   }
 
   return (
     <div>
       <Banner imageUrl={propertyConfig.bannerImageUrl} />
+      <Stepper />
       <RoomResultContainer>
-        <Stepper />
         <SearchForm onSearch={handleSearch} />
         <RoomResultFlexContainer>
           <AccordionContainer>

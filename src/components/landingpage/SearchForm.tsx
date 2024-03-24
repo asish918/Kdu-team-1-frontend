@@ -10,17 +10,18 @@ import { DatePicker } from '../datepicker/DatePicker';
 import { CenteredContainer, FlexContainer, GuestsContainer, RoomsContainer, StyledBox } from './styled-components';
 import { useNavigate } from 'react-router-dom';
 import { searchFieldParamsValidator } from '../../utils/validator';
-import { convertSearchParamsToQueryString } from '../../utils/util';
+import { convertStatesToQueryString } from '../../utils/util';
 
 
 const SearchForm: React.FC = () => {
    const { propertyName } = useSelector((state: RootState) => state.searchForm);
    const wheelchairAccessible = useSelector((state: RootState) => state.propertyConfig.property.accessibility);
    const searchFormParams = useSelector((state: RootState) => state.searchForm);
+   const filterParams = useSelector((state: RootState) => state.filterState);
    const navigate = useNavigate();
 
    const handleSearch = () => {
-      const searchParams = convertSearchParamsToQueryString(searchFormParams);
+      const searchParams = convertStatesToQueryString(searchFormParams, filterParams);
 
       const pathWithQuery = `/room-result?${searchParams}`;
 

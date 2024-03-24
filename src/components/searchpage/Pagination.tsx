@@ -28,7 +28,7 @@ const Pagination: React.FC = () => {
       <IconButton onClick={handlePrevious} disabled={currentPage === 0}>
         <ArrowBackIosIcon />
       </IconButton>
-      <span>Showing {startIdx}-{endIdx} of {totalItems * 2} Results</span>
+      <span>Showing {startIdx}-{endIdx} of {totalItems === 1 ? totalItems : totalItems * 2} Results</span>
       <IconButton onClick={handleNext} disabled={totalItems === 1 || currentPage * 2 >= totalItems}>
         <ArrowForwardIosIcon />
       </IconButton>
