@@ -13,7 +13,6 @@ import { setPriceSort } from '../../redux/reducers/filterSortReducer';
 const RoomCardsContainer = styled.div`
  display: flex;
  flex-wrap: wrap;
- justify-content: space-between;
  gap: 10px;
 `;
 

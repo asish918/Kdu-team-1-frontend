@@ -57,6 +57,7 @@ export type HotelProperties = {
   bannerImageUrl: string;
   siteLogoUrl: string;
   maxLengthStay: number;
+  footerLogoUrl: string;
 };
 
 export type APIStatus = "success" | "error" | "loading" | null;

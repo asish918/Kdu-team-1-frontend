@@ -4,13 +4,18 @@ import StarIcon from '@mui/icons-material/Star';
 import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } from '@mui/icons-material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
-import { Result } from '../../types';
+import { ExchangeRateData, Result } from '../../types';
 import { bedTypeTextGenerator } from '../../utils/util';
+import { formatCurrency } from '../../utils/i18next';
+import { useTranslation } from 'react-i18next';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
 // Define styled components
 const RoomCardContainer = styled(Card)`
  margin: 20px;
  width: 300px;
+ height: 561px;
   
  @media (max-width: 768px) {
     margin: 0 auto;
@@ -36,6 +41,7 @@ const TitleContainer = styled.div`
  align-items: center;
  margin-top: 0px;
  margin-left: 5px;
+ margin-bottom: 10px;
 `;
 
 const ReviewsContainer = styled.div`
@@ -44,6 +50,7 @@ const ReviewsContainer = styled.div`
 
 const LocationText = styled(Typography)`
  margin-left: 2px;
+ margin-bottom: 5px;
 `;
 
 const DealsContainer = styled.div`
@@ -54,19 +61,20 @@ const DealsContainer = styled.div`
 const SpecialDealText = styled(Typography)`
  font-weight: bold;
  color: black;
+ margin-block: 5px;
 `;
 
-const NewPropertyBox = styled(Box)`
- background-color: #cdcdee;
+const NewPropertyBox = styled.h2`
+ background-color: ${props => props.theme.colors.secondaryNavyBlue};
  border-radius: 4px;
  padding: 4px;
+ font-size: 0.8rem;
 `;
 
 // Styled components for icons
 const StyledStarIcon = styled(StarIcon)`
  margin-right: 1px;
- color: #26266d;
- margin-top: 26px;
+ color: ${props => props.theme.colors.primaryNavyBlue};
 `;
 
 const StyledLocationIcon = styled(LocationIcon)`
@@ -84,6 +92,17 @@ const StyledOccupancyIcon = styled(OccupancyIcon)`
  color: grey;
 `;
 
+const RoomTypeName = styled.h1`
+  font-size: 1rem;
+  width: 150px;
+  word-wrap: break-word;
+`
+
+const RatingContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+`
 
 const RoomCard: React.FC<Result> = ({
   room_type_name,
@@ -96,6 +115,10 @@ const RoomCard: React.FC<Result> = ({
   reviews,
   lowResImages
 }) => {
+  const { t, i18n } = useTranslation();
+  const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
+  const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+
   return (
     <RoomCardContainer>
       <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
@@ -105,27 +128,25 @@ const RoomCard: React.FC<Result> = ({
       </Carousel>
       <CardContent>
         <TitleContainer>
-          <Typography variant="h6" component="div">
+          <RoomTypeName>
             {room_type_name}
-          </Typography>
+          </RoomTypeName>
           <ReviewsContainer>
             {reviews.length > 0 ? (
               <>
-                <IconTextContainer>
+                <RatingContainer>
                   <StyledStarIcon fontSize="small" />
-                  <Typography variant="body1" color="text.secondary" style={{ marginTop: '26px' }}>
+                  <Typography variant="body1" color="text.secondary">
                     {rating}
                   </Typography>
-                </IconTextContainer>
+                </RatingContainer>
                 <Typography variant="body1" color="text.secondary">
                   {reviews.length} reviews
                 </Typography>
               </>
             ) : (
               <NewPropertyBox>
-                <Typography variant="body1" color="black">
-                  New property
-                </Typography>
+                New property
               </NewPropertyBox>
             )}
           </ReviewsContainer>
@@ -138,18 +159,18 @@ const RoomCard: React.FC<Result> = ({
           </LocationText>
         </IconTextContainer>
         <LocationText variant="body1" color="text.secondary">
-          Inclusive {area_in_square_feet} ft.
+          <i>Inclusive</i> &emsp; {area_in_square_feet} ft.
         </LocationText>
-        <IconTextContainer>
-          <StyledBedIcon fontSize="small" />
-          <Typography variant="body1" color="text.secondary">
-            {bedTypeTextGenerator(double_bed, single_bed)}
-          </Typography>
-        </IconTextContainer>
         <IconTextContainer>
           <StyledOccupancyIcon fontSize="small" />
           <Typography variant="body1" color="text.secondary">
             1-{max_capacity}
+          </Typography>
+        </IconTextContainer>
+        <IconTextContainer>
+          <StyledBedIcon fontSize="small" />
+          <Typography variant="body1" color="text.secondary">
+            {bedTypeTextGenerator(double_bed, single_bed)}
           </Typography>
         </IconTextContainer>
 
@@ -182,7 +203,7 @@ const RoomCard: React.FC<Result> = ({
           {deals.join(', ')}
         </Typography> */}
         <SpecialDealText variant="body1" color="text.secondary">
-          ${average_rate}
+          {formatCurrency(average_rate, activeCurrency, exchangeRates, i18n)}
         </SpecialDealText>
         <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
           per night

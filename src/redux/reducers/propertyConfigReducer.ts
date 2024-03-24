@@ -20,7 +20,8 @@ const initialState: PropertyConfig = {
     maxGuests: 5,
     maxLengthStay: 1,
     numberOfRooms: 5,
-    siteLogoUrl: ""
+    siteLogoUrl: "",
+    footerLogoUrl: ""
   },
   message: "",
   status: null,

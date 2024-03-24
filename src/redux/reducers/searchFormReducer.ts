@@ -21,7 +21,7 @@ const initialState: SearchFormState = {
     totalGuests: 1,
     teens: 0,
     kids: 0,
-    beds: 1
+    beds: 0
 };
 
 export const searchFormSlice = createSlice({
