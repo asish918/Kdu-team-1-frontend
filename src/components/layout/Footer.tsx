@@ -1,6 +1,8 @@
 import React from "react";
 import styled from "styled-components";
 import { useTranslation } from "react-i18next";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 // Styled components for the footer
 const FooterContainer = styled.footer<{ $sticky: boolean; }>`
@@ -17,13 +19,10 @@ const FooterContainer = styled.footer<{ $sticky: boolean; }>`
   padding-block: 5px;
 `;
 
-const CompanyTitle = styled.div`
-  h1 {
+const CompanyTitle = styled.img`
     margin-right: 10px;
     font-size: 24px;
-    text-transform: uppercase;
-    color: white;
-  }
+    height: 20px;
 `;
 
 const LegalInfo = styled.div`
@@ -43,12 +42,11 @@ interface FooterProps {
 
 // Footer component
 const Footer: React.FC<FooterProps> = ({ sticky }) => {
+  const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
   const { t } = useTranslation();
   return (
     <FooterContainer $sticky={sticky}>
-      <CompanyTitle>
-        <h1>{t("footer.title")}</h1>
-      </CompanyTitle>
+      <CompanyTitle src={propertyConfig.footerLogoUrl} />
       <LegalInfo>
         <p>{t("footer.copyright")}</p>
         <p>{t("footer.rights")}</p>

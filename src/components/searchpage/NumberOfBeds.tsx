@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -29,6 +29,7 @@ const NumberOfBeds: React.FC = () => {
           onChange={handleChange}
           label="Beds"
         >
+          <MenuItem value={"0"}>Any</MenuItem>
           <MenuItem value={"1"}>1</MenuItem>
           <MenuItem value={"2"}>2</MenuItem>
         </Select>

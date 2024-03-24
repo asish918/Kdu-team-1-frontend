@@ -12,7 +12,7 @@ export function searchFieldFormValidator(search: SearchFormState): boolean {
     if (search.startDate! > search.endDate!) return false;
     if (search.kids + search.adults + search.teens > search.totalGuests) return false;
     if (search.adults < search.numberOfRooms) return false;
-    if (search.kids < 0 || search.adults < 1 || search.teens < 0 || search.totalGuests < 0 || search.numberOfRooms < 1 || search.beds < 1) return false;
+    if (search.kids < 0 || search.adults < 1 || search.teens < 0 || search.totalGuests < 0 || search.numberOfRooms < 1 || search.beds < 0) return false;
 
     return true;
 }

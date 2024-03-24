@@ -11,6 +11,7 @@ const appTheme: DefaultTheme = {
     primaryRed: "#D0182B",
     secondaryBlue: "#006EFF",
     textBlack: "#000000",
+    secondaryNavyBlue: "#c7c7de",
   },
 };
 

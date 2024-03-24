@@ -19,8 +19,8 @@ const Pagination: React.FC = () => {
     dispatch(setPage(currentPage + 1))
   };
 
-  const itemsPerPage = 2; 
-  const startIdx = currentPage * itemsPerPage;
+  const itemsPerPage = 2;
+  const startIdx = currentPage * itemsPerPage + 1;
   const endIdx = startIdx + itemsPerPage - 1;
 
   return (
