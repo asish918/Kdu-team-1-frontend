@@ -47,23 +47,23 @@ export function DatePicker({ step }: DatePickerProps) {
     const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
     const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
 
-    const startDate: Date | null = useSelector((state: RootState) => state.searchForm.startDate);
-    const endDate: Date | null = useSelector((state: RootState) => state.searchForm.endDate);
+    const startDate: string | null = useSelector((state: RootState) => state.searchForm.startDate);
+    const endDate: string | null = useSelector((state: RootState) => state.searchForm.endDate);
 
     const handleDateClick = (date: Date) => {
         if (!startDate) {
             setMessage(`Please select end date. Max. length of stay: ${maxLengthStay} day(s)`);
-            dispatch(setStartDatePick(date));
+            dispatch(setStartDatePick(date.toISOString()));
             dispatch(setEndDatePick(null));
             setMaxDate(addDays(date, maxLengthStay));
             setMinDate(date);
         } else if (!endDate && !isBefore(date, startDate)) {
-            dispatch(setEndDatePick(date));
+            dispatch(setEndDatePick(date.toISOString()));
             setMaxDate(null);
             setMinDate(null);
             setMessage('Minimum nightly rate over stay is $50');
         } else {
-            dispatch(setStartDatePick(date));
+            dispatch(setStartDatePick(date.toISOString()));
             dispatch(setEndDatePick(null));
             setMaxDate(addDays(date, maxLengthStay));
             setMinDate(date);

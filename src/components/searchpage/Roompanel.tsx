@@ -85,7 +85,7 @@ const RoomResultsPanel: React.FC = () => {
       </HeaderAndControlsContainer >
 
       {status === "loading" ?
-        <Spinner size={50} />
+        <Spinner size={80} />
         :
         <RoomCardsContainer>
           {roomResults?.results.map((room, index) => (

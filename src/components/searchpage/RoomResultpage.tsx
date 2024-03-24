@@ -8,17 +8,12 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useLocation, useNavigate } from 'react-router-dom';
-import queryString from 'query-string';
-import { convertStatesToQueryString, requestBodyGenerator } from '../../utils/util';
+import { checkLocalStorageForKey, convertStatesToQueryString, requestBodyGenerator } from '../../utils/util';
 import { searchFieldFormValidator, validateFilters } from '../../utils/validator';
 import { setAdults, setBeds, setEndDatePick, setKids, setNumberOfRooms, setStartDatePick, setTeens, setTotalGuests } from '../../redux/reducers/searchFormReducer';
 import { RoomResultRequestBody } from '../../types';
 import { fetchRoomResult } from '../../redux/thunks/fetchRoomResults';
 import { setBedTypes, setPriceSort, setRoomTypes } from '../../redux/reducers/filterSortReducer';
-
-interface RoomResultsPageProps {
-  onSearch: (params: { dateRange: Date[]; beds: number }) => void;
-}
 
 const RoomResultContainer = styled.div`
   padding-inline: 20px;
@@ -53,7 +48,7 @@ const RoomResultPanelContainer = styled.div`
   }
 `
 
-function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
+function RoomResultsPage() {
   const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
   const searchFormProps = useSelector((state: RootState) => state.searchForm);
   const filterSortProps = useSelector((state: RootState) => state.filterState);
@@ -65,14 +60,30 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
   useEffect(() => {
     const searchParams = new URLSearchParams(location.search);
 
+    if (!searchParams.size) {
+      if (checkLocalStorageForKey('persist:root')) {
+        const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
+
+        dispatch(fetchRoomResult({
+          url: `api/roomresult/search?page=${currentPage}&size=2`,
+          requestBody
+        }));
+
+        return;
+      }
+      else {
+        throw new Error("No User Preferences Found")
+      }
+    }
+
     if (!validateFilters(filterSortProps)) {
       return;
     }
 
     if (!searchFieldFormValidator(searchParams)) throw new Error("Invalid Request");
 
-    dispatch(setStartDatePick(new Date(searchParams.get('startDate')!)));
-    dispatch(setEndDatePick(new Date(searchParams.get('endDate')!)));
+    dispatch(setStartDatePick(searchParams.get('startDate')!));
+    dispatch(setEndDatePick(searchParams.get('endDate')!));
     dispatch(setAdults(parseInt(searchParams.get('adults')!)));
     dispatch(setBeds(parseInt(searchParams.get('beds')!)));
     dispatch(setKids(parseInt(searchParams.get('kids')!)));
@@ -82,15 +93,15 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
 
     if (!validateFilters(filterSortProps)) {
       const roomTypes = searchParams.getAll('roomTypes');
-      const bedTypesString = searchParams.get('bedTypes') || '';
-      const bedTypes = bedTypesString.split(',');
+      const bedTypesString = searchParams.get('bedTypes');
+      const bedTypes = bedTypesString?.split(',');
       dispatch(setBedTypes(bedTypes.length > 0 ? bedTypes : []));
       dispatch(setRoomTypes(roomTypes.length > 0 ? roomTypes : []));
     }
 
     dispatch(setPriceSort(searchParams.get('priceSort') === 'true'));
 
-    const bedTypesString = searchParams.get('bedTypes') || '';
+    const bedTypesString = searchParams.get('bedTypes') || "";
     const bedTypes = bedTypesString.split(',');
 
     const requestBody: RoomResultRequestBody = {
@@ -102,9 +113,8 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
       totalGuests: parseInt(searchParams.get('totalGuests')!),
       roomTypes: searchParams.getAll('roomTypes').length > 0 ? searchParams.getAll('roomTypes') : [],
       priceSort: searchParams.get('priceSort') === 'true',
-      bedTypes: bedTypes.length > 0 ? bedTypes : []
+      bedTypes: bedTypes.length > 0 && bedTypes[0] !== "" ? bedTypes : []
     };
-
 
     console.log(requestBody);
 
@@ -135,6 +145,7 @@ function RoomResultsPage({ onSearch }: RoomResultsPageProps) {
   const handleSearch = () => {
     const searchParams = convertStatesToQueryString(searchFormProps, filterSortProps);
     const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
+
     dispatch(fetchRoomResult({
       url: `api/roomresult/search?page=${currentPage}&size=2`,
       requestBody

@@ -54,9 +54,9 @@ export function generateDescription(adults: number, children: number, teens: num
 export function convertStatesToQueryString(searchParams: SearchFormState, filterParams: FilterSortState): string {
   const queryParams = new URLSearchParams();
 
-  const startDate: Date = searchParams.startDate!;
+  const startDate: Date = new Date(searchParams.startDate!);
   startDate.setUTCHours(0, 0, 0);
-  const endDate: Date = searchParams.endDate!;
+  const endDate: Date = new Date(searchParams.endDate!);
   endDate.setUTCHours(0, 0, 0);
 
   queryParams.set('startDate', startDate.toISOString());
@@ -86,9 +86,9 @@ export function convertStatesToQueryString(searchParams: SearchFormState, filter
 }
 
 export function requestBodyGenerator(searchParams: SearchFormState, filterParams: FilterSortState): RoomResultRequestBody {
-  const startDate: Date = searchParams.startDate!;
+  const startDate: Date = new Date(searchParams.startDate!);
   startDate.setUTCHours(0, 0, 0);
-  const endDate: Date = searchParams.endDate!;
+  const endDate: Date = new Date(searchParams.endDate!);
   endDate.setUTCHours(0, 0, 0);
 
   const requestBody: RoomResultRequestBody = {
@@ -144,15 +144,12 @@ export function roomCardNameGenerator(input: string): string {
   return input.replace(/_/g, ' ');
 }
 
-export function setUserPreferences(key: string, object: RoomResultRequestBody): void {
-  const serializedObject = JSON.stringify(object);
-  localStorage.setItem(key, serializedObject);
-}
-
-export function getUserPreferences(key: string): RoomResultRequestBody | null {
-  const serializedObject = localStorage.getItem(key);
-  if (serializedObject) {
-    return JSON.parse(serializedObject);
+export function checkLocalStorageForKey(key: string): boolean {
+  try {
+    const item = localStorage.getItem(key);
+    return item !== null;
+  } catch (error) {
+    console.error('Error checking local storage:', error);
+    return false;
   }
-  return null;
 }
