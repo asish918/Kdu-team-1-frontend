@@ -7,10 +7,10 @@ import Select, { SelectChangeEvent } from '@mui/material/Select';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
-import { setNumberOfRooms } from '../../redux/reducers/landingPageReducer';
+import { setNumberOfRooms } from '../../redux/reducers/searchFormReducer';
 
 const NumberOfRooms: React.FC = ({}) => {
-  const numberOfRooms = useSelector((state: RootState) => state.landingPage.numberOfRooms);
+  const numberOfRooms = useSelector((state: RootState) => state.searchForm.numberOfRooms);
   const dispatch = useDispatch();
 
   const { i18n } = useTranslation();

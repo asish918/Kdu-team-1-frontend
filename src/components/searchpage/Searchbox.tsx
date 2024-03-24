@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import NumberOfGuests from '../landingpage/NumberOfGuests';
 import NumberOfRooms from '../landingpage/NumberOfRooms';
 import { DatePicker } from '../datepicker/DatePicker';
@@ -13,12 +12,6 @@ interface SearchFormProps {
 }
 
 function SearchForm({ onSearch }: SearchFormProps) {
-  const [dateRange, setDateRange] = useState<Date[]>([new Date(), new Date()]);
-  const [beds, setBeds] = useState<number>(1);
-
-  const handleSearch = () => {
-    onSearch({ dateRange, beds });
-  };
 
   const Container = styled.div`
   display: flex;
@@ -31,12 +24,16 @@ function SearchForm({ onSearch }: SearchFormProps) {
   const InnerContainer = styled.div`
   display: flex;
   align-items: center;
-  /* justify-content: space-between; */
+  justify-content: center;
   width: 100%;
   gap: 20px;
 
   @media (max-width: 570px) {
     flex-direction: column;
+  }
+
+  @media (min-width: 570px) and (max-width: 768px) {
+    flex-wrap: wrap;
   }
 `;
 
@@ -76,6 +73,10 @@ function SearchForm({ onSearch }: SearchFormProps) {
   @media (max-width: 570px) {
     width: 100%;
   }
+
+  @media (min-width: 570px) and (max-width: 768px) {
+    width: 48%;
+  }
   `
 
   return (
@@ -92,7 +93,7 @@ function SearchForm({ onSearch }: SearchFormProps) {
         </BedsContainer>
         <DatePicker step={1} />
         <WheelchairAccessible step={1} />
-        <ButtonStyled variant="contained" onClick={handleSearch}>
+        <ButtonStyled variant="contained" onClick={onSearch}>
           Search
         </ButtonStyled>
       </InnerContainer>

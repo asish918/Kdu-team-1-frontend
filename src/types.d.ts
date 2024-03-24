@@ -81,3 +81,45 @@ export type SearchFieldParams = {
   startDate?: Date,
   endDate?: Date,
 }
+
+export type RoomResultRequestBody = {
+  startDate: string;
+  endDate: string;
+  beds: string;
+  rooms: string;
+  propertyId: string;
+  totalGuests: string;
+  roomTypes: string[];
+  bedTypes: string[];
+  priceSort?: boolean;
+  areaSort?: boolean;
+  ratingSort?: boolean;
+}
+
+export type RoomResult = {
+  results: Result[];
+  totalPages: number;
+  currentPage: number;
+}
+
+export type Result = {
+  area_in_square_feet: number;
+  double_bed: number;
+  max_capacity: number;
+  room_type_name: string;
+  single_bed: number;
+  average_rate: number;
+  room_type_id: number;
+  rating: number;
+  reviews: string[];
+  highResImages: string[];
+  lowResImages: string[];
+  promotionType: PromotionType;
+}
+
+export type PromotionType = {
+  promotion_description: string;
+  promotion_id: string;
+  promotion_title: string;
+  price_factor: number;
+}

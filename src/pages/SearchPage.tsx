@@ -1,12 +1,14 @@
-import React from 'react';
 import RoomResultsPage from '../components/searchpage/RoomResultpage';
 import Footer from '../components/layout/Footer';
+import { useLocation } from 'react-router-dom';
+import queryString from 'query-string';
 
 const SearchPage = () => {
+   const location = useLocation();
    // Define the onSearch function
-   const handleSearch = (params: { dateRange: Date[]; beds: number }) => {
-      // Implement the logic to handle the search parameters
-      console.log(params);
+   const handleSearch = () => {
+      const queryParams = queryString.parse(location.search);
+      console.log(queryParams);
    };
 
    return (

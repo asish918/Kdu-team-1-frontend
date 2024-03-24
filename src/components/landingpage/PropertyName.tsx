@@ -8,7 +8,7 @@ import { Property } from '../../types';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { useTranslation } from 'react-i18next';
-import { setPropertyName } from '../../redux/reducers/landingPageReducer';
+import { setPropertyName } from '../../redux/reducers/searchFormReducer';
 import styled from 'styled-components';
 import queryString from "query-string";
 
@@ -32,7 +32,7 @@ const StyledFormControl = styled(FormControl)`
 
 const PropertyName: React.FC = () => {
   const properties: Property[] = useSelector((state: RootState) => state.propertyList.propertyList)
-  const propertyName = useSelector((state: RootState) => state.landingPage.propertyName);
+  const propertyName = useSelector((state: RootState) => state.searchForm.propertyName);
 
   const dispatch = useDispatch();
 

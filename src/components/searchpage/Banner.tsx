@@ -9,6 +9,7 @@ interface BannerProps {
 const BannerImage = styled.img`
     width: 100%;
     height: 192px;
+    object-fit: cover;
 `
 
 // Define the functional component
