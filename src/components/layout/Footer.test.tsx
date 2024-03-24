@@ -1,32 +1,26 @@
 
 import { render, screen } from "@testing-library/react";
+import { BrowserRouter } from "react-router-dom";
 import Footer from "./Footer";
 import AppProvider from "../../providers/AppProvider";
 
 describe("Footer component", () => {
-  it("renders correctly with translations", () => {
+ it("renders correctly with translations", () => {
     render(
+      <BrowserRouter>
         <AppProvider>
-          <Footer />  
+          <Footer sticky={true} />
         </AppProvider>
-      
+      </BrowserRouter>
     );
 
-    
     const copyrightElements = screen.getAllByText("© Kickdrum Technology Group LLC.");
-    
-    copyrightElements.forEach(element => {
-      expect(element);
-    });
+    expect(copyrightElements)
 
     const rights = screen.getAllByText("All rights reserved.");
-    rights.forEach(element =>{
-        expect(element);
-    });
-
+    expect(rights);
     
-  });
-
-  
+ });
 });
+
 
