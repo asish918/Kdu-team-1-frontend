@@ -20,7 +20,21 @@ export type LandingPageFormTranslation = {
   age: string;
   rooms: string;
   search: string;
+  beds: string;
   accessibility: string;
+}
+
+export type RoomResultFormTranslation = {
+  filterTitle: string;
+  roomResultTitle: string;
+  paginationFirst: string;
+  paginationSecond: string;
+}
+
+export type StepperTranslation = {
+  step1: string,
+  step2: string,
+  step3: string
 }
 
 export type FooterTranslation = {
@@ -37,7 +51,9 @@ export type ErrorTranslation = {
 export type Translation = {
   header: HeaderTranslation;
   footer: FooterTranslation;
-  landingPageForm: LandingPageFormTranslation
+  landingPageForm: LandingPageFormTranslation;
+  roomResultForm: RoomResultFormTranslation;
+  stepper: StepperTranslation;
   error: ErrorTranslation;
 };
 

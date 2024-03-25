@@ -23,7 +23,19 @@ export const hn: LanguageType = {
       kids: "बच्चे",
       adult: "वयस्क",
       teens: "किशोर",
+      beds: "बिस्तर",
       accessibility: "मुझे एक पहुंचने योग्य कमरा चाहिए"
+    },
+    roomResultForm: {
+      filterTitle: "अपने परिणामों को संक्षेपित करें",
+      roomResultTitle: "कक्ष परिणाम",
+      paginationFirst: "दिखाना",
+      paginationSecond: "परिणाम"
+    },
+    stepper: {
+      step1: "कमरा चुनें",
+      step2: "ऐड-ऑन चुनें",
+      step3: "चेक-आउट"
     },
     footer: {
       title: "Kickdrum",
