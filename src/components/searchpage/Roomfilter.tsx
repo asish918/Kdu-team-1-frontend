@@ -13,6 +13,7 @@ import {default as styledComponent}  from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setBedTypes, setRoomTypes } from '../../redux/reducers/filterSortReducer';
 import { generateRoomTypeNumbers } from '../../utils/util';
+import { useTranslation } from 'react-i18next';
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -61,6 +62,7 @@ const AccordionDiv = styledComponent.div`
 
 export default function CustomizedAccordions() {
   const dispatch = useDispatch();
+  const { i18n } = useTranslation();
 
   const [expanded, setExpanded] = React.useState<string | false>('BedTypes');
   const [checkedState, setCheckedState] = React.useState<{
@@ -109,7 +111,7 @@ export default function CustomizedAccordions() {
   return (
     <AccordionDiv>
       <Typography variant="h6" gutterBottom sx={{ marginLeft: '23px' }}>
-        Narrow your results
+        {i18n.t("roomResultForm.filterTitle")}
       </Typography>
       <Accordion expanded={expanded === 'BedTypes'} onChange={handleChange('BedTypes')}>
         <AccordionSummary aria-controls="BedTypes-content" id="BedTypes-header">

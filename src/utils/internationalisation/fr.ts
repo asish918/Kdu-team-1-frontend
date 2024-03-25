@@ -23,7 +23,19 @@ export const fr: LanguageType = {
       kids: "Enfants",
       adult: "Adulte",
       teens: "Adolescents",
+      beds: "Lits",
       accessibility: "J'ai besoin d'une chambre accessible"
+    },
+    roomResultForm: {
+      filterTitle: "Affiner vos résultats",
+      roomResultTitle: "Résultats de la chambre",
+      paginationFirst: "Affichage de",
+      paginationSecond: "résultats"
+    },
+    stepper: {
+      step1: "Choisissez une chambre",
+      step2: "Choisissez un supplément",
+      step3: "Check-out"
     },
     footer: {
       title: "Kickdrum",

@@ -65,7 +65,7 @@ function RoomResultsPage() {
         const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
 
         dispatch(fetchRoomResult({
-          url: `api/roomresult/search?page=${currentPage}&size=2`,
+          url: `search?page=${currentPage}&size=2`,
           requestBody
         }));
 
@@ -119,7 +119,7 @@ function RoomResultsPage() {
     console.log(requestBody);
 
     dispatch(fetchRoomResult({
-      url: `api/roomresult/search?page=${currentPage}&size=2`,
+      url: `search?page=${currentPage}&size=2`,
       requestBody
     }));
   }, [currentPage])
@@ -134,7 +134,7 @@ function RoomResultsPage() {
     const searchParams = convertStatesToQueryString(searchFormProps, filterSortProps);
 
     dispatch(fetchRoomResult({
-      url: `api/roomresult/search?page=${currentPage}&size=2`,
+      url: `search?page=${currentPage}&size=2`,
       requestBody
     }));
 
@@ -147,7 +147,7 @@ function RoomResultsPage() {
     const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
 
     dispatch(fetchRoomResult({
-      url: `api/roomresult/search?page=${currentPage}&size=2`,
+      url: `search?page=${currentPage}&size=2`,
       requestBody
     }));
     navigate(`/room-result?${searchParams}`);

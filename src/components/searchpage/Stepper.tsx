@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Stepper, Step, StepLabel } from '@mui/material';
 import styled from 'styled-components';
+import { useTranslation } from 'react-i18next';
 
 const steps = ['1.Choose room', '2.Choose add on', '3.Checkout'];
 
@@ -36,6 +37,8 @@ const StepperContainer = styled.div`
 
 function BookingStepper() {
   const [activeStep, setActiveStep] = useState(0);
+
+  const { i18n } = useTranslation();
 
   const handleStep = (step: any) => {
     setActiveStep(step);

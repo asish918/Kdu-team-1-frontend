@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import Spinner from '../layout/Spinner';
 import { setPriceSort } from '../../redux/reducers/filterSortReducer';
+import { useTranslation } from 'react-i18next';
 
 
 const RoomCardsContainer = styled.div`
@@ -58,12 +59,15 @@ const RoomResultAction = styled.div`
  }
 `;
 
+const NoResultDiv = styled.div`
+  margin-left: 20px;
+`
 
 const RoomResultsPanel: React.FC = () => {
   const [sortCriteria, setSortCriteria] = useState('price low');
   const { roomResults, status } = useSelector((state: RootState) => state.roomResult)
   const dispatch = useDispatch();
-
+  const { i18n } = useTranslation();
 
   const handleSortChange = (criteria: string) => {
     if (criteria == "price low") {
@@ -77,7 +81,7 @@ const RoomResultsPanel: React.FC = () => {
   return (
     <div>
       <HeaderAndControlsContainer>
-        <RoomResultsTitle>Room Results</RoomResultsTitle>
+        <RoomResultsTitle>{i18n.t("roomResultForm.roomResultTitle")}</RoomResultsTitle>
         <RoomResultAction>
           <Pagination />
           <SortDropdown value={sortCriteria} onChange={handleSortChange} />
@@ -87,13 +91,18 @@ const RoomResultsPanel: React.FC = () => {
       {status === "loading" ?
         <Spinner size={80} />
         :
-        <RoomCardsContainer>
-          {roomResults?.results.map((room, index) => (
-            <RoomCardWrapper key={index}>
-              <RoomCard {...room} />
-            </RoomCardWrapper>
-          ))}
-        </RoomCardsContainer>
+        roomResults?.results.length === 0 ?
+          <NoResultDiv>
+            No Results
+          </NoResultDiv>
+          :
+          <RoomCardsContainer>
+            {roomResults?.results.map((room, index) => (
+              <RoomCardWrapper key={index}>
+                <RoomCard {...room} />
+              </RoomCardWrapper>
+            ))}
+          </RoomCardsContainer>
       }
 
     </div>
