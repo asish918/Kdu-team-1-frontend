@@ -5,12 +5,12 @@ import { BrowserRouter } from "react-router-dom";
 
 test('renders SearchForm component', () => {
   render(
-  
-  <BrowserRouter>
-  <AppProvider>
-  <SearchForm />
- </AppProvider>
- </BrowserRouter>
+
+    <BrowserRouter>
+      <AppProvider>
+        <SearchForm />
+      </AppProvider>
+    </BrowserRouter>
   );
-  
+
 });
