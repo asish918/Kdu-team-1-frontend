@@ -1,5 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import RoomCard from './Roomcard';
+import AppProvider from '../../providers/AppProvider';
+import { BrowserRouter } from 'react-router-dom';
 
 test('renders RoomCard component', () => {
   const mockRoom = {
@@ -14,23 +16,29 @@ test('renders RoomCard component', () => {
     lowResImages: ['image1.jpg', 'image2.jpg'],
   };
 
-  render(<RoomCard room_type_id={0} highResImages={[]} promotionType={{
-      promotion_description: '',
-      promotion_id: '',
-      promotion_title: '',
-      price_factor: 0
-  }} {...mockRoom} />);
+  render(
+    <BrowserRouter>
+      <AppProvider>
+        <RoomCard room_type_id={0} highResImages={[]} promotionType={{
+          promotion_description: '',
+          promotion_id: '',
+          promotion_title: '',
+          price_factor: 0
+        }} {...mockRoom} />
+      </AppProvider>
+    </BrowserRouter>
+  );
 
-  
+
   const roomTypeNameElement = screen.getByText(/Deluxe Suite/i);
   expect(roomTypeNameElement);
 
-  
+
   const averageRateElement = screen.getByText(/per night/i);
   expect(averageRateElement);
 
-  
+
   const selectRoomButton = screen.getByText(/Select Room/i);
   expect(selectRoomButton);
-  
+
 });
