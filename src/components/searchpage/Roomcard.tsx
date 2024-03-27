@@ -128,30 +128,30 @@ const RoomCard: React.FC<Result> = ({
 
   const [modalOpen, setModalOpen] = useState(false);
 
- const handleOpenModal = () => {
+  const handleOpenModal = () => {
     setModalOpen(true);
- };
+  };
 
- const handleCloseModal = () => {
+  const handleCloseModal = () => {
     setModalOpen(false);
- };
+  };
 
   return (
     <>
-    
-    <RoomCardContainer>
-      <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
-        {lowResImages.map((image, index) => (
-          <StyledImage key={index} src={image} alt={`Room ${index}`} />
-        ))}
-      </Carousel>
-      <CardContent>
-        <TitleContainer>
-          <RoomTypeName>
-            {roomCardNameGenerator(room_type_name)}
-          </RoomTypeName>
-          <ReviewsContainer>
-            {reviews.length > 0 ? (
+
+      <RoomCardContainer>
+        <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
+          {lowResImages.map((image, index) => (
+            <StyledImage key={index} src={image} alt={`Room ${index}`} />
+          ))}
+        </Carousel>
+        <CardContent>
+          <TitleContainer>
+            <RoomTypeName>
+              {roomCardNameGenerator(room_type_name)}
+            </RoomTypeName>
+            <ReviewsContainer>
+              {/* {reviews.length > 0 ? (
               <>
                 <RatingContainer>
                   <StyledStarIcon fontSize="small" />
@@ -163,37 +163,37 @@ const RoomCard: React.FC<Result> = ({
                   {reviews.length} reviews
                 </Typography>
               </>
-            ) : (
+            ) : ( */}
               <NewPropertyBox>
                 New property
               </NewPropertyBox>
-            )}
-          </ReviewsContainer>
-        </TitleContainer>
+              {/* )} */}
+            </ReviewsContainer>
+          </TitleContainer>
 
-        <IconTextContainer>
-          <StyledLocationIcon fontSize="small" />
+          <IconTextContainer>
+            <StyledLocationIcon fontSize="small" />
+            <LocationText variant="body1" color="text.secondary">
+              Kickdrum
+            </LocationText>
+          </IconTextContainer>
           <LocationText variant="body1" color="text.secondary">
-            Kickdrum
+            <i>Inclusive</i> &emsp; {area_in_square_feet} ft.
           </LocationText>
-        </IconTextContainer>
-        <LocationText variant="body1" color="text.secondary">
-          <i>Inclusive</i> &emsp; {area_in_square_feet} ft.
-        </LocationText>
-        <IconTextContainer>
-          <StyledOccupancyIcon fontSize="small" />
-          <Typography variant="body1" color="text.secondary">
-            1-{max_capacity}
-          </Typography>
-        </IconTextContainer>
-        <IconTextContainer>
-          <StyledBedIcon fontSize="small" />
-          <Typography variant="body1" color="text.secondary">
-            {bedTypeTextGenerator(double_bed, single_bed)}
-          </Typography>
-        </IconTextContainer>
+          <IconTextContainer>
+            <StyledOccupancyIcon fontSize="small" />
+            <Typography variant="body1" color="text.secondary">
+              1-{max_capacity}
+            </Typography>
+          </IconTextContainer>
+          <IconTextContainer>
+            <StyledBedIcon fontSize="small" />
+            <Typography variant="body1" color="text.secondary">
+              {bedTypeTextGenerator(double_bed, single_bed)}
+            </Typography>
+          </IconTextContainer>
 
-        {/* <DealsContainer>
+          {/* <DealsContainer>
           <svg
             width="121"
             height="32"
@@ -221,18 +221,18 @@ const RoomCard: React.FC<Result> = ({
         <Typography variant="body1" color="text.secondary">
           {deals.join(', ')}
         </Typography> */}
-        <SpecialDealText variant="body1" color="text.secondary">
-          {formatCurrency(average_rate, activeCurrency, exchangeRates, i18n)}
-        </SpecialDealText>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-          per night
-        </Typography>
-        <Button variant="contained" color="primary" onClick={handleOpenModal}>
-          Select Room
-        </Button>
-      </CardContent>
-    </RoomCardContainer>
-    <RoomDetailsModal
+          <SpecialDealText variant="body1" color="text.secondary">
+            {formatCurrency(average_rate, activeCurrency, exchangeRates, i18n)}
+          </SpecialDealText>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+            per night
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleOpenModal}>
+            Select Room
+          </Button>
+        </CardContent>
+      </RoomCardContainer>
+      <RoomDetailsModal
         open={modalOpen}
         onClose={handleCloseModal}
         roomDetails={{

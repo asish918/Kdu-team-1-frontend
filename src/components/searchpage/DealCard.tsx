@@ -1,4 +1,3 @@
-import React from 'react';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
@@ -7,48 +6,48 @@ import { styled } from '@mui/system';
 
 // Custom styled components for the card and its parts
 const CustomCard = styled(Card)(({ theme }) => ({
- width: '618px',
- height: '130px',
- border: '1px solid rgba(239, 240, 241, 1)',
- display: 'flex',
- flexDirection: 'row',
- marginTop: '20px',
+  maxWidth: '618px',
+  height: '130px',
+  border: '1px solid rgba(239, 240, 241, 1)',
+  display: 'flex',
+  flexDirection: 'row',
+  marginTop: '20px',
 }));
 
 const LeftContent = styled(CardContent)(({ theme }) => ({
- flex: 7,
- backgroundColor: 'white',
- display: 'flex',
- flexDirection: 'column',
- justifyContent: 'space-between',
+  flex: 7,
+  backgroundColor: 'white',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }));
 
 const RightContent = styled(CardContent)(({ theme }) => ({
- flex: 3,
- backgroundColor: '#EFF0F1',
- display: 'flex',
- flexDirection: 'column',
- justifyContent: 'space-between',
+  flex: 3,
+  backgroundColor: '#EFF0F1',
+  display: 'flex',
+  flexDirection: 'column',
+  justifyContent: 'space-between',
 }));
 
 const DealTitle = styled(Typography)(({ theme }) => ({
- color: 'black',
+  color: 'black',
 }));
 
 const DealDescription = styled(Typography)(({ theme }) => ({
- color: 'black',
+  color: 'black',
 }));
 
 const Price = styled(Typography)(({ theme }) => ({
- color: 'black',
+  color: 'black',
 }));
 
 const SelectPackageButton = styled(Button)(({ theme }) => ({
- color: 'white',
+  color: 'white',
 }));
 
 const DealCard = ({ dealTitle, dealDescription, price }) => {
- return (
+  return (
     <CustomCard>
       <LeftContent>
         <DealTitle variant="h5">{dealTitle}</DealTitle>
@@ -62,7 +61,7 @@ const DealCard = ({ dealTitle, dealDescription, price }) => {
         <SelectPackageButton variant="contained">Select Package</SelectPackageButton>
       </RightContent>
     </CustomCard>
- );
+  );
 };
 
 export default DealCard;

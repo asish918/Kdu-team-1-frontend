@@ -1,4 +1,3 @@
-import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
@@ -122,6 +121,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
         // Implement future logic here
     };
 
+    // TODO Fetch this data from Backend API (Asish)
     const deals = [
         {
            dealTitle: "$150 Dining Credit Package",
