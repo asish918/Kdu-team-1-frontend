@@ -9,7 +9,7 @@ import { RootState } from '../../redux/store';
 import Spinner from '../layout/Spinner';
 import { setPriceSort } from '../../redux/reducers/filterSortReducer';
 import { useTranslation } from 'react-i18next';
-
+import Itinerary from './Itinerary'; 
 
 const RoomCardsContainer = styled.div`
  display: flex;
@@ -68,6 +68,18 @@ const RoomResultsPanel: React.FC = () => {
   const { roomResults, status } = useSelector((state: RootState) => state.roomResult)
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
+//   const itineraryData = {
+//     dates: 'May 9 - May 16, 2022',
+//     guests: '1 adult 1 child',
+//     room: '1 room',
+//     roomType: 'Executive Room',
+//     specialPromo: 'Special Promoname',
+//     subtotal: '$00.00',
+//     taxes: '$000.00',
+//     vat: '$000.00',
+//     dueNow: '$0000.00',
+//     dueAtResort: '$0000.00',
+//  };
 
   const handleSortChange = (criteria: string) => {
     if (criteria == "price low") {
@@ -102,6 +114,9 @@ const RoomResultsPanel: React.FC = () => {
                 <RoomCard {...room} />
               </RoomCardWrapper>
             ))}
+               
+              {/* <Itinerary itinerary={itineraryData} /> */}
+               
           </RoomCardsContainer>
       }
 
