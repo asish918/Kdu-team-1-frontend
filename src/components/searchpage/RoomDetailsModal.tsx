@@ -8,14 +8,14 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DealCard from './DealCard';
 import PromoCode from './PromoCode';
 
-// Container for each image with text overlay
+
 const ImageContainer = styled.div`
  position: relative;
  width: 100%;
  height: 560px;
 `;
 
-// Styled image component
+
 const StyledImage = styled.img`
  width: 100%;
  height: 100%;
@@ -23,7 +23,7 @@ const StyledImage = styled.img`
  border-radius: 5px;
 `;
 
-// Updated styled text overlay
+
 const ImageTextOverlay = styled.div`
  position: absolute;
  bottom: 0;
@@ -57,7 +57,7 @@ const StyledOccupancyIcon = styled(OccupancyIcon)`
  color: grey;
 `;
 
-// Main container styled component
+
 const MainContainer = styled.div`
  display: flex;
  justify-content: space-between;
@@ -67,7 +67,7 @@ const MainContainer = styled.div`
  padding: 23px 25px;
 `;
 
-// Left and Right divs styled components
+
 const Left = styled.div`
  display: flex;
  flex-direction: column;
@@ -83,16 +83,45 @@ const Right = styled.div`
  width: 40%; 
 `;
 
+
+const StyledIconContainer = styled.div`
+ display: flex;
+ justify-content: space-between;
+ align-items: flex-start;
+`;
+
+const StyledAmenitiesContainer = styled.div`
+ display: flex;
+ flex-direction: row;
+ justify-content: space-between;
+ width: 100%;
+ margin-top: 8px;
+`;
+
+const StyledAmenitiesColumn = styled.div`
+ flex: 1;
+ display: flex;
+ flex-direction: column;
+ align-items: flex-start;
+ margin-right: 8px;
+`;
+
+const StyledAmenityItem = styled.div`
+ display: flex;
+ align-items: center;
+`;
+
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const Amenities = ["Wireless Internet Access","Cable & Pay TV Channels","Alarm Clock","Hair Dryer","In Room Safe","Iron and Ironing Board","Writing Desk and Chair"];
     const half = Math.ceil(Amenities.length / 2);
     const firstHalf = Amenities.slice(0, half);
     const secondHalf = Amenities.slice(half);
-
+    
     const handleApplyPromoCode = (code: string) => {
         console.log('Applying promo code:', code);
-        // Implement  logic here
-     };
+        // Implement future logic here
+    };
+
     const deals = [
         {
            dealTitle: "$150 Dining Credit Package",
@@ -109,9 +138,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
            dealDescription: "Experience a wellness retreat and earn $250 in wellness credit.",
            price: "$199.99"
         },
-        
-       ];
-       
+    ];
 
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
@@ -135,7 +162,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                 </Carousel>
                 <MainContainer>
                     <Left>
-                        <div className='icon' style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                        <StyledIconContainer>
                             <IconContainer>
                                 <StyledOccupancyIcon fontSize="small" />
                                 <Typography variant="body1" color="text.secondary">
@@ -154,53 +181,47 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                                     {roomDetails.area_in_square_feet} ft.
                                 </Typography>
                             </IconContainer>
-                        </div>
-                        
-                        <span> Lorem ipsum dolor, sit amet consectetur adipisicing elit. Fuga exercitationem magni, nesciunt, in tenetur quam ad corrupti possimus nemo dicta saepe accusamus pariatur soluta nihil natus amet veniam perspiciatis quas!</span>
+                        </StyledIconContainer>
+                        <span>Smoke free and decorated in contemporary jewel and earth tones, the 15-story Casino Tower rooms are located directly above the casino. The 364 sq.ft. Casino Tower rooms are appointed with classic furnishings and include pillow-top mattresses, 40 inch flat panel plasma TV and Wi-Fi internet access.</span>
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
                           Deals & Packages
-                         </Typography>
-                         {deals.map((deal, index) => (
-                        <DealCard
-                         key={index}
-                         dealTitle={deal.dealTitle}
-                         dealDescription={deal.dealDescription}
-                         price={deal.price}
-                                   />
+                        </Typography>
+                        {deals.map((deal, index) => (
+                            <DealCard
+                                key={index}
+                                dealTitle={deal.dealTitle}
+                                dealDescription={deal.dealDescription}
+                                price={deal.price}
+                            />
+                        ))}
+                        <PromoCode onApplyPromoCode={handleApplyPromoCode} />
+                    </Left>
+                    <Right>
+                        <Typography variant="body1" style={{ color: 'black' }}>
+                            Amenities
+                        </Typography>
+                        <StyledAmenitiesContainer>
+                            <StyledAmenitiesColumn>
+                                {firstHalf.map((amenity, index) => (
+                                    <StyledAmenityItem key={index}>
+                                        <CheckCircleOutlineIcon style={{ marginRight: '4px' }} />
+                                        {amenity}
+                                    </StyledAmenityItem>
                                 ))}
-                        
-                          <PromoCode onApplyPromoCode={handleApplyPromoCode} />
-
-                             </Left>
-                             <Right>
-                            <Typography variant="body1" style={{ color: 'black' }}>
-                                Amenities
-                            </Typography>
-                           
-                            <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between',width:'100%', marginTop:'8px' }}>
-                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start',marginRight:'8px' }}>
-                                
-                             {firstHalf.map((amenity, index) => (
-                               <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                               <CheckCircleOutlineIcon style={{ marginRight: '4px' }} />
-                               {amenity}
-                            </div>
-                                        ))}
-                              </div>
-                             <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                             {secondHalf.map((amenity, index) => (
-                             <div key={index} style={{ display: 'flex', alignItems: 'center' }}>
-                             <CheckCircleOutlineIcon style={{ marginRight: '4px' }} />
-                             {amenity}
-                          </div>
-                              ))}
-                                   </div>
-                              </div>
+                            </StyledAmenitiesColumn>
+                            <StyledAmenitiesColumn>
+                                {secondHalf.map((amenity, index) => (
+                                    <StyledAmenityItem key={index}>
+                                        <CheckCircleOutlineIcon style={{ marginRight: '4px' }} />
+                                        {amenity}
+                                    </StyledAmenityItem>
+                                ))}
+                            </StyledAmenitiesColumn>
+                        </StyledAmenitiesContainer>
                     </Right>
-
                 </MainContainer>
-               </DialogContent>
-              <DialogActions>
+            </DialogContent>
+            <DialogActions>
                 <Button onClick={onClose} color="primary">
                     Close
                 </Button>
@@ -210,6 +231,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
 };
 
 export default RoomDetailsModal;
+
 
 
 
