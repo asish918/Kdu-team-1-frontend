@@ -41,14 +41,14 @@ export default function DateToggle({ calendarToggle, startDate, endDate }: DateT
         <>
             <DateButton onClick={() => calendarToggle(prev => !prev)}>
                 <DateValue>
-                    <div>{t('landingPageForm.checkIn')}</div>
+                    <div>{t('landingPageForm.checkIn')} between</div>
                     <div className="DateValue">
                         {startDate ? new Date(startDate).toDateString() : "Any Date"}
                     </div>
                 </DateValue>
                 <VerticalLine />
                 <DateValue>
-                    <div>{t('landingPageForm.checkOut')}</div>
+                    <div>{t('landingPageForm.checkOut')} between</div>
                     <div className="DateValue">
                         {endDate ? new Date(endDate).toDateString() : "Any Date"}
                     </div>

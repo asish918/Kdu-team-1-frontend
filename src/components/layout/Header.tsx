@@ -12,13 +12,20 @@ import { Currency } from "../../utils/enums";
 import {
   Button,
   Drawer,
+  IconButton,
+  InputLabel,
+  Menu,
   MenuItem,
+  Paper,
+  Popper,
   Select,
   SelectChangeEvent,
+  Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getCurrentUser } from "aws-amplify/auth";
 import { useAuthenticator } from "@aws-amplify/ui-react";
+import { capitalize } from "../../utils/util";
 
 const HeaderContainer = styled.header`
   display: flex;
@@ -79,8 +86,18 @@ const StyledSelect = styled(Select)`
 `;
 
 const StyledLanguageIcon = styled(LanguageIcon)`
-  margin-left: 12px;
+  /* margin-left: 12px; */
 `;
+
+const LanguageDropDown = styled.div`
+  &.MuiIconButton-root {
+    color: ${props => props.theme.colors.primaryDeepBlue};
+  }
+
+  width: 100px;
+  display: flex;
+  justify-content: flex-end;
+`
 
 const MobileMenuButton = styled(Button)`
   &.MuiButtonBase-root {
@@ -154,6 +171,25 @@ const Header: React.FC = () => {
     setOpen(newOpen);
   };
 
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open1 = Boolean(anchorEl);
+  // const [selectedLabel, setSelectedLabel] = useState(''); // State to store the selected language label
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleLanguageSelect = (language: string) => {
+    setSelectedLanguage(language);
+    i18n.changeLanguage(language);
+    handleClose();
+  };
+
+
   const { t, i18n } = useTranslation();
   const [selectedLanguage, setSelectedLanguage] = useState(i18n.language);
   const activeCurrency = useSelector((state: RootState) => state.intel.activeCurrency)
@@ -161,12 +197,6 @@ const Header: React.FC = () => {
 
   const handleCurrencyChange = (e: SelectChangeEvent<unknown>) => {
     dispatch(setActiveCurrency(e.target.value as string));
-  };
-
-  const handleLanguageChange = (event: SelectChangeEvent<unknown>) => {
-    const language = event.target.value as string;
-    setSelectedLanguage(language);
-    i18n.changeLanguage(language);
   };
 
   const handleAuth = () => {
@@ -181,10 +211,9 @@ const Header: React.FC = () => {
   useEffect(() => {
     async function fetchUserSession() {
       try {
-        const { username, userId, signInDetails } = await getCurrentUser();
+        const { username, userId } = await getCurrentUser();
         console.log(`The username: ${username}`);
         console.log(`The userId: ${userId}`);
-        console.log(signInDetails);
         setAuthState(true);
       } catch (err) {
         console.log(err);
@@ -208,15 +237,33 @@ const Header: React.FC = () => {
           {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>}
 
           <LanguageContainer>
-            <StyledLanguageIcon fontSize="small" />
-            <StyledSelect
-              value={selectedLanguage}
-              onChange={handleLanguageChange}
-            >
-              <MenuItem value="en">En</MenuItem>
-              <MenuItem value="fr">Fr</MenuItem>
-              <MenuItem value="hn">Hn</MenuItem>
-            </StyledSelect>
+            <LanguageDropDown>
+              <IconButton
+                color="primary"
+                aria-label="language"
+                aria-controls="language-menu"
+                aria-haspopup="true"
+                disableRipple
+                onClick={handleClick}
+              >
+                <StyledLanguageIcon fontSize="small" />
+                <Typography>{capitalize(selectedLanguage)}</Typography>
+              </IconButton>
+              <Popper open={open1} anchorEl={anchorEl} placement="bottom-start">
+                <Paper>
+                  <Menu
+                    id="language-menu"
+                    anchorEl={anchorEl}
+                    open={open1}
+                    onClose={handleClose}
+                  >
+                    <MenuItem value="en" onClick={() => handleLanguageSelect("en")}>En</MenuItem>
+                    <MenuItem value="fr" onClick={() => handleLanguageSelect("fr")}>Fr</MenuItem>
+                    <MenuItem value="hn" onClick={() => handleLanguageSelect("hn")}>Hn</MenuItem>
+                  </Menu>
+                </Paper>
+              </Popper>
+            </LanguageDropDown>
           </LanguageContainer>
 
           <StyledSelect value={activeCurrency} onChange={handleCurrencyChange}>
@@ -242,15 +289,7 @@ const Header: React.FC = () => {
           {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>}
 
           <MobileContainer>
-            <StyledLanguageIcon fontSize="small" />
-            <StyledSelect
-              value={selectedLanguage}
-              onChange={handleLanguageChange}
-            >
-              <MenuItem value="en">En</MenuItem>
-              <MenuItem value="fr">Fr</MenuItem>
-              <MenuItem value="hn">Hn</MenuItem>
-            </StyledSelect>
+
           </MobileContainer>
 
           <MobileContainer>

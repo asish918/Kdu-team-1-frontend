@@ -3,6 +3,7 @@ import { SearchFormState } from "../redux/reducers/searchFormReducer";
 import { RequestType } from "./enums";
 import { RoomResultRequestBody } from "../types";
 import { FilterSortState } from "../redux/reducers/filterSortReducer";
+import { persistor } from "../redux/store";
 
 const config = {
   headers: {
@@ -175,4 +176,16 @@ export function checkLocalStorageForKey(key: string): boolean {
     console.error('Error checking local storage:', error);
     return false;
   }
+}
+
+export function clearLocalStorage() {
+  try {
+    persistor.purge();
+  } catch (error) {
+    console.log("Error in clearing local storage");
+  }
+}
+
+export function capitalize(str: string): string {
+  return str.toString().charAt(0).toUpperCase() + str.toString().slice(1);
 }
