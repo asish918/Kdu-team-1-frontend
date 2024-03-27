@@ -76,9 +76,9 @@ function RoomResultsPage() {
       }
     }
 
-    if (!validateFilters(filterSortProps)) {
-      return;
-    }
+    // if (!validateFilters(filterSortProps)) {
+    //   return;
+    // }
 
     if (!searchFieldFormValidator(searchParams)) throw new Error("Invalid Request");
 
@@ -126,9 +126,9 @@ function RoomResultsPage() {
 
 
   useEffect(() => {
-    if (validateFilters(filterSortProps)) {
-      return;
-    }
+    // if (validateFilters(filterSortProps)) {
+    //   return;
+    // }
 
     const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
     const searchParams = convertStatesToQueryString(searchFormProps, filterSortProps);

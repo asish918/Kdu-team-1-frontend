@@ -2,7 +2,7 @@ import { FilterSortState } from "../redux/reducers/filterSortReducer";
 import { SearchFormState } from "../redux/reducers/searchFormReducer";
 
 export function searchFieldParamsValidator(params: SearchFormState): boolean {
-    if (!params.endDate && !params.startDate) return false;
+    if (!params.endDate || !params.startDate) return false;
     return true;
 }
 

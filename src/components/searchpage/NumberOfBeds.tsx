@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -21,7 +21,7 @@ const NumberOfBeds: React.FC = () => {
   return (
     <Box marginBottom={2}>
       <FormControl fullWidth>
-        <InputLabel id="numberOfBeds-label">{i18n.t("landingPageForm.search")}</InputLabel>
+        <InputLabel id="numberOfBeds-label">{i18n.t("landingPageForm.beds")}</InputLabel>
         <Select
           labelId="numberOfBeds-label"
           id="numberOfBeds"
