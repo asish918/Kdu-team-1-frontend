@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# Run npm install after every git pull
+npm install

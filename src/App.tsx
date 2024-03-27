@@ -1,35 +1,26 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { store } from "./redux/store";
+import { useEffect } from "react";
+import { fetchPropertyConfig } from "./redux/thunks/fetchPropertyConfig";
+import { fetchPropertyList } from "./redux/thunks/fetchPropertyList";
+import { fetchCalendarDates } from "./redux/thunks/fetchCalendarDates";
+import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
+import AppProvider from "./providers/AppProvider";
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  useEffect(() => {
+    store.dispatch(fetchPropertyConfig());
+    store.dispatch(fetchPropertyList());
+    store.dispatch(fetchCalendarDates());
+    store.dispatch(fetchExchangeRates());
+  }, [])
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+      <AppProvider>
+        <Outlet />
+      </AppProvider>
+  );
 }
 
-export default App
+export default App;

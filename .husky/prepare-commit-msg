@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Get the current branch name
+branch_name=$(git rev-parse --abbrev-ref HEAD)
+
+# Check if the commit is being created as a result of a merge
+if [ -n "$2" ]; then
+  # For merge commits, don't modify the commit message
+  exit 0
+fi
+
+# Prepend the branch name to the commit message
+echo "$branch_name: $1" > "$1"
