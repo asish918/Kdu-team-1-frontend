@@ -10,7 +10,7 @@ import { formatCurrency } from '../../utils/i18next';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-
+import RoomDetailsModal from './RoomDetailsModal';
 // Define styled components
 const RoomCardContainer = styled(Card)`
  margin: 20px;
@@ -119,13 +119,26 @@ const RoomCard: React.FC<Result> = ({
   single_bed,
   rating,
   reviews,
-  lowResImages
+  lowResImages,
+  highResImages
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
   const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+ const handleOpenModal = () => {
+    setModalOpen(true);
+ };
+
+ const handleCloseModal = () => {
+    setModalOpen(false);
+ };
+
   return (
+    <>
+    
     <RoomCardContainer>
       <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
         {lowResImages.map((image, index) => (
@@ -214,11 +227,24 @@ const RoomCard: React.FC<Result> = ({
         <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
           per night
         </Typography>
-        <Button variant="contained" color="primary">
+        <Button variant="contained" color="primary" onClick={handleOpenModal}>
           Select Room
         </Button>
       </CardContent>
     </RoomCardContainer>
+    <RoomDetailsModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        roomDetails={{
+          room_type_name,
+          area_in_square_feet,
+          max_capacity,
+          highResImages,
+          bedTypeText: bedTypeTextGenerator(double_bed, single_bed),
+          // Add more room details as needed
+        }}
+      />
+    </>
   );
 };
 
