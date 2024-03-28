@@ -1,3 +1,4 @@
+import React from 'react';
 import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
@@ -7,13 +8,11 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DealCard from './DealCard';
 import PromoCode from './PromoCode';
 
-
 const ImageContainer = styled.div`
  position: relative;
  width: 100%;
  height: 560px;
 `;
-
 
 const StyledImage = styled.img`
  width: 100%;
@@ -21,7 +20,6 @@ const StyledImage = styled.img`
  object-fit: cover;
  border-radius: 5px;
 `;
-
 
 const ImageTextOverlay = styled.div`
  position: absolute;
@@ -56,7 +54,6 @@ const StyledOccupancyIcon = styled(OccupancyIcon)`
  color: grey;
 `;
 
-
 const MainContainer = styled.div`
  display: flex;
  justify-content: space-between;
@@ -64,24 +61,37 @@ const MainContainer = styled.div`
  width: 100%;
  height: 100%;
  padding: 23px 25px;
-`;
+ flex-direction: column;
 
+ @media (min-width: 768px) {
+    flex-direction: row;
+ }
+`;
 
 const Left = styled.div`
  display: flex;
  flex-direction: column;
  align-items: flex-start;
- width: 60%; 
- margin-left: 20px;
+ width: 100%;
+ margin-bottom: 20px;
+
+ @media (min-width: 768px) {
+    width: 60%;
+    margin-left: 20px;
+    margin-bottom: 0;
+ }
 `;
 
 const Right = styled.div`
  display: flex;
  flex-direction: column;
  align-items: flex-start;
- width: 40%; 
-`;
+ width: 100%;
 
+ @media (min-width: 768px) {
+    width: 40%;
+ }
+`;
 
 const StyledIconContainer = styled.div`
  display: flex;
@@ -121,7 +131,6 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
         // Implement future logic here
     };
 
-    // TODO Fetch this data from Backend API (Asish)
     const deals = [
         {
            dealTitle: "$150 Dining Credit Package",
@@ -231,6 +240,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
 };
 
 export default RoomDetailsModal;
+
 
 
 
