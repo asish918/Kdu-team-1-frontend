@@ -3,7 +3,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { styled } from '@mui/system';
+import { styled, theme } from '@mui/system';
 
 
 const CustomCard = styled(Card)(({ theme }) => ({
@@ -80,7 +80,7 @@ const SelectPackageButton = styled(Button)(({ theme }) => ({
  '@media (max-width: 440px)': {
     padding: '1px 2px',
     fontSize: '0.6rem', 
-    
+
     
  },
 }));

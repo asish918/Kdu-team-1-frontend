@@ -1,18 +1,22 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@mui/material'; 
+import InfoIcon from '@mui/icons-material/Info';
+import ModalComponent from './ItineraryModal';
+
 const size = {
-  mobile: '320px',
-  tablet: '768px',
-  desktop: '1024px',
- };
- 
- const device = {
-  mobile: `(max-width: ${size.mobile})`,
-  tablet: `(max-width: ${size.tablet})`,
-  desktop: `(max-width: ${size.desktop})`,
- };
-// Define the styled components
+ mobile: '320px',
+ tablet: '768px',
+ desktop: '1024px',
+};
+
+const device = {
+ mobile: `(max-width: ${size.mobile})`,
+ tablet: `(max-width: ${size.tablet})`,
+ desktop: `(max-width: ${size.desktop})`,
+};
+
 const ItineraryBox = styled.div`
  width: 330px;
  height: 494px;
@@ -70,14 +74,15 @@ const ItineraryItem = styled.div`
 
 const ItineraryItemLabel = styled.span`
  font-weight: bold;
- color: #5D5D5D; 
+ color: #5D5D5D;
+ display: flex;
+ align-items: center;
 `;
 
 const ItineraryItemValue = styled.span`
  font-size: 14px;
  color: #5D5D5D; 
 `;
-
 
 const CheckoutButton = styled(Button)`
  padding: 10px 20px;
@@ -94,8 +99,34 @@ const Border = styled.div`
  margin: 10px auto;
 `;
 
-// Itinerary component
 const Itinerary = ({ itinerary }) => {
+  const [openSpecialPromo, setOpenSpecialPromo] = useState(false);
+  const [openTaxes, setOpenTaxes] = useState(false);
+ 
+  const handleOpenSpecialPromo = () => setOpenSpecialPromo(true);
+  const handleCloseSpecialPromo = () => setOpenSpecialPromo(false);
+ 
+  const handleOpenTaxes = () => setOpenTaxes(true);
+  const handleCloseTaxes = () => setOpenTaxes(false);
+ 
+  const promotionContent = (
+     <div>
+       <p>Circus Savings Promotion</p>
+       <p>SAVE up to 30% OFF room rates w / 2-night minimum stay</p>
+       <p>Package Total: $173.60</p>
+     </div>
+  );
+ 
+  const taxesContent = (
+     <div>
+       <p>Taxes and Fees (Per Room):</p>
+       <p>Resort Fee: $83.90</p>
+       <p>Occupancy Tax: $23.22</p>
+       <p>Due now: $75.45</p>
+       <p>Due at Resort: $205.27</p>
+     </div>
+  );
+
  return (
     <ItineraryBox>
       <ItineraryTitle>Your Trip Itinerary </ItineraryTitle>
@@ -118,18 +149,32 @@ const Itinerary = ({ itinerary }) => {
           <ItineraryItemValue>{itinerary.roomType}</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-          <ItineraryItemLabel>Special Promo:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.specialPromo}</ItineraryItemValue>
-        </ItineraryItem>
+        <ItineraryItemLabel>Special Promo:
+        <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
+        </ItineraryItemLabel>
+        
+        <ItineraryItemValue>{itinerary.specialPromo}</ItineraryItemValue>
+      </ItineraryItem>
+      <ModalComponent
+        open={openSpecialPromo}
+        handleClose={handleCloseSpecialPromo}
+        title="Special Promo Information"
+        content={promotionContent}
+      />
         <Border />
         <ItineraryItem>
-          <ItineraryItemLabel>Subtotal:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.subtotal}</ItineraryItemValue>
-        </ItineraryItem>
-        <ItineraryItem>
-          <ItineraryItemLabel>Taxes, Surcharges, Fees:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.taxes}</ItineraryItemValue>
-        </ItineraryItem>
+        <ItineraryItemLabel>Taxes, Surcharges, Fees:
+        <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
+        </ItineraryItemLabel>
+        
+        <ItineraryItemValue>{itinerary.taxes}</ItineraryItemValue>
+      </ItineraryItem>
+      <ModalComponent
+        open={openTaxes}
+        handleClose={handleCloseTaxes}
+        title="Taxes, Surcharges, Fees Information"
+        content={taxesContent}
+      />
         <ItineraryItem>
           <ItineraryItemLabel>VAT:</ItineraryItemLabel>
           <ItineraryItemValue>{itinerary.vat}</ItineraryItemValue>
@@ -146,7 +191,6 @@ const Itinerary = ({ itinerary }) => {
       </ItineraryDetails>
       <CheckoutButton variant="contained" color="primary" sx={{ margin: '6px' }}>Checkout</CheckoutButton>
     </ItineraryBox>
-    
  );
 };
 
