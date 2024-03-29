@@ -5,12 +5,12 @@ import { BrowserRouter } from "react-router-dom";
 
 test('renders Header component', () => {
   render(
-      <BrowserRouter>
-        <AppProvider>
+    <BrowserRouter>
+      <AppProvider>
         <Header />
-       </AppProvider>
-       </BrowserRouter>
-  
+      </AppProvider>
+    </BrowserRouter>
+
   );
-  
+
 });

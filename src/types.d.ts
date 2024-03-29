@@ -120,18 +120,21 @@ export type RoomResult = {
 }
 
 export type Result = {
-  area_in_square_feet: number;
-  double_bed: number;
-  max_capacity: number;
-  room_type_name: string;
-  single_bed: number;
-  average_rate: number;
-  room_type_id: number;
+  areaInSquareFeet: number;
+  doubleBed: number;
+  maxCapacity: number;
+  roomTypeName: string;
+  singleBed: number;
+  averageRate: number;
+  roomTypeId: number;
   rating: number;
-  reviews: string[];
+  reviews: number;
   highResImages: string[];
   lowResImages: string[];
-  promotionType: PromotionType;
+  bestPromotion: PromotionType;
+  validPromotions: List<PromotionType>;
+  amenities: List<string>;
+  description: string;
 }
 
 export type PromotionType = {

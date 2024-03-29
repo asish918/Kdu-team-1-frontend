@@ -10,7 +10,7 @@ import { formatCurrency } from '../../utils/i18next';
 import { useTranslation } from 'react-i18next';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-
+import RoomDetailsModal from './RoomDetailsModal';
 // Define styled components
 const RoomCardContainer = styled(Card)`
  margin: 20px;
@@ -111,34 +111,50 @@ const RatingContainer = styled.div`
 `
 
 const RoomCard: React.FC<Result> = ({
-  room_type_name,
-  area_in_square_feet,
-  average_rate,
-  double_bed,
-  max_capacity,
-  single_bed,
+  roomTypeName,
+  areaInSquareFeet,
+  averageRate,
+  doubleBed,
+  maxCapacity,
+  singleBed,
   rating,
   reviews,
-  lowResImages
+  lowResImages,
+  highResImages,
+  validPromotions,
+  amenities,
+  description
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
   const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
 
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
   return (
-    <RoomCardContainer>
-      <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
-        {lowResImages.map((image, index) => (
-          <StyledImage key={index} src={image} alt={`Room ${index}`} />
-        ))}
-      </Carousel>
-      <CardContent>
-        <TitleContainer>
-          <RoomTypeName>
-            {roomCardNameGenerator(room_type_name)}
-          </RoomTypeName>
-          <ReviewsContainer>
-            {reviews.length > 0 ? (
+    <>
+
+      <RoomCardContainer>
+        <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
+          {lowResImages.map((image, index) => (
+            <StyledImage key={index} src={image} alt={`Room ${index}`} />
+          ))}
+        </Carousel>
+        <CardContent>
+          <TitleContainer>
+            <RoomTypeName>
+              {roomCardNameGenerator(roomTypeName)}
+            </RoomTypeName>
+            <ReviewsContainer>
+              {/* {reviews.length > 0 ? (
               <>
                 <RatingContainer>
                   <StyledStarIcon fontSize="small" />
@@ -150,37 +166,37 @@ const RoomCard: React.FC<Result> = ({
                   {reviews.length} reviews
                 </Typography>
               </>
-            ) : (
+            ) : ( */}
               <NewPropertyBox>
                 New property
               </NewPropertyBox>
-            )}
-          </ReviewsContainer>
-        </TitleContainer>
+              {/* )} */}
+            </ReviewsContainer>
+          </TitleContainer>
 
-        <IconTextContainer>
-          <StyledLocationIcon fontSize="small" />
+          <IconTextContainer>
+            <StyledLocationIcon fontSize="small" />
+            <LocationText variant="body1" color="text.secondary">
+              Kickdrum
+            </LocationText>
+          </IconTextContainer>
           <LocationText variant="body1" color="text.secondary">
-            Kickdrum
+            <i>Inclusive</i> &emsp; {areaInSquareFeet} ft.
           </LocationText>
-        </IconTextContainer>
-        <LocationText variant="body1" color="text.secondary">
-          <i>Inclusive</i> &emsp; {area_in_square_feet} ft.
-        </LocationText>
-        <IconTextContainer>
-          <StyledOccupancyIcon fontSize="small" />
-          <Typography variant="body1" color="text.secondary">
-            1-{max_capacity}
-          </Typography>
-        </IconTextContainer>
-        <IconTextContainer>
-          <StyledBedIcon fontSize="small" />
-          <Typography variant="body1" color="text.secondary">
-            {bedTypeTextGenerator(double_bed, single_bed)}
-          </Typography>
-        </IconTextContainer>
+          <IconTextContainer>
+            <StyledOccupancyIcon fontSize="small" />
+            <Typography variant="body1" color="text.secondary">
+              1-{maxCapacity}
+            </Typography>
+          </IconTextContainer>
+          <IconTextContainer>
+            <StyledBedIcon fontSize="small" />
+            <Typography variant="body1" color="text.secondary">
+              {bedTypeTextGenerator(doubleBed, singleBed)}
+            </Typography>
+          </IconTextContainer>
 
-        {/* <DealsContainer>
+          {/* <DealsContainer>
           <svg
             width="121"
             height="32"
@@ -208,17 +224,33 @@ const RoomCard: React.FC<Result> = ({
         <Typography variant="body1" color="text.secondary">
           {deals.join(', ')}
         </Typography> */}
-        <SpecialDealText variant="body1" color="text.secondary">
-          {formatCurrency(average_rate, activeCurrency, exchangeRates, i18n)}
-        </SpecialDealText>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-          per night
-        </Typography>
-        <Button variant="contained" color="primary">
-          Select Room
-        </Button>
-      </CardContent>
-    </RoomCardContainer>
+          <SpecialDealText variant="body1" color="text.secondary">
+            {formatCurrency(averageRate, activeCurrency, exchangeRates, i18n)}
+          </SpecialDealText>
+          <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+            per night
+          </Typography>
+          <Button variant="contained" color="primary" onClick={handleOpenModal}>
+            Select Room
+          </Button>
+        </CardContent>
+      </RoomCardContainer>
+      <RoomDetailsModal
+        open={modalOpen}
+        onClose={handleCloseModal}
+        roomDetails={{
+          roomTypeName,
+          areaInSquareFeet,
+          maxCapacity,
+          highResImages,
+          bedTypeText: bedTypeTextGenerator(doubleBed, singleBed),
+          validPromotions,
+          amenities,
+          description,
+          averageRate
+        }}
+      />
+    </>
   );
 };
 
