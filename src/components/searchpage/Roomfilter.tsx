@@ -120,46 +120,38 @@ export default function CustomizedAccordions() {
           <Typography>Bed type</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.BedTypes.Single} onChange={handleCheckboxChange('BedTypes', 'Single')} />}
-            label="Single"
+    {bedTypes.map((type) => (
+      <FormControlLabel
+        key={type}
+        control={
+          <Checkbox
+            checked={checkedState.BedTypes[type]}
+            onChange={handleCheckboxChange('BedTypes', type)}
           />
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.BedTypes.Double} onChange={handleCheckboxChange('BedTypes', 'Double')} />}
-            label="Double"
-          />
-        </AccordionDetails>
+        }
+        label={type}
+      />
+    ))}
+ </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded === 'RoomTypes'} onChange={handleChange('RoomTypes')}>
         <AccordionSummary aria-controls="RoomTypes-content" id="RoomTypes-header">
           <Typography>Room type</Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.RoomTypes.GrandDeluxe} onChange={handleCheckboxChange('RoomTypes', 'GrandDeluxe')} />}
-            label="Grand Deluxe"
+    {roomTypes.map((type) => (
+      <FormControlLabel
+        key={type}
+        control={
+          <Checkbox
+            checked={checkedState.RoomTypes[type]}
+            onChange={handleCheckboxChange('RoomTypes', type)}
           />
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.RoomTypes.SuperDeluxe} onChange={handleCheckboxChange('RoomTypes', 'SuperDeluxe')} />}
-            label="Super Deluxe"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.RoomTypes.FamilyDeluxe} onChange={handleCheckboxChange('RoomTypes', 'FamilyDeluxe')} />}
-            label="Family Deluxe"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.RoomTypes.CoupleSuite} onChange={handleCheckboxChange('RoomTypes', 'CoupleSuite')} />}
-            label="Couple Suite"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.RoomTypes.GardenSuite} onChange={handleCheckboxChange('RoomTypes', 'GardenSuite')} />}
-            label="Garden Suite"
-          />
-          <FormControlLabel
-            control={<Checkbox checked={checkedState.RoomTypes.StandardSuite} onChange={handleCheckboxChange('RoomTypes', 'StandardSuite')} />}
-            label="Standard Suite"
-          />
-        </AccordionDetails>
+        }
+        label={type}
+      />
+    ))}
+ </AccordionDetails>
       </Accordion>
     </AccordionDiv>
   );
