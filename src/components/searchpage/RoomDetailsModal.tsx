@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
+import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography, Theme, SxProps } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
 import { bedTypeTextGenerator, roomCardNameGenerator } from '../../utils/util';
@@ -7,6 +7,11 @@ import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } f
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DealCard from './DealCard';
 import PromoCode from './PromoCode';
+import { useTranslation } from 'react-i18next';
+import { ExchangeRateData } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { formatCurrency } from '../../utils/i18next';
 
 const ImageContainer = styled.div`
  position: relative;
@@ -121,6 +126,17 @@ const StyledAmenityItem = styled.div`
  align-items: center;
 `;
 
+const DialogSxProps: SxProps<Theme> = {
+    width: '90%',
+    height: '90%',
+    maxWidth: 'none',
+    maxHeight: 'none',
+}
+
+const DialogContentSxProps: SxProps<Theme> = {
+    width: '100%', height: '100%', overflow: 'auto', padding: "0px"
+}
+
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const half = Math.ceil(roomDetails.amenities.length / 2);
     const firstHalf = roomDetails.amenities.slice(0, half);
@@ -131,16 +147,15 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
         // Implement future logic here
     };
 
+    const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
+    const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+    const { i18n } = useTranslation();
+
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
-            sx: {
-                width: '90%',
-                height: '90%',
-                maxWidth: 'none',
-                maxHeight: 'none',
-            }
+            sx: DialogSxProps
         }}>
-            <DialogContent sx={{ width: '100%', height: '100%', overflow: 'auto', padding: "0px" }}>
+            <DialogContent sx={DialogContentSxProps}>
                 <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
                     {roomDetails.highResImages.map((image, index) => (
                         <ImageContainer key={index}>
@@ -175,6 +190,14 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                         </StyledIconContainer>
                         <span>{roomDetails.description}</span>
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
+                            Standard Rates
+                        </Typography>
+                        <DealCard
+                            dealTitle="Standard Rate"
+                            dealDescription="Spend $10 every night you stay and earn $150 in dining credit at the resort. "
+                            price={formatCurrency(roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
+                        />
+                        <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
                             Deals & Packages
                         </Typography>
                         {roomDetails.validPromotions.map((deal, index) => (
@@ -182,7 +205,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                                 key={index}
                                 dealTitle={deal.promotion_title}
                                 dealDescription={deal.promotion_description}
-                                price={deal.price_factor * roomDetails.averageRate}
+                                price={formatCurrency(deal.price_factor * roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
                             />
                         ))}
                         <PromoCode onApplyPromoCode={handleApplyPromoCode} />

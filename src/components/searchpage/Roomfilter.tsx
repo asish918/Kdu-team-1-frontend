@@ -32,7 +32,7 @@ const Accordion = styled((props: AccordionProps) => (
 
 const AccordionSummary = styled((props: AccordionSummaryProps) => (
   <MuiAccordionSummary
-    expandIcon={<ExpandMoreIcon sx={{ fontSize: '0.9rem' }} />}
+    expandIcon={<ExpandMoreIcon sx={{ fontSize: '2rem' }} />}
     {...props}
   />
 ))(({ theme }) => ({
