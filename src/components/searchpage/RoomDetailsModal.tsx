@@ -1,8 +1,8 @@
 import React from 'react';
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from '@mui/material';
+import { Dialog, DialogContent, DialogActions, Button, Typography,Theme, SxProps } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
-import { bedTypeTextGenerator, roomCardNameGenerator } from '../../utils/util';
+import { roomCardNameGenerator } from '../../utils/util';
 import { LocationOn as LocationIcon, People as OccupancyIcon, Bed as BedIcon } from '@mui/icons-material';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import DealCard from './DealCard';
@@ -120,6 +120,30 @@ const StyledAmenityItem = styled.div`
  display: flex;
  align-items: center;
 `;
+const DialogSxProps: SxProps<Theme> = {
+    width: '90%',
+    height: '90%',
+    maxWidth: 'none',
+    maxHeight: 'none',
+}
+
+const DialogContentSxProps: SxProps<Theme> = {
+    width: '100%', height: '100%', overflow: 'auto', padding: "0px"
+}
+const StyledTypographySxProps: SxProps<Theme>={
+    color: 'black',
+    fontWeight: 'bold',
+    fontSize: '1.5rem',
+    marginTop: '16px',
+}
+   
+   const StyledAmenityTypography = styled(Typography)({
+    color: 'black',
+   });
+   
+   const StyledCheckCircleOutlineIcon = styled(CheckCircleOutlineIcon)({
+    marginRight: '4px',
+   });
 
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const half = Math.ceil(roomDetails.amenities.length / 2);
@@ -133,14 +157,9 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
 
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
-            sx: {
-                width: '90%',
-                height: '90%',
-                maxWidth: 'none',
-                maxHeight: 'none',
-            }
+            sx: DialogSxProps
         }}>
-            <DialogContent sx={{ width: '100%', height: '100%', overflow: 'auto', padding: "0px" }}>
+            <DialogContent sx={DialogContentSxProps}>
                 <Carousel cycleNavigation={true} navButtonsAlwaysVisible={true} animation='slide'>
                     {roomDetails.highResImages.map((image, index) => (
                         <ImageContainer key={index}>
@@ -174,7 +193,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             </IconContainer>
                         </StyledIconContainer>
                         <span>{roomDetails.description}</span>
-                        <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
+                        <Typography variant="body1" sx={StyledTypographySxProps}>
                             Deals & Packages
                         </Typography>
                         {roomDetails.validPromotions.map((deal, index) => (
@@ -188,14 +207,15 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                         <PromoCode onApplyPromoCode={handleApplyPromoCode} />
                     </Left>
                     <Right>
-                        <Typography variant="body1" style={{ color: 'black' }}>
-                            Amenities
-                        </Typography>
+                        <StyledAmenityTypography variant="body1">
+                          Amenities
+                        </StyledAmenityTypography>
                         <StyledAmenitiesContainer>
                             <StyledAmenitiesColumn>
                                 {firstHalf.map((amenity, index) => (
                                     <StyledAmenityItem key={index}>
-                                        <CheckCircleOutlineIcon style={{ marginRight: '4px' }} />
+                                       
+                                        <StyledCheckCircleOutlineIcon />
                                         {amenity}
                                     </StyledAmenityItem>
                                 ))}
@@ -203,7 +223,8 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             <StyledAmenitiesColumn>
                                 {secondHalf.map((amenity, index) => (
                                     <StyledAmenityItem key={index}>
-                                        <CheckCircleOutlineIcon style={{ marginRight: '4px' }} />
+                                        
+                                        <StyledCheckCircleOutlineIcon />
                                         {amenity}
                                     </StyledAmenityItem>
                                 ))}

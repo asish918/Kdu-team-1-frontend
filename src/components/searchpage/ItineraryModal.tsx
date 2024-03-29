@@ -1,9 +1,10 @@
 
 import React from 'react';
 import { Modal, Box, Typography } from '@mui/material';
+import { Theme, SxProps } from '@mui/material';
 
-const style = {
- position: 'absolute',
+const BoxSxProps: SxProps<Theme> = {
+  position: 'absolute',
  top: '50%',
  left: '50%',
  transform: 'translate(-50%, -50%)',
@@ -11,6 +12,9 @@ const style = {
  bgcolor: 'background.paper',
  boxShadow: 24,
  p: 4,
+};
+const TopographySxProps: SxProps<Theme> = {
+  mt: 2,
 };
 
 const ModalComponent = ({ open, handleClose, title, content }) => {
@@ -21,11 +25,11 @@ const ModalComponent = ({ open, handleClose, title, content }) => {
       aria-labelledby="modal-title"
       aria-describedby="modal-description"
     >
-      <Box sx={style}>
+      <Box sx={BoxSxProps}>
         <Typography id="modal-title" variant="h6" component="h2">
           {title}
         </Typography>
-        <Typography id="modal-description" sx={{ mt: 2 }}>
+        <Typography id="modal-description" sx={TopographySxProps}>
           {content}
         </Typography>
       </Box>

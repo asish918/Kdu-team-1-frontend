@@ -4,7 +4,7 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { styled, theme } from '@mui/system';
-
+import { Theme, SxProps } from '@mui/material';
 
 const CustomCard = styled(Card)(({ theme }) => ({
   height: '130px',
@@ -84,7 +84,9 @@ const SelectPackageButton = styled(Button)(({ theme }) => ({
     
  },
 }));
-
+const TopopgraphySxProps: SxProps<Theme> = {
+   mb: 1,
+}
 const DealCard = ({ dealTitle, dealDescription, price }) => {
  return (
     <CustomCard>
@@ -94,7 +96,7 @@ const DealCard = ({ dealTitle, dealDescription, price }) => {
       </LeftContent>
       <RightContent>
         <Price variant="h6">{price}</Price>
-        <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
+        <Typography variant="body1" color="text.secondary" sx={TopopgraphySxProps}>
           per night
         </Typography>
         <SelectPackageButton variant="contained">Select Package</SelectPackageButton>

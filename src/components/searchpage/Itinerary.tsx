@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import { Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ModalComponent from './ItineraryModal';
+import { Theme, SxProps } from '@mui/material';
+import PromotionContent from './PromotionContent';
+import TaxesContent from './TaxesContent';
 
 const size = {
   mobile: '320px',
@@ -98,6 +101,10 @@ const Border = styled.div`
  margin: 10px auto;
 `;
 
+const CheckoutButtonSxProps: SxProps<Theme> = {
+  margin: '6px',
+}
+
 const Itinerary = ({ itinerary }) => {
   const [openSpecialPromo, setOpenSpecialPromo] = useState(false);
   const [openTaxes, setOpenTaxes] = useState(false);
@@ -107,24 +114,6 @@ const Itinerary = ({ itinerary }) => {
 
   const handleOpenTaxes = () => setOpenTaxes(true);
   const handleCloseTaxes = () => setOpenTaxes(false);
-
-  const promotionContent = (
-    <div>
-      <p>Circus Savings Promotion</p>
-      <p>SAVE up to 30% OFF room rates w / 2-night minimum stay</p>
-      <p>Package Total: $173.60</p>
-    </div>
-  );
-
-  const taxesContent = (
-    <div>
-      <p>Taxes and Fees (Per Room):</p>
-      <p>Resort Fee: $83.90</p>
-      <p>Occupancy Tax: $23.22</p>
-      <p>Due now: $75.45</p>
-      <p>Due at Resort: $205.27</p>
-    </div>
-  );
 
   return (
     <ItineraryBox>
@@ -158,7 +147,7 @@ const Itinerary = ({ itinerary }) => {
           open={openSpecialPromo}
           handleClose={handleCloseSpecialPromo}
           title="Special Promo Information"
-          content={promotionContent}
+          content={<PromotionContent />}
         />
         <Border />
         <ItineraryItem>
@@ -172,7 +161,7 @@ const Itinerary = ({ itinerary }) => {
           open={openTaxes}
           handleClose={handleCloseTaxes}
           title="Taxes, Surcharges, Fees Information"
-          content={taxesContent}
+          content={<TaxesContent />}
         />
         <ItineraryItem>
           <ItineraryItemLabel>VAT:</ItineraryItemLabel>
@@ -188,7 +177,7 @@ const Itinerary = ({ itinerary }) => {
           <ItineraryItemValue>{itinerary.dueAtResort}</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
-      <CheckoutButton variant="outlined" color="primary" sx={{ margin: '6px' }}>Checkout</CheckoutButton>
+      <CheckoutButton variant="outlined" color="primary" sx={CheckoutButtonSxProps}>Checkout</CheckoutButton>
     </ItineraryBox>
   );
 };
