@@ -1,20 +1,20 @@
 
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Button } from '@mui/material'; 
+import { Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ModalComponent from './ItineraryModal';
 
 const size = {
- mobile: '320px',
- tablet: '768px',
- desktop: '1024px',
+  mobile: '320px',
+  tablet: '768px',
+  desktop: '1024px',
 };
 
 const device = {
- mobile: `(max-width: ${size.mobile})`,
- tablet: `(max-width: ${size.tablet})`,
- desktop: `(max-width: ${size.desktop})`,
+  mobile: `(max-width: ${size.mobile})`,
+  tablet: `(max-width: ${size.tablet})`,
+  desktop: `(max-width: ${size.desktop})`,
 };
 
 const ItineraryBox = styled.div`
@@ -86,7 +86,6 @@ const ItineraryItemValue = styled.span`
 
 const CheckoutButton = styled(Button)`
  padding: 10px 20px;
- border: none;
  border-radius: 5px;
  cursor: pointer;
  font-size: 16px;
@@ -102,32 +101,32 @@ const Border = styled.div`
 const Itinerary = ({ itinerary }) => {
   const [openSpecialPromo, setOpenSpecialPromo] = useState(false);
   const [openTaxes, setOpenTaxes] = useState(false);
- 
+
   const handleOpenSpecialPromo = () => setOpenSpecialPromo(true);
   const handleCloseSpecialPromo = () => setOpenSpecialPromo(false);
- 
+
   const handleOpenTaxes = () => setOpenTaxes(true);
   const handleCloseTaxes = () => setOpenTaxes(false);
- 
+
   const promotionContent = (
-     <div>
-       <p>Circus Savings Promotion</p>
-       <p>SAVE up to 30% OFF room rates w / 2-night minimum stay</p>
-       <p>Package Total: $173.60</p>
-     </div>
-  );
- 
-  const taxesContent = (
-     <div>
-       <p>Taxes and Fees (Per Room):</p>
-       <p>Resort Fee: $83.90</p>
-       <p>Occupancy Tax: $23.22</p>
-       <p>Due now: $75.45</p>
-       <p>Due at Resort: $205.27</p>
-     </div>
+    <div>
+      <p>Circus Savings Promotion</p>
+      <p>SAVE up to 30% OFF room rates w / 2-night minimum stay</p>
+      <p>Package Total: $173.60</p>
+    </div>
   );
 
- return (
+  const taxesContent = (
+    <div>
+      <p>Taxes and Fees (Per Room):</p>
+      <p>Resort Fee: $83.90</p>
+      <p>Occupancy Tax: $23.22</p>
+      <p>Due now: $75.45</p>
+      <p>Due at Resort: $205.27</p>
+    </div>
+  );
+
+  return (
     <ItineraryBox>
       <ItineraryTitle>Your Trip Itinerary </ItineraryTitle>
       <ItineraryDetails>
@@ -149,32 +148,32 @@ const Itinerary = ({ itinerary }) => {
           <ItineraryItemValue>{itinerary.roomType}</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-        <ItineraryItemLabel>Special Promo:
-        <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
-        </ItineraryItemLabel>
-        
-        <ItineraryItemValue>{itinerary.specialPromo}</ItineraryItemValue>
-      </ItineraryItem>
-      <ModalComponent
-        open={openSpecialPromo}
-        handleClose={handleCloseSpecialPromo}
-        title="Special Promo Information"
-        content={promotionContent}
-      />
+          <ItineraryItemLabel>Special Promo:
+            <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
+          </ItineraryItemLabel>
+
+          <ItineraryItemValue>{itinerary.specialPromo}</ItineraryItemValue>
+        </ItineraryItem>
+        <ModalComponent
+          open={openSpecialPromo}
+          handleClose={handleCloseSpecialPromo}
+          title="Special Promo Information"
+          content={promotionContent}
+        />
         <Border />
         <ItineraryItem>
-        <ItineraryItemLabel>Taxes, Surcharges, Fees:
-        <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
-        </ItineraryItemLabel>
-        
-        <ItineraryItemValue>{itinerary.taxes}</ItineraryItemValue>
-      </ItineraryItem>
-      <ModalComponent
-        open={openTaxes}
-        handleClose={handleCloseTaxes}
-        title="Taxes, Surcharges, Fees Information"
-        content={taxesContent}
-      />
+          <ItineraryItemLabel>Taxes, Surcharges, Fees:
+            <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
+          </ItineraryItemLabel>
+
+          <ItineraryItemValue>{itinerary.taxes}</ItineraryItemValue>
+        </ItineraryItem>
+        <ModalComponent
+          open={openTaxes}
+          handleClose={handleCloseTaxes}
+          title="Taxes, Surcharges, Fees Information"
+          content={taxesContent}
+        />
         <ItineraryItem>
           <ItineraryItemLabel>VAT:</ItineraryItemLabel>
           <ItineraryItemValue>{itinerary.vat}</ItineraryItemValue>
@@ -189,9 +188,9 @@ const Itinerary = ({ itinerary }) => {
           <ItineraryItemValue>{itinerary.dueAtResort}</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
-      <CheckoutButton variant="contained" color="primary" sx={{ margin: '6px' }}>Checkout</CheckoutButton>
+      <CheckoutButton variant="outlined" color="primary" sx={{ margin: '6px' }}>Checkout</CheckoutButton>
     </ItineraryBox>
- );
+  );
 };
 
 export default Itinerary;

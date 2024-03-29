@@ -87,6 +87,7 @@ const Right = styled.div`
  flex-direction: column;
  align-items: flex-start;
  width: 100%;
+ margin-left: 20px;
 
  @media (min-width: 768px) {
     width: 40%;
@@ -121,33 +122,14 @@ const StyledAmenityItem = styled.div`
 `;
 
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
-    const Amenities = ["Wireless Internet Access","Cable & Pay TV Channels","Alarm Clock","Hair Dryer","In Room Safe","Iron and Ironing Board","Writing Desk and Chair"];
-    const half = Math.ceil(Amenities.length / 2);
-    const firstHalf = Amenities.slice(0, half);
-    const secondHalf = Amenities.slice(half);
-    
+    const half = Math.ceil(roomDetails.amenities.length / 2);
+    const firstHalf = roomDetails.amenities.slice(0, half);
+    const secondHalf = roomDetails.amenities.slice(half);
+
     const handleApplyPromoCode = (code: string) => {
         console.log('Applying promo code:', code);
         // Implement future logic here
     };
-
-    const deals = [
-        {
-           dealTitle: "$150 Dining Credit Package",
-           dealDescription: "Spend $10 every night you stay and earn $150 in dining credit at the resort.",
-           price: "$99.99"
-        },
-        {
-           dealTitle: "$200 Spa Credit Package",
-           dealDescription: "Enjoy a full day spa experience and earn $200 in spa credit.",
-           price: "$149.99"
-        },
-        {
-           dealTitle: "$250 Wellness Package",
-           dealDescription: "Experience a wellness retreat and earn $250 in wellness credit.",
-           price: "$199.99"
-        },
-    ];
 
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
@@ -164,7 +146,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                         <ImageContainer key={index}>
                             <StyledImage src={image} alt={`Room ${index}`} />
                             <ImageTextOverlay>
-                                {roomCardNameGenerator(roomDetails.room_type_name)}
+                                {roomCardNameGenerator(roomDetails.roomTypeName)}
                             </ImageTextOverlay>
                         </ImageContainer>
                     ))}
@@ -175,7 +157,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             <IconContainer>
                                 <StyledOccupancyIcon fontSize="small" />
                                 <Typography variant="body1" color="text.secondary">
-                                    {roomDetails.max_capacity}
+                                    {roomDetails.maxCapacity}
                                 </Typography>
                             </IconContainer>
                             <IconContainer>
@@ -187,20 +169,20 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             <IconContainer>
                                 <StyledLocationIcon fontSize="small" />
                                 <Typography variant="body1" color="text.secondary">
-                                    {roomDetails.area_in_square_feet} ft.
+                                    {roomDetails.areaInSquareFeet} ft.
                                 </Typography>
                             </IconContainer>
                         </StyledIconContainer>
-                        <span>Smoke free and decorated in contemporary jewel and earth tones, the 15-story Casino Tower rooms are located directly above the casino. The 364 sq.ft. Casino Tower rooms are appointed with classic furnishings and include pillow-top mattresses, 40 inch flat panel plasma TV and Wi-Fi internet access.</span>
+                        <span>{roomDetails.description}</span>
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
-                          Deals & Packages
+                            Deals & Packages
                         </Typography>
-                        {deals.map((deal, index) => (
+                        {roomDetails.validPromotions.map((deal, index) => (
                             <DealCard
                                 key={index}
-                                dealTitle={deal.dealTitle}
-                                dealDescription={deal.dealDescription}
-                                price={deal.price}
+                                dealTitle={deal.promotion_title}
+                                dealDescription={deal.promotion_description}
+                                price={deal.price_factor * roomDetails.averageRate}
                             />
                         ))}
                         <PromoCode onApplyPromoCode={handleApplyPromoCode} />

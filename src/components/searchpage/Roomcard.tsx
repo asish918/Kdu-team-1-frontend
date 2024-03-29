@@ -111,16 +111,19 @@ const RatingContainer = styled.div`
 `
 
 const RoomCard: React.FC<Result> = ({
-  room_type_name,
-  area_in_square_feet,
-  average_rate,
-  double_bed,
-  max_capacity,
-  single_bed,
+  roomTypeName,
+  areaInSquareFeet,
+  averageRate,
+  doubleBed,
+  maxCapacity,
+  singleBed,
   rating,
   reviews,
   lowResImages,
-  highResImages
+  highResImages,
+  validPromotions,
+  amenities,
+  description
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
@@ -148,7 +151,7 @@ const RoomCard: React.FC<Result> = ({
         <CardContent>
           <TitleContainer>
             <RoomTypeName>
-              {roomCardNameGenerator(room_type_name)}
+              {roomCardNameGenerator(roomTypeName)}
             </RoomTypeName>
             <ReviewsContainer>
               {/* {reviews.length > 0 ? (
@@ -178,18 +181,18 @@ const RoomCard: React.FC<Result> = ({
             </LocationText>
           </IconTextContainer>
           <LocationText variant="body1" color="text.secondary">
-            <i>Inclusive</i> &emsp; {area_in_square_feet} ft.
+            <i>Inclusive</i> &emsp; {areaInSquareFeet} ft.
           </LocationText>
           <IconTextContainer>
             <StyledOccupancyIcon fontSize="small" />
             <Typography variant="body1" color="text.secondary">
-              1-{max_capacity}
+              1-{maxCapacity}
             </Typography>
           </IconTextContainer>
           <IconTextContainer>
             <StyledBedIcon fontSize="small" />
             <Typography variant="body1" color="text.secondary">
-              {bedTypeTextGenerator(double_bed, single_bed)}
+              {bedTypeTextGenerator(doubleBed, singleBed)}
             </Typography>
           </IconTextContainer>
 
@@ -222,7 +225,7 @@ const RoomCard: React.FC<Result> = ({
           {deals.join(', ')}
         </Typography> */}
           <SpecialDealText variant="body1" color="text.secondary">
-            {formatCurrency(average_rate, activeCurrency, exchangeRates, i18n)}
+            {formatCurrency(averageRate, activeCurrency, exchangeRates, i18n)}
           </SpecialDealText>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
             per night
@@ -236,12 +239,15 @@ const RoomCard: React.FC<Result> = ({
         open={modalOpen}
         onClose={handleCloseModal}
         roomDetails={{
-          room_type_name,
-          area_in_square_feet,
-          max_capacity,
+          roomTypeName,
+          areaInSquareFeet,
+          maxCapacity,
           highResImages,
-          bedTypeText: bedTypeTextGenerator(double_bed, single_bed),
-          // Add more room details as needed
+          bedTypeText: bedTypeTextGenerator(doubleBed, singleBed),
+          validPromotions,
+          amenities,
+          description,
+          averageRate
         }}
       />
     </>
