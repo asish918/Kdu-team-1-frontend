@@ -9,7 +9,7 @@ import MuiAccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import {default as styledComponent}  from 'styled-components';
+import { default as styledComponent } from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { setBedTypes, setRoomTypes } from '../../redux/reducers/filterSortReducer';
 import { generateRoomTypeNumbers } from '../../utils/util';
@@ -63,6 +63,8 @@ const AccordionDiv = styledComponent.div`
 export default function CustomizedAccordions() {
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
+  const bedTypes = ["Single", " Double"];
+  const roomTypes = ["GrandDeluxe", "SuperDeluxe", "FamilyDeluxe", "CoupleSuite", "GardenSuite", "StandardSuite"];
 
   const [expanded, setExpanded] = React.useState<string | false>('BedTypes');
   const [checkedState, setCheckedState] = React.useState<{
