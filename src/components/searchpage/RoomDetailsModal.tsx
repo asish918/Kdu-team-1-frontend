@@ -13,6 +13,7 @@ import { RootState } from '../../redux/store';
 import { formatCurrency } from '../../utils/i18next';
 import { validatePromoCode } from '../../redux/thunks/validatePromo';
 import { resetStatus } from '../../redux/reducers/promoReducer';
+import { useEffect } from 'react';
 
 const ImageContainer = styled.div`
  position: relative;
@@ -140,9 +141,8 @@ const RoomInfo = styled.div`
 `
 
 const AmenitiesTitle = styled(Typography)`
-    font-weight: bold;
     flex-basis: 100%;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
 `
 
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
@@ -161,6 +161,12 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
     const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
     const { i18n } = useTranslation();
+
+    useEffect(() => {
+        if (status === "error") {
+            dispatch(resetStatus());
+        }
+    }, [status])
 
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
@@ -232,6 +238,8 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             dealTitle="Standard Rate"
                             dealDescription="Spend $10 every night you stay and earn $150 in dining credit at the resort. "
                             price={formatCurrency(roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
+                            room={roomDetails}
+                            
                         />
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
                             Deals & Packages
@@ -253,9 +261,9 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                                     Promotion
                                 </Typography>
                                 <DealCard
-                                    dealTitle={promo?.promoTitle}
-                                    dealDescription={promo?.promoDescription}
-                                    price={formatCurrency(roomDetails.averageRate * parseInt(promo?.priceFactor), activeCurrency, exchangeRates, i18n)}
+                                    dealTitle={promo?.promotion_title}
+                                    dealDescription={promo?.promotion_description}
+                                    price={formatCurrency(roomDetails.averageRate * parseInt(promo?.price_factor), activeCurrency, exchangeRates, i18n)}
                                 />
                             </>
                         }

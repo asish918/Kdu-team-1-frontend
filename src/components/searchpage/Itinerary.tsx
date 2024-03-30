@@ -6,8 +6,11 @@ import InfoIcon from '@mui/icons-material/Info';
 import ModalComponent from './ItineraryModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { decreaseStep, increaseStep } from '../../redux/reducers/navigationReducer';
+import { decreaseStep, increaseStep, resetStep } from '../../redux/reducers/navigationReducer';
 import { useNavigate } from 'react-router-dom';
+import { generateDescription, itenaryDateFormat, roomCardNameGenerator } from '../../utils/util';
+import { aD } from 'vitest/dist/reporters-P7C2ytIv.js';
+import { setVisible } from '../../redux/reducers/itenaryReducer';
 
 const size = {
   mobile: '320px',
@@ -77,7 +80,6 @@ const ItineraryItem = styled.div`
 `;
 
 const ItineraryItemLabel = styled.span`
- font-weight: bold;
  color: #5D5D5D;
  display: flex;
  align-items: center;
@@ -102,7 +104,22 @@ const Border = styled.div`
  margin: 10px auto;
 `;
 
-const Itinerary = ({ itinerary }) => {
+const ItenaryHeader = styled.div`
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+`
+
+const RemoveButton = styled.button`
+  color: ${props => props.theme.colors.secondaryBlue};
+  cursor: pointer;
+  transition: all 0.3s all; 
+  &:active {
+    transform: scale(0.8);
+  }
+`
+
+const Itinerary = () => {
   const [openSpecialPromo, setOpenSpecialPromo] = useState(false);
   const [openTaxes, setOpenTaxes] = useState(false);
 
@@ -113,6 +130,9 @@ const Itinerary = ({ itinerary }) => {
   const handleCloseTaxes = () => setOpenTaxes(false);
 
   const step = useSelector((state: RootState) => state.appNavigation.step)
+  const itenary = useSelector((state: RootState) => state.itenary)
+  const { adults, kids, teens, numberOfRooms, startDate, endDate } = useSelector((state: RootState) => state.searchForm);
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -145,33 +165,39 @@ const Itinerary = ({ itinerary }) => {
     navigate(-1);
   }
 
+  const handleRemove = () => {
+    if (step == 2) {
+      dispatch(resetStep());
+      dispatch(setVisible(false));
+      navigate(-1);
+      return;
+    }
+
+    dispatch(resetStep());
+    dispatch(setVisible(false));
+  }
+
   return (
     <ItineraryBox>
-      <ItineraryTitle>Your Trip Itinerary </ItineraryTitle>
+      <ItenaryHeader>
+        <ItineraryTitle>Your Trip Itinerary </ItineraryTitle>
+        <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
+      </ItenaryHeader>
       <ItineraryDetails>
-        <Itineraryname>Long Beautiful Resort Name</Itineraryname>
+        <Itineraryname>{roomCardNameGenerator(itenary.room?.roomTypeName)}</Itineraryname>
         <ItineraryItem>
-          <ItineraryItemLabel>Dates:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.dates}</ItineraryItemValue>
+          <ItineraryItemValue>{itenaryDateFormat(startDate, endDate)} | {generateDescription(adults, kids, teens)}</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-          <ItineraryItemLabel>Guests:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.guests}</ItineraryItemValue>
-        </ItineraryItem>
-        <ItineraryItem>
-          <ItineraryItemLabel>Room:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.room}</ItineraryItemValue>
-        </ItineraryItem>
-        <ItineraryItem>
-          <ItineraryItemLabel>Room Type:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.roomType}</ItineraryItemValue>
+          <ItineraryItemValue>{roomCardNameGenerator(itenary.room?.roomTypeName)}</ItineraryItemValue>
+          <ItineraryItemValue>{numberOfRooms} room(s)</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
           <ItineraryItemLabel>Special Promo:
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
           </ItineraryItemLabel>
 
-          <ItineraryItemValue>{itinerary.specialPromo}</ItineraryItemValue>
+          <ItineraryItemValue>{itenary.promotion ? itenary.promotion.promotion_title : "Standard Rate"}</ItineraryItemValue>
         </ItineraryItem>
         <ModalComponent
           open={openSpecialPromo}
@@ -185,7 +211,7 @@ const Itinerary = ({ itinerary }) => {
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
           </ItineraryItemLabel>
 
-          <ItineraryItemValue>{itinerary.taxes}</ItineraryItemValue>
+          <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <ModalComponent
           open={openTaxes}
@@ -195,16 +221,16 @@ const Itinerary = ({ itinerary }) => {
         />
         <ItineraryItem>
           <ItineraryItemLabel>VAT:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.vat}</ItineraryItemValue>
+          <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <Border />
         <ItineraryItem>
           <ItineraryItemLabel>Due Now:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.dueNow}</ItineraryItemValue>
+          <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
           <ItineraryItemLabel>Due at Resort:</ItineraryItemLabel>
-          <ItineraryItemValue>{itinerary.dueAtResort}</ItineraryItemValue>
+          <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
       <CheckoutButton onClick={handleClick} variant="outlined" color="primary" sx={{ margin: '6px' }}>

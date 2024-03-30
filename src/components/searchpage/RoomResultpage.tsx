@@ -1,6 +1,5 @@
 import { useEffect } from 'react';
 import Banner from './Banner';
-import Stepper from './Stepper';
 import SearchForm from './Searchbox';
 import RoomResultsPanel from './Roompanel';
 import AccordionWithCheckboxes from './Roomfilter';
@@ -14,6 +13,7 @@ import { setAdults, setBeds, setEndDatePick, setKids, setNumberOfRooms, setStart
 import { RoomResultRequestBody } from '../../types';
 import { fetchRoomResult } from '../../redux/thunks/fetchRoomResults';
 import { setBedTypes, setPriceSort, setRoomTypes } from '../../redux/reducers/filterSortReducer';
+import CustomStepper from './CustomStepper';
 
 const RoomResultContainer = styled.div`
   padding-inline: 20px;
@@ -156,7 +156,7 @@ function RoomResultsPage() {
   return (
     <div>
       <Banner imageUrl={propertyConfig.bannerImageUrl} />
-      <Stepper />
+      <CustomStepper />
       <RoomResultContainer>
         <SearchForm onSearch={handleSearch} />
         <RoomResultFlexContainer>

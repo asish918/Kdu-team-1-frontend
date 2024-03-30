@@ -19,7 +19,7 @@ test('renders RoomCard component', () => {
   render(
     <BrowserRouter>
       <AppProvider>
-        <RoomCard room_type_id={0} highResImages={[]} promotionType={{
+        <RoomCard roomTypeId={0} highResImages={[]} promotionType={{
           promotion_description: '',
           promotion_id: '',
           promotion_title: '',

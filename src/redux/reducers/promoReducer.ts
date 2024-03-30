@@ -1,9 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { APIStatus, PromoCodeType } from '../../types';
+import { APIStatus, PromotionType } from '../../types';
 import { validatePromoCode } from '../thunks/validatePromo';
 
 interface PromoReducerProps {
-    promo: PromoCodeType | null,
+    promo: PromotionType | null,
     message: string,
     status: APIStatus
 }

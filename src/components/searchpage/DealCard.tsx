@@ -6,7 +6,7 @@ import { styled } from '@mui/system';
 import { PromotionType, Result } from "../../types";
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { setVisible } from '../../redux/reducers/itenaryReducer';
+import { setPromotion, setRoom, setVisible } from '../../redux/reducers/itenaryReducer';
 import { increaseStep } from '../../redux/reducers/navigationReducer';
 
 const CustomCard = styled(Card)`
@@ -82,11 +82,11 @@ const SelectPackageButton = styled(Button)`
 `;
 
 interface DealCardProps {
-   dealTitle: string;
-   dealDescription: string;
+   dealTitle: string | undefined;
+   dealDescription: string | undefined;
    price: string | number;
    promotion?: PromotionType;
-   room?: Result;
+   room: Result;
 }
 
 const DealCard = ({ dealTitle, dealDescription, price, promotion, room }: DealCardProps) => {
@@ -96,6 +96,8 @@ const DealCard = ({ dealTitle, dealDescription, price, promotion, room }: DealCa
    const handleSelectPackage = () => {
       dispatch(setVisible(true));
       dispatch(increaseStep());
+      dispatch(setPromotion(promotion!));
+      dispatch(setRoom(room));
       navigate("/checkout")
    }
 

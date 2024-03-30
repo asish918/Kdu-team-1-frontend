@@ -51,6 +51,26 @@ export function generateDescription(adults: number, children: number, teens: num
   return parts.join(' ');
 }
 
+export function itenaryDateFormat(start: string, end: string): string {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'
+  ];
+
+  const startMonth = months[startDate.getMonth()];
+  const endMonth = months[endDate.getMonth()];
+
+  const startDay = startDate.getDate();
+  const endDay = endDate.getDate();
+
+  const year = startDate.getFullYear();
+
+  return `${startMonth} ${startDay} - ${endMonth} ${endDay}, ${year}`;
+}
+
 export function convertStatesToQueryString(searchParams: SearchFormState, filterParams: FilterSortState): string {
   const queryParams = new URLSearchParams();
 

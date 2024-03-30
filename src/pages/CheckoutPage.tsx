@@ -5,6 +5,10 @@ import FeedbackModal from '../components/searchpage/FeedbackModal';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import { TextField } from "@mui/material";
+import { RootState } from "../redux/store";
+import { useSelector } from "react-redux";
+import Banner from "../components/searchpage/Banner";
+import CustomStepper from "../components/searchpage/CustomStepper";
 
 
 const CenteredDiv = styled('div')`
@@ -47,6 +51,7 @@ export default function CheckoutPage() {
     };
 
     const [email, setEmail] = useState<string>("");
+    const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
 
     const handleFeedbackSubmit = () => {
         console.log("Hemlo")
@@ -54,6 +59,8 @@ export default function CheckoutPage() {
 
     return (
         <>
+            <Banner imageUrl={propertyConfig.bannerImageUrl} />
+            <CustomStepper />
             <CenteredDiv>
                 <div>
                     <Itinerary itinerary={itineraryData} />

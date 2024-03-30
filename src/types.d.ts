@@ -139,13 +139,7 @@ export type Result = {
 
 export type PromotionType = {
   promotion_description: string;
-  promotion_id: string;
+  promotion_id?: string;
   promotion_title: string;
   price_factor: number;
-}
-
-export type PromoCodeType = {
-  promoTitle: string;
-  promoDescription: string;
-  priceFactor: string;
 }

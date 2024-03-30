@@ -144,6 +144,7 @@ const LanguageContainer = styled.div`
 const Header: React.FC = () => {
   const [authState, setAuthState] = useState<boolean>(false);
   const dispatch: AppDispatch = useDispatch();
+  const { user, signOut } = useAuthenticator((context) => [context.user]);
 
   const [open, setOpen] = React.useState(false);
 

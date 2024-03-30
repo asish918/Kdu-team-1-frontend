@@ -1,4 +1,4 @@
-import { styled } from '@mui/material/styles';
+import { SxProps, Theme, styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
@@ -6,8 +6,10 @@ import StepLabel from '@mui/material/StepLabel';
 import Check from '@mui/icons-material/Check';
 import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector';
 import { StepIconProps } from '@mui/material/StepIcon';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
 
-const QontoConnector = styled(StepConnector)(({ theme }) => ({
+const CustomConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
         top: 10,
         left: 'calc(-50% + 16px)',
@@ -30,13 +32,13 @@ const QontoConnector = styled(StepConnector)(({ theme }) => ({
     },
 }));
 
-const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
+const StepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
     ({ theme, ownerState }) => ({
         color: theme.palette.mode === 'dark' ? theme.palette.grey[700] : '#eaeaf0',
         display: 'flex',
         height: 22,
         alignItems: 'center',
-        '& .QontoStepIcon-completedIcon': {
+        '& .CustomStepIcon-completedIcon': {
             color: 'white',
             zIndex: 1,
             fontSize: 25,
@@ -44,7 +46,7 @@ const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
             backgroundColor: theme.colors.primaryNavyBlue,
             borderRadius: '50%'
         },
-        '& .QontoStepIcon-circle': {
+        '& .CustomStepIcon-circle': {
             zIndex: 1,
             fontSize: 25,
             padding: 5,
@@ -54,29 +56,39 @@ const QontoStepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
     }),
 );
 
-function QontoStepIcon(props: StepIconProps) {
+function CustomStepIcon(props: StepIconProps) {
     const { active, completed, className } = props;
 
     return (
-        <QontoStepIconRoot ownerState={{ active }} className={className}>
+        <StepIconRoot ownerState={{ active }} className={className}>
             {completed ? (
-                <Check className="QontoStepIcon-completedIcon" />
+                <Check className="CustomStepIcon-completedIcon" />
             ) : (
-                <Check className="QontoStepIcon-circle" />
+                <Check className="CustomStepIcon-circle" />
             )}
-        </QontoStepIconRoot>
+        </StepIconRoot>
     );
+}
+
+const StepperContainerStyles: SxProps<Theme> = {
+    width: {
+        md: "70%"
+    },
+    marginInline: 'auto',
+    marginTop: '10px'
 }
 
 const steps = ['1. Choose Room', '2. Choose add-on', '3. Checkout'];
 
-export default function CustomizedSteppers() {
+export default function CustomStepper() {
+    const step = useSelector((state: RootState) => state.appNavigation.step);
+
     return (
-        <Stack sx={{ width: '100%' }} spacing={4}>
-            <Stepper alternativeLabel activeStep={1} connector={<QontoConnector />}>
+        <Stack sx={StepperContainerStyles} spacing={1}>
+            <Stepper alternativeLabel activeStep={step} connector={<CustomConnector />}>
                 {steps.map((label) => (
                     <Step key={label}>
-                        <StepLabel StepIconComponent={QontoStepIcon}>{label}</StepLabel>
+                        <StepLabel StepIconComponent={CustomStepIcon}>{label}</StepLabel>
                     </Step>
                 ))}
             </Stepper>
