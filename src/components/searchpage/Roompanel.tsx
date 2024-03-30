@@ -66,6 +66,7 @@ const NoResultDiv = styled.div`
 const RoomResultsPanel: React.FC = () => {
   const [sortCriteria, setSortCriteria] = useState('price low');
   const { roomResults, status } = useSelector((state: RootState) => state.roomResult)
+  const itenaryVisible = useSelector((state: RootState) => state.itenary.visible);
   const dispatch = useDispatch();
   const { i18n } = useTranslation();
 
@@ -117,7 +118,10 @@ const RoomResultsPanel: React.FC = () => {
               </RoomCardWrapper>
             ))}
 
-            <Itinerary itinerary={itineraryData} />
+            {
+              itenaryVisible &&
+              <Itinerary itinerary={itineraryData} />
+            }
 
           </RoomCardsContainer>
       }

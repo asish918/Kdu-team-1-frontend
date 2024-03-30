@@ -1,20 +1,18 @@
+import { Modal, Box, Typography, SxProps, Theme } from '@mui/material';
 
-import React from 'react';
-import { Modal, Box, Typography } from '@mui/material';
-
-const style = {
- position: 'absolute',
- top: '50%',
- left: '50%',
- transform: 'translate(-50%, -50%)',
- width: 400,
- bgcolor: 'background.paper',
- boxShadow: 24,
- p: 4,
+const style: SxProps<Theme> = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
 };
 
 const ModalComponent = ({ open, handleClose, title, content }) => {
- return (
+  return (
     <Modal
       open={open}
       onClose={handleClose}
@@ -30,7 +28,7 @@ const ModalComponent = ({ open, handleClose, title, content }) => {
         </Typography>
       </Box>
     </Modal>
- );
+  );
 };
 
 export default ModalComponent;

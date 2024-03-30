@@ -1,53 +1,44 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { APIStatus, HotelProperties } from '../../types';
-import { fetchPropertyConfig } from '../thunks/fetchPropertyConfig';
+import { APIStatus, PromoCodeType } from '../../types';
+import { validatePromoCode } from '../thunks/validatePromo';
 
 interface PromoReducerProps {
-    promo: HotelProperties,
+    promo: PromoCodeType | null,
     message: string,
     status: APIStatus
 }
 
-const initialState: PropertyConfig = {
-    property: {
-        accessibility: false,
-        bannerImageUrl: "",
-        guests: {
-            adults: true,
-            children: false,
-            teens: false,
-        },
-        maxGuests: 5,
-        maxLengthStay: 1,
-        numberOfRooms: 5,
-        siteLogoUrl: "",
-        footerLogoUrl: ""
-    },
+const initialState: PromoReducerProps = {
+    promo: null,
     message: "",
     status: null,
 }
 
-const hotePropertyConfig = createSlice({
+const promoReducer = createSlice({
     name: 'promoCode',
     initialState: initialState,
-    reducers: {},
+    reducers: {
+        resetStatus: (state) => {
+            state.status = null;
+        }
+    },
     extraReducers: (builder) => {
-        builder.addCase(fetchPropertyConfig.fulfilled, (state, action: PayloadAction<HotelProperties>) => {
-            state.property = action.payload;
+        builder.addCase(validatePromoCode.fulfilled, (state, action: PayloadAction<PromoCodeType>) => {
+            state.promo = action.payload;
             state.status = 'success';
-            state.message = "Property Config fetched successfully";
-            console.log(state.property)
+            state.message = "Promo Code Valid";
         });
-        builder.addCase(fetchPropertyConfig.pending, (state) => {
-            state.message = "Property Config loading";
+        builder.addCase(validatePromoCode.pending, (state) => {
+            state.message = "Promo Code loading";
             state.status = 'loading';
         });
-        builder.addCase(fetchPropertyConfig.rejected, (state) => {
-            state.message = "Error occurred while fetching Property Config";
+        builder.addCase(validatePromoCode.rejected, (state) => {
+            state.message = "Invalid Promo Code";
             state.status = 'error';
         });
     },
 });
 
-export default hotePropertyConfig.reducer;
+export const { resetStatus } = promoReducer.actions;
+export default promoReducer.reducer;
 

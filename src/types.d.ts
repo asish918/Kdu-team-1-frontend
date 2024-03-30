@@ -143,3 +143,9 @@ export type PromotionType = {
   promotion_title: string;
   price_factor: number;
 }
+
+export type PromoCodeType = {
+  promoTitle: string;
+  promoDescription: string;
+  priceFactor: string;
+}

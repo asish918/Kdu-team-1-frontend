@@ -14,6 +14,7 @@ import LandingPage from "./pages/LandingPage.tsx";
 import SearchPage from "./pages/SearchPage.tsx";
 import { Authenticator } from "@aws-amplify/ui-react";
 import CheckoutPage from "./pages/CheckoutPage.tsx";
+import FeedbackPage from "./pages/FeedbackPage.tsx";
 
 const client = new ApolloClient({
   uri: urlGenerator(`${process.env.GRAPHQL_PATH}`),
@@ -51,6 +52,11 @@ const router = createBrowserRouter([
       {
         path: "/checkout",
         element: <CheckoutPage />,
+        errorElement: <ErrorPage />,
+      },
+      {
+        path: "/feedback",
+        element: <FeedbackPage />,
         errorElement: <ErrorPage />,
       },
     ]

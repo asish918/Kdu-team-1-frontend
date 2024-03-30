@@ -7,6 +7,8 @@ import searchFormReducer from './searchFormReducer';
 import navigationReducer from './navigationReducer';
 import filterSortReducer from './filterSortReducer';
 import roomResultReducer from './roomResultReducer';
+import promoReducer from './promoReducer';
+import itenaryReducer from './itenaryReducer';
 
 const rootReducer = combineReducers({
     propertyConfig: propertyConfigReducer,
@@ -16,7 +18,9 @@ const rootReducer = combineReducers({
     searchForm: searchFormReducer,
     appNavigation: navigationReducer,
     filterState: filterSortReducer,
-    roomResult: roomResultReducer
+    roomResult: roomResultReducer,
+    promoCode: promoReducer,
+    itenary: itenaryReducer
 });
 
 export default rootReducer;

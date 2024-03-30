@@ -8,9 +8,10 @@ import { ExchangeRateData, Result } from '../../types';
 import { bedTypeTextGenerator, roomCardNameGenerator } from '../../utils/util';
 import { formatCurrency } from '../../utils/i18next';
 import { useTranslation } from 'react-i18next';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import RoomDetailsModal from './RoomDetailsModal';
+import { increaseStep } from '../../redux/reducers/navigationReducer';
 // Define styled components
 const RoomCardContainer = styled(Card)`
  margin: 20px;
@@ -123,15 +124,18 @@ const RoomCard: React.FC<Result> = ({
   highResImages,
   validPromotions,
   amenities,
-  description
+  description,
+  roomTypeId
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
   const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+  const dispatch = useDispatch();
 
   const [modalOpen, setModalOpen] = useState(false);
 
   const handleOpenModal = () => {
+    dispatch(increaseStep());
     setModalOpen(true);
   };
 
@@ -247,7 +251,8 @@ const RoomCard: React.FC<Result> = ({
           validPromotions,
           amenities,
           description,
-          averageRate
+          averageRate,
+          roomTypeId
         }}
       />
     </>

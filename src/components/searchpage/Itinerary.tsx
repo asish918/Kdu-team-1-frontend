@@ -1,9 +1,13 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 import ModalComponent from './ItineraryModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { decreaseStep, increaseStep } from '../../redux/reducers/navigationReducer';
+import { useNavigate } from 'react-router-dom';
 
 const size = {
   mobile: '320px',
@@ -108,6 +112,10 @@ const Itinerary = ({ itinerary }) => {
   const handleOpenTaxes = () => setOpenTaxes(true);
   const handleCloseTaxes = () => setOpenTaxes(false);
 
+  const step = useSelector((state: RootState) => state.appNavigation.step)
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const promotionContent = (
     <div>
       <p>Circus Savings Promotion</p>
@@ -125,6 +133,17 @@ const Itinerary = ({ itinerary }) => {
       <p>Due at Resort: $205.27</p>
     </div>
   );
+
+  const handleClick = () => {
+    if (step === 1) {
+      dispatch(increaseStep());
+      navigate("/checkout")
+      return;
+    }
+
+    dispatch(decreaseStep());
+    navigate(-1);
+  }
 
   return (
     <ItineraryBox>
@@ -188,7 +207,9 @@ const Itinerary = ({ itinerary }) => {
           <ItineraryItemValue>{itinerary.dueAtResort}</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
-      <CheckoutButton variant="outlined" color="primary" sx={{ margin: '6px' }}>Checkout</CheckoutButton>
+      <CheckoutButton onClick={handleClick} variant="outlined" color="primary" sx={{ margin: '6px' }}>
+        {step == 1 ? "Checkout" : "Continue Shopping"}
+      </CheckoutButton>
     </ItineraryBox>
   );
 };

@@ -1,4 +1,4 @@
-import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 interface NavigationState {
     step: number;
@@ -12,11 +12,16 @@ export const navigationSlice = createSlice({
     name: "navigation",
     initialState,
     reducers: {
-        setStepRedux: (state, action: PayloadAction<number>) => {
-            state.step = action.payload;
+        increaseStep: (state) => {
+            if (state.step < 2)
+                state.step += 1;
         },
+        decreaseStep: (state) => {
+            if (state.step > 0)
+                state.step -= 1;
+        }
     },
 });
 
-export const { setStepRedux } = navigationSlice.actions;
+export const { increaseStep, decreaseStep } = navigationSlice.actions;
 export default navigationSlice.reducer;
