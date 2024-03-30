@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Rating } from '@mui/material';
+import { TextField, Button, Box, Typography, Rating, Theme, SxProps} from '@mui/material';
 import { styled } from '@mui/system';
 
 const StyledTypography = styled(Typography)`
@@ -22,15 +22,12 @@ const FeedbackModal: React.FC = () => {
   };
 
   // Define the style for the modal content
-  const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
+  const modalStyle: SxProps<Theme> = {
     width: 400,
     bgcolor: 'background.paper',
     boxShadow: 24,
     p: 4,
+    marginInline: 'auto'
   };
 
   return (
