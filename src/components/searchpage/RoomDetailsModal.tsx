@@ -145,6 +145,10 @@ const AmenitiesTitle = styled(Typography)`
     font-size: 1.2rem;
 `
 
+const InvalidPromo = styled.span`
+    color: red;
+`
+
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const half = Math.ceil(roomDetails.amenities.length / 2);
     const firstHalf = roomDetails.amenities.slice(0, half);
@@ -164,7 +168,9 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
 
     useEffect(() => {
         if (status === "error") {
-            dispatch(resetStatus());
+            setTimeout(() => {
+                dispatch(resetStatus());
+            }, 4000)
         }
     }, [status])
 
@@ -239,7 +245,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             dealDescription="Spend $10 every night you stay and earn $150 in dining credit at the resort. "
                             price={formatCurrency(roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
                             room={roomDetails}
-                            
+
                         />
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
                             Deals & Packages
@@ -255,7 +261,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             />
                         ))}
                         {
-                            status === "success" &&
+                            status === "success" && promo?.room_type_id == roomDetails.roomTypeId &&
                             <>
                                 <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
                                     Promotion
@@ -263,13 +269,15 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                                 <DealCard
                                     dealTitle={promo?.promotion_title}
                                     dealDescription={promo?.promotion_description}
-                                    price={formatCurrency(roomDetails.averageRate * parseInt(promo?.price_factor), activeCurrency, exchangeRates, i18n)}
+                                    price={formatCurrency(roomDetails.averageRate * promo?.price_factor, activeCurrency, exchangeRates, i18n)}
+                                    room={roomDetails}
+                                    promotion={promo}
                                 />
                             </>
                         }
                         <PromoCode onApplyPromoCode={handleApplyPromoCode} />
                         {status === "error" &&
-                            <span>{message}</span>
+                            <InvalidPromo>{message}</InvalidPromo>
                         }
                     </DealsPromoContainer>
                 </MainContainer>

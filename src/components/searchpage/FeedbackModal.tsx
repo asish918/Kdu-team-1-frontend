@@ -6,6 +6,7 @@ import { ReviewRequest } from '../../types';
 import { axiosRequest, urlGenerator } from '../../utils/util';
 import { RequestType } from '../../utils/enums';
 import { validateAndExtractToken } from '../../utils/jwtUtils';
+import { Toaster, toast } from 'react-hot-toast';
 
 const StyledTypography = styled(Typography)`
  margin-top: 10px;
@@ -16,6 +17,14 @@ const StyledButton = styled(Button)`
   margin-top: 16px;
 `;
 
+const modalStyle: SxProps<Theme> = {
+  width: 400,
+  bgcolor: 'background.paper',
+  boxShadow: 24,
+  p: 4,
+  marginInline: 'auto'
+};
+
 const FeedbackModal: React.FC = () => {
   const [feedback, setFeedback] = useState('');
   const [rating, setRating] = useState<number | null>(null);
@@ -23,6 +32,7 @@ const FeedbackModal: React.FC = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const token = searchParams.get('token');
+
 
   const buttonDisabled = (): boolean => {
     return feedback.length == 0 || !token || !rating;
@@ -42,18 +52,14 @@ const FeedbackModal: React.FC = () => {
       }
 
       const res = await axiosRequest(urlGenerator(`${process.env.ROOM_REVIEW_API}`), RequestType.POST, requestBody);
-      console.log(res.data);
+      toast.success(res.data);
+      setRating(0);
+      setFeedback("");
     } catch (error: unknown) {
-      console.log(error.toString())
+      toast.error(error.toString());
+      setRating(0);
+      setFeedback("");
     }
-  };
-
-  const modalStyle: SxProps<Theme> = {
-    width: 400,
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-    marginInline: 'auto'
   };
 
   useEffect(() => {
@@ -62,6 +68,7 @@ const FeedbackModal: React.FC = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off" sx={modalStyle}>
+      <Toaster />
       <Typography variant="h6" gutterBottom>
         Room Review
       </Typography>

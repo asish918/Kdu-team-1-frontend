@@ -142,6 +142,7 @@ export type PromotionType = {
   promotion_id?: string;
   promotion_title: string;
   price_factor: number;
+  room_type_id?: number;
 }
 
 export type ReviewRequest = {
@@ -149,4 +150,12 @@ export type ReviewRequest = {
   rating: number;
   review: string;
   room_type_id: number;
+}
+
+export type RoomTypeInfo = {
+  
+}
+
+export type RoomTypeInfoMap = {
+  [key: string]: ;
 }

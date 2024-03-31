@@ -17,6 +17,7 @@ const StyledButton = styled(Button)({
 const StyledBox = styled(Box)({
   marginTop: '25px',
 });
+
 interface PromoCodeProps {
   onApplyPromoCode: (code: string) => void;
 }

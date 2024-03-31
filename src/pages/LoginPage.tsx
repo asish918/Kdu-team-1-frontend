@@ -11,7 +11,7 @@ export default function LoginPage() {
         switch (payload.event) {
             case 'signedIn':
                 console.log('user have been signedIn successfully.');
-                navigate("/");
+                navigate(-1);
                 break;
             case 'signedOut':
                 console.log('user have been signedOut successfully.');

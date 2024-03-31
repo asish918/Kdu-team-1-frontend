@@ -1,7 +1,6 @@
 import Footer from "../components/layout/Footer";
 import Itinerary from "../components/searchpage/Itinerary";
-import React, { useEffect, useState } from 'react';
-import FeedbackModal from '../components/searchpage/FeedbackModal';
+import { useEffect, useState } from 'react';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
 import { TextField } from "@mui/material";
@@ -10,7 +9,6 @@ import { useSelector } from "react-redux";
 import Banner from "../components/searchpage/Banner";
 import CustomStepper from "../components/searchpage/CustomStepper";
 import { getCurrentUser } from "aws-amplify/auth";
-import axios from "axios";
 import { axiosRequest, prodUrlGenerator, urlGenerator } from "../utils/util";
 import { RequestType } from "../utils/enums";
 
@@ -56,7 +54,7 @@ export default function CheckoutPage() {
                 console.log(`The username: ${username}`);
                 console.log(`The userId: ${userId}`);
                 console.log(signInDetails);
-                setEmail(signInDetails?.loginId);
+                signInDetails ? setEmail(signInDetails!.loginId) : setEmail("");
             } catch (err) {
                 console.log(err);
             }

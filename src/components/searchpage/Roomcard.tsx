@@ -16,7 +16,7 @@ import { increaseStep } from '../../redux/reducers/navigationReducer';
 const RoomCardContainer = styled(Card)`
  margin: 20px;
  width: 300px;
- height: 561px;
+ height: 620px;
  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
  transition: all 0.2s ease-in-out;
 
@@ -125,7 +125,8 @@ const RoomCard: React.FC<Result> = ({
   validPromotions,
   amenities,
   description,
-  roomTypeId
+  roomTypeId,
+  bestPromotion
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
@@ -158,23 +159,23 @@ const RoomCard: React.FC<Result> = ({
               {roomCardNameGenerator(roomTypeName)}
             </RoomTypeName>
             <ReviewsContainer>
-              {/* {reviews.length > 0 ? (
-              <>
-                <RatingContainer>
-                  <StyledStarIcon fontSize="small" />
+              {reviews > 0 ? (
+                <>
+                  <RatingContainer>
+                    <StyledStarIcon fontSize="small" />
+                    <Typography variant="body1" color="text.secondary">
+                      {rating}
+                    </Typography>
+                  </RatingContainer>
                   <Typography variant="body1" color="text.secondary">
-                    {rating}
+                    {reviews} reviews
                   </Typography>
-                </RatingContainer>
-                <Typography variant="body1" color="text.secondary">
-                  {reviews.length} reviews
-                </Typography>
-              </>
-            ) : ( */}
-              <NewPropertyBox>
-                New property
-              </NewPropertyBox>
-              {/* )} */}
+                </>
+              ) : (
+                <NewPropertyBox>
+                  New property
+                </NewPropertyBox>
+              )}
             </ReviewsContainer>
           </TitleContainer>
 
@@ -200,34 +201,34 @@ const RoomCard: React.FC<Result> = ({
             </Typography>
           </IconTextContainer>
 
-          {/* <DealsContainer>
-          <svg
-            width="121"
-            height="32"
-            viewBox="0 0 121 32"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M120.759 0H0V32H120.759L112.775 14.9677L120.759 0Z"
-              fill="#26266D"
-            />
-            <text
-              x="50%"
-              y="50%"
-              dominantBaseline="middle"
-              textAnchor="middle"
-              fill="white"
-              fontWeight="400"
-              fontSize="16px"
+          <DealsContainer>
+            <svg
+              width="121"
+              height="32"
+              viewBox="0 0 121 32"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              Special Deal
-            </text>
-          </svg>
-        </DealsContainer>
-        <Typography variant="body1" color="text.secondary">
-          {deals.join(', ')}
-        </Typography> */}
+              <path
+                d="M120.759 0H0V32H120.759L112.775 14.9677L120.759 0Z"
+                fill="#26266D"
+              />
+              <text
+                x="50%"
+                y="50%"
+                dominantBaseline="middle"
+                textAnchor="middle"
+                fill="white"
+                fontWeight="400"
+                fontSize="16px"
+              >
+                Special Deal
+              </text>
+            </svg>
+          </DealsContainer>
+          <Typography variant="body1" color="text.secondary">
+            {bestPromotion.promotion_title}
+          </Typography>
           <SpecialDealText variant="body1" color="text.secondary">
             {formatCurrency(averageRate, activeCurrency, exchangeRates, i18n)}
           </SpecialDealText>
