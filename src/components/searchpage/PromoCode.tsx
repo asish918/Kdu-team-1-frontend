@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, Box } from '@mui/material';
 import { styled } from '@mui/system';
+import { useTranslation } from 'react-i18next';
 
 const StyledTextField = styled(TextField)({
   width: '201px',
@@ -34,10 +35,12 @@ const PromoCode: React.FC<PromoCodeProps> = ({ onApplyPromoCode }) => {
     setPromoCode('');
   };
 
+  const { i18n } = useTranslation();
+
   return (
     <StyledBox>
       <StyledTextField
-        label="Enter a Promo Code"
+        label={i18n.t("generic.promoCodeInput")}
         variant="outlined"
         value={promoCode}
         onChange={handlePromoCodeChange}
@@ -48,7 +51,7 @@ const PromoCode: React.FC<PromoCodeProps> = ({ onApplyPromoCode }) => {
         onClick={handleApplyPromoCode}
         disabled={promoCode.length === 0}
       >
-        Apply
+        {i18n.t("generic.promoCodeButton")}
       </StyledButton>
     </StyledBox>
   );

@@ -11,6 +11,8 @@ import { CenteredContainer, FlexContainer, GuestsContainer, RoomsContainer, Styl
 import { useNavigate } from 'react-router-dom';
 import { searchFieldParamsValidator } from '../../utils/validator';
 import { convertStatesToQueryString } from '../../utils/util';
+import MilitaryToggle from './MilitaryToggle';
+import SeniorCitizenToggle from './SeniorCitizenToggle';
 
 
 const SearchForm: React.FC = () => {
@@ -45,6 +47,8 @@ const SearchForm: React.FC = () => {
                   </RoomsContainer>
                </FlexContainer>
                {wheelchairAccessible && <WheelchairAccessible step={0} />}
+               <MilitaryToggle step={0} />
+               <SeniorCitizenToggle step={0} />
                <CenteredContainer>
                   <SearchButton isDisabled={!searchFieldParamsValidator(searchFormParams)} onClick={handleSearch} />
                </CenteredContainer>

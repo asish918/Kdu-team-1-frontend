@@ -7,6 +7,8 @@ import { GuestsContainer, RoomsContainer } from '../landingpage/styled-component
 import styled from 'styled-components';
 import WheelchairAccessible from '../landingpage/WheelchairAccessible';
 import { useTranslation } from 'react-i18next';
+import MilitaryToggle from '../landingpage/MilitaryToggle';
+import SeniorCitizenToggle from '../landingpage/SeniorCitizenToggle';
 
 interface SearchFormProps {
   onSearch: (params: { dateRange: Date[]; beds: number }) => void;
@@ -95,6 +97,8 @@ function SearchForm({ onSearch }: SearchFormProps) {
         </BedsContainer>
         <DatePicker step={1} />
         <WheelchairAccessible step={1} />
+        <MilitaryToggle step={1} />
+        <SeniorCitizenToggle step={1} />
         <ButtonStyled variant="contained" onClick={onSearch}>
           {i18n.t("landingPageForm.search")}
         </ButtonStyled>

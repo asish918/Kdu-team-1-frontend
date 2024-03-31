@@ -168,12 +168,12 @@ const RoomCard: React.FC<Result> = ({
                     </Typography>
                   </RatingContainer>
                   <Typography variant="body1" color="text.secondary">
-                    {reviews} reviews
+                    {reviews} {i18n.t("generic.reviews")}
                   </Typography>
                 </>
               ) : (
                 <NewPropertyBox>
-                  New property
+                  {i18n.t("generic.newPropertyTag")}
                 </NewPropertyBox>
               )}
             </ReviewsContainer>
@@ -182,11 +182,11 @@ const RoomCard: React.FC<Result> = ({
           <IconTextContainer>
             <StyledLocationIcon fontSize="small" />
             <LocationText variant="body1" color="text.secondary">
-              Kickdrum
+              {i18n.t("generic.location")}
             </LocationText>
           </IconTextContainer>
           <LocationText variant="body1" color="text.secondary">
-            <i>Inclusive</i> &emsp; {areaInSquareFeet} ft.
+            <i>{i18n.t("generic.inclusive")}</i> &emsp; {areaInSquareFeet} ft.
           </LocationText>
           <IconTextContainer>
             <StyledOccupancyIcon fontSize="small" />
@@ -222,7 +222,7 @@ const RoomCard: React.FC<Result> = ({
                 fontWeight="400"
                 fontSize="16px"
               >
-                Special Deal
+                {i18n.t("generic.specialDealTitle")}
               </text>
             </svg>
           </DealsContainer>
@@ -233,10 +233,10 @@ const RoomCard: React.FC<Result> = ({
             {formatCurrency(averageRate, activeCurrency, exchangeRates, i18n)}
           </SpecialDealText>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-            per night
+            {i18n.t("generic.perNight")}
           </Typography>
           <Button variant="contained" color="primary" onClick={handleOpenModal}>
-            Select Room
+            {i18n.t("generic.selectRoomButton")}
           </Button>
         </CardContent>
       </RoomCardContainer>

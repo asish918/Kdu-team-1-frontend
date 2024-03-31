@@ -9,8 +9,8 @@ import { RootState } from '../../redux/store';
 import { decreaseStep, increaseStep, resetStep } from '../../redux/reducers/navigationReducer';
 import { useNavigate } from 'react-router-dom';
 import { generateDescription, itenaryDateFormat, roomCardNameGenerator } from '../../utils/util';
-import { aD } from 'vitest/dist/reporters-P7C2ytIv.js';
 import { setVisible } from '../../redux/reducers/itenaryReducer';
+import { useTranslation } from 'react-i18next';
 
 const size = {
   mobile: '320px',
@@ -129,6 +129,8 @@ const Itinerary = () => {
   const handleOpenTaxes = () => setOpenTaxes(true);
   const handleCloseTaxes = () => setOpenTaxes(false);
 
+  const { t, i18n } = useTranslation();
+
   const step = useSelector((state: RootState) => state.appNavigation.step)
   const itenary = useSelector((state: RootState) => state.itenary)
   const { adults, kids, teens, numberOfRooms, startDate, endDate } = useSelector((state: RootState) => state.searchForm);
@@ -180,8 +182,8 @@ const Itinerary = () => {
   return (
     <ItineraryBox>
       <ItenaryHeader>
-        <ItineraryTitle>Your Trip Itinerary </ItineraryTitle>
-        <RemoveButton onClick={handleRemove}>Remove</RemoveButton>
+        <ItineraryTitle>{i18n.t("generic.itenaryTitle")}</ItineraryTitle>
+        <RemoveButton onClick={handleRemove}>{i18n.t("generic.itenaryRemove")}</RemoveButton>
       </ItenaryHeader>
       <ItineraryDetails>
         <Itineraryname>{roomCardNameGenerator(itenary.room?.roomTypeName)}</Itineraryname>
@@ -193,7 +195,7 @@ const Itinerary = () => {
           <ItineraryItemValue>{numberOfRooms} room(s)</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-          <ItineraryItemLabel>Special Promo:
+          <ItineraryItemLabel>{i18n.t("generic.itenarySpecialPromo")}:
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
           </ItineraryItemLabel>
 
@@ -207,7 +209,7 @@ const Itinerary = () => {
         />
         <Border />
         <ItineraryItem>
-          <ItineraryItemLabel>Taxes, Surcharges, Fees:
+          <ItineraryItemLabel>{i18n.t("generic.itenaryTaxes")}:
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
           </ItineraryItemLabel>
 
@@ -220,21 +222,21 @@ const Itinerary = () => {
           content={taxesContent}
         />
         <ItineraryItem>
-          <ItineraryItemLabel>VAT:</ItineraryItemLabel>
+          <ItineraryItemLabel>{i18n.t("generic.itenaryVAT")}:</ItineraryItemLabel>
           <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <Border />
         <ItineraryItem>
-          <ItineraryItemLabel>Due Now:</ItineraryItemLabel>
+          <ItineraryItemLabel>{i18n.t("generic.itenaryDueNow")}:</ItineraryItemLabel>
           <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-          <ItineraryItemLabel>Due at Resort:</ItineraryItemLabel>
+          <ItineraryItemLabel>{i18n.t("generic.itenaryDueResort")}:</ItineraryItemLabel>
           <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
       <CheckoutButton onClick={handleClick} variant="outlined" color="primary" sx={{ margin: '6px' }}>
-        {step == 1 ? "Checkout" : "Continue Shopping"}
+        {step == 1 ? i18n.t("generic.itenaryCheckout") : i18n.t("generic.itenaryContinueShopping")}
       </CheckoutButton>
     </ItineraryBox>
   );

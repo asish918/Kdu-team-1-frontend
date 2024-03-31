@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { setPromotion, setRoom, setVisible } from '../../redux/reducers/itenaryReducer';
 import { increaseStep } from '../../redux/reducers/navigationReducer';
+import { useTranslation } from 'react-i18next';
 
 const CustomCard = styled(Card)`
    width: 100%;
@@ -93,6 +94,8 @@ const DealCard = ({ dealTitle, dealDescription, price, promotion, room }: DealCa
    const navigate = useNavigate();
    const dispatch = useDispatch();
 
+   const { i18n } = useTranslation();
+
    const handleSelectPackage = () => {
       dispatch(setVisible(true));
       dispatch(increaseStep());
@@ -110,9 +113,9 @@ const DealCard = ({ dealTitle, dealDescription, price, promotion, room }: DealCa
          <RightContent>
             <Price variant="h6">{price}</Price>
             <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
-               per night
+               {i18n.t("generic.perNight")}
             </Typography>
-            <SelectPackageButton onClick={handleSelectPackage} variant="contained">Select Package</SelectPackageButton>
+            <SelectPackageButton onClick={handleSelectPackage} variant="contained">{i18n.t("generic.selectPackageButton")}</SelectPackageButton>
          </RightContent>
       </CustomCard>
    );

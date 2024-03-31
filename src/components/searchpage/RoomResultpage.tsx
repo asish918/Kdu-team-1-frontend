@@ -27,7 +27,7 @@ const RoomResultFlexContainer = styled.div`
   display: flex;
   width: 100%;
 
-  @media (max-width: 570px) {
+  @media (max-width: 768px) {
     flex-wrap: wrap;
   }
 `
@@ -35,7 +35,7 @@ const RoomResultFlexContainer = styled.div`
 const AccordionContainer = styled.div`
   flex-basis: 20%;
 
-  @media (max-width: 570px) {
+  @media (max-width: 768px) {
     flex-basis: 95%;
   }
 `
@@ -113,7 +113,10 @@ function RoomResultsPage() {
       totalGuests: parseInt(searchParams.get('totalGuests')!),
       roomTypes: searchParams.getAll('roomTypes').length > 0 ? searchParams.getAll('roomTypes') : [],
       priceSort: searchParams.get('priceSort') === 'true',
-      bedTypes: bedTypes.length > 0 && bedTypes[0] !== "" ? bedTypes : []
+      bedTypes: bedTypes.length > 0 && bedTypes[0] !== "" ? bedTypes : [],
+      isKDUMember: true,
+      isMilitary: filterSortProps.military ? filterSortProps.military : false,
+      isSeniorCitizen: filterSortProps.seniorCitizen ? filterSortProps.seniorCitizen : false
     };
 
     console.log(requestBody);

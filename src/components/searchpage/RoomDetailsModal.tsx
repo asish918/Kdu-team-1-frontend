@@ -216,7 +216,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                         </RoomInfo>
                         <StyledAmenitiesContainer>
                             <AmenitiesTitle variant="body1" style={{ color: 'black' }}>
-                                Amenities
+                                {i18n.t("generic.amenitiesTitle")}
                             </AmenitiesTitle>
                             <StyledAmenitiesColumn>
                                 {firstHalf.map((amenity, index) => (
@@ -238,7 +238,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                     </RoomInfoContainer>
                     <DealsPromoContainer>
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
-                            Standard Rates
+                            {i18n.t("generic.standardRatesTitle")}
                         </Typography>
                         <DealCard
                             dealTitle="Standard Rate"
@@ -248,7 +248,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
 
                         />
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
-                            Deals & Packages
+                            {i18n.t("generic.dealsAndPackagesTitle")}
                         </Typography>
                         {roomDetails.validPromotions.map((deal: PromotionType, index: number) => (
                             <DealCard

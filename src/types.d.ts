@@ -22,6 +22,8 @@ export type LandingPageFormTranslation = {
   search: string;
   beds: string;
   accessibility: string;
+  military: string;
+  seniorCitizen: string;
 }
 
 export type RoomResultFormTranslation = {
@@ -54,6 +56,8 @@ export type Translation = {
   landingPageForm: LandingPageFormTranslation;
   roomResultForm: RoomResultFormTranslation;
   stepper: StepperTranslation;
+  generic: GenericInfo;
+  itenary: ItenaryTranslation;
   error: ErrorTranslation;
 };
 
@@ -111,6 +115,9 @@ export type RoomResultRequestBody = {
   priceSort?: boolean;
   areaSort?: boolean;
   ratingSort?: boolean;
+  isKDUMember?: boolean;
+  isSeniorCitizen?: boolean;
+  isMilitary?: boolean;
 }
 
 export type RoomResult = {
@@ -152,10 +159,32 @@ export type ReviewRequest = {
   room_type_id: number;
 }
 
-export type RoomTypeInfo = {
-  
+export type GenericInfo = {
+  location: string;
+  specialDealTitle: string;
+  perNight: string;
+  selectPackageButton: string;
+  inclusive: string;
+  newPropertyTag: string;
+  reviews: string;
+  selectRoomButton: string;
+  amenitiesTitle: string;
+  standardRatesTitle: string;
+  dealsAndPackagesTitle: string;
+  promoCodeButton: string;
+  promoCodeInput: string;
 }
 
-export type RoomTypeInfoMap = {
-  [key: string]: ;
+export type ItenaryTranslation = {
+  itenaryTitle: string;
+  itenarySpecialPromo: string;
+  itenaryTaxes: string;
+  itenaryVAT: string;
+  itenaryDueNow: string;
+  itenaryDueResort: string;
+  itenaryContinueShopping: string;
+  itenaryCheckout: string;
+  itenaryEmail: string;
+  itenaryStayCompleted: string;
+  itenaryRemove: string;
 }

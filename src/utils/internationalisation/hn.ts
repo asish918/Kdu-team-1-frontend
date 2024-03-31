@@ -24,7 +24,9 @@ export const hn: LanguageType = {
       adult: "वयस्क",
       teens: "किशोर",
       beds: "बिस्तर",
-      accessibility: "मुझे एक पहुंचने योग्य कमरा चाहिए"
+      accessibility: "मुझे एक पहुंचने योग्य कमरा चाहिए",
+      military: "मैं सैन्य पर्सनल हूँ",
+      seniorCitizen: "मेरे साथ वरिष्ठ नागरिक हैं"
     },
     roomResultForm: {
       filterTitle: "अपने परिणामों को संक्षेपित करें",
@@ -46,5 +48,33 @@ export const hn: LanguageType = {
       title: "उफ़!",
       subtitle: "क्षमा करें, एक अप्रत्याशित त्रुटि उत्पन्न हुई है.",
     },
+    generic: {
+      amenitiesTitle: "सुविधाएं",
+      dealsAndPackagesTitle: "डील्स और पैकेज",
+      standardRatesTitle: "मानक दरें",
+      inclusive: "सम्मिलित",
+      location: "किकड्रम",
+      newPropertyTag: "नई संपत्ति",
+      perNight: "प्रति रात",
+      promoCodeButton: "लागू करें",
+      promoCodeInput: "प्रोमो कोड दर्ज करें",
+      reviews: "समीक्षाएँ",
+      selectPackageButton: "पैकेज चुनें",
+      selectRoomButton: "कमरा चुनें",
+      specialDealTitle: "विशेष सौदा"
+    },
+    itenary: {
+      itenaryCheckout: "चेक-आउट",
+      itenaryContinueShopping: "खरीदारी जारी रखें",
+      itenaryDueNow: "अब देना है",
+      itenaryDueResort: "रिज़ॉर्ट पर देना है",
+      itenaryEmail: "ईमेल दर्ज करें",
+      itenarySpecialPromo: "विशेष प्रोमो",
+      itenaryStayCompleted: "आपका रहना समाप्त हो गया है",
+      itenaryTaxes: "कर, अतिरिक्त शुल्क, शुल्क",
+      itenaryTitle: "आपकी यात्रा योजना",
+      itenaryVAT: "वैट",
+      itenaryRemove: "हटाएं"
+    }
   },
 };

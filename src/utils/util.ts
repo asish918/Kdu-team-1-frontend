@@ -120,7 +120,10 @@ export function requestBodyGenerator(searchParams: SearchFormState, filterParams
     totalGuests: searchParams.totalGuests.toString(),
     roomTypes: filterParams.roomTypes ? filterParams.roomTypes : [],
     bedTypes: filterParams.bedTypes ? filterParams.bedTypes : [],
-    priceSort: filterParams.priceSort
+    priceSort: filterParams.priceSort,
+    isKDUMember: true,
+    isMilitary: filterParams.military ? filterParams.military : false,
+    isSeniorCitizen: filterParams.seniorCitizen ? filterParams.seniorCitizen : false,
   }
 
   return requestBody;

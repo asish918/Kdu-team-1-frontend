@@ -21,7 +21,7 @@ const NumberOfBeds: React.FC = () => {
   return (
     <Box marginBottom={2}>
       <FormControl fullWidth>
-        <InputLabel id="numberOfBeds-label">{i18n.t("landingPageForm.search")}</InputLabel>
+        <InputLabel id="numberOfBeds-label">{i18n.t("landingPageForm.beds")}</InputLabel>
         <Select
           labelId="numberOfBeds-label"
           id="numberOfBeds"
