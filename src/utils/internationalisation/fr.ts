@@ -37,7 +37,7 @@ export const fr: LanguageType = {
     stepper: {
       step1: "Choisissez une chambre",
       step2: "Choisissez un supplément",
-      step3: "Check-out"
+      step3: "vérifier"
     },
     footer: {
       title: "Kickdrum",

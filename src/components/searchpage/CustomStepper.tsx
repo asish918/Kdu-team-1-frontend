@@ -8,6 +8,7 @@ import StepConnector, { stepConnectorClasses } from '@mui/material/StepConnector
 import { StepIconProps } from '@mui/material/StepIcon';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import { useTranslation } from 'react-i18next';
 
 const CustomConnector = styled(StepConnector)(({ theme }) => ({
     [`&.${stepConnectorClasses.alternativeLabel}`]: {
@@ -78,10 +79,11 @@ const StepperContainerStyles: SxProps<Theme> = {
     marginTop: '10px'
 }
 
-const steps = ['1. Choose Room', '2. Choose add-on', '3. Checkout'];
 
 export default function CustomStepper() {
     const step = useSelector((state: RootState) => state.appNavigation.step);
+    const { t, i18n } = useTranslation();
+    const steps = [`1. ${i18n.t("stepper.step1")}`, `2. ${i18n.t("stepper.step2")}`, `3. ${i18n.t("stepper.step3")}`];
 
     return (
         <Stack sx={StepperContainerStyles} spacing={1}>

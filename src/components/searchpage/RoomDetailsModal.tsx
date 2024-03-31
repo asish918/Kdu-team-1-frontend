@@ -167,7 +167,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const { i18n } = useTranslation();
 
     useEffect(() => {
-        if (status === "error") {
+        if (message === "The Promo Code is invalid") {
             setTimeout(() => {
                 dispatch(resetStatus());
             }, 4000)
@@ -276,7 +276,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             </>
                         }
                         <PromoCode onApplyPromoCode={handleApplyPromoCode} />
-                        {status === "error" &&
+                        {message === "The Promo Code is invalid" &&
                             <InvalidPromo>{message}</InvalidPromo>
                         }
                     </DealsPromoContainer>

@@ -44,7 +44,7 @@ export default function CheckoutPage() {
     const roomTypeId = useSelector((state: RootState) => state.itenary.room?.roomTypeId);
 
     const handleFeedbackSubmit = async () => {
-        const res = await axiosRequest(urlGenerator(`${process.env.EMAIL_API}?email=${email}&roomTypeId=${roomTypeId}`), RequestType.GET);
+        const res = await axiosRequest(prodUrlGenerator(`${process.env.EMAIL_API}?email=${email}&roomTypeId=${roomTypeId}`), RequestType.GET);
         toast.success(res.data);
     };
 

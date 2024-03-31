@@ -19,14 +19,14 @@ const promoReducer = createSlice({
     initialState: initialState,
     reducers: {
         resetStatus: (state) => {
-            state.status = null;
+            state.message = "";
         }
     },
     extraReducers: (builder) => {
-        builder.addCase(validatePromoCode.fulfilled, (state, action: PayloadAction<PromoCodeType>) => {
+        builder.addCase(validatePromoCode.fulfilled, (state, action: PayloadAction<PromotionType | string>) => {
             state.promo = action.payload;
             state.status = 'success';
-            state.message = "Promo Code Valid";
+            state.message = action.payload;
         });
         builder.addCase(validatePromoCode.pending, (state) => {
             state.message = "Promo Code loading";
