@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import RoomDetailsModal from './RoomDetailsModal';
-import { increaseStep } from '../../redux/reducers/navigationReducer';
+import { decreaseStep, increaseStep } from '../../redux/reducers/navigationReducer';
 // Define styled components
 const RoomCardContainer = styled(Card)`
  margin: 20px;
@@ -141,6 +141,7 @@ const RoomCard: React.FC<Result> = ({
   };
 
   const handleCloseModal = () => {
+    dispatch(decreaseStep());
     setModalOpen(false);
   };
 

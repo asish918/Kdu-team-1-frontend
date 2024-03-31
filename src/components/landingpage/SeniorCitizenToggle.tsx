@@ -1,9 +1,9 @@
 import ElderlyIcon from '@mui/icons-material/Elderly';
 import { useTranslation } from 'react-i18next';
 import { IconContainer, StyledCheckbox, StyledLabel } from './styled-components';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setSeniorCitizen } from '../../redux/reducers/filterSortReducer';
+import { RootState } from '../../redux/store';
 
 interface SeniorCitizenToggleProps {
     step: number;
@@ -11,11 +11,10 @@ interface SeniorCitizenToggleProps {
 
 const SeniorCitizenToggle: React.FC<SeniorCitizenToggleProps> = ({ step }) => {
     const { i18n } = useTranslation();
-    const [toggle, setToggle] = useState<boolean>(false);
+    const toggle = useSelector((state: RootState) => state.filterState.seniorCitizen);
     const dispatch = useDispatch();
 
     const handleChange = () => {
-        setToggle(!toggle);
         dispatch(setSeniorCitizen(!toggle));
     }
 

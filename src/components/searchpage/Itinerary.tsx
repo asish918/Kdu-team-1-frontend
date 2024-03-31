@@ -182,8 +182,8 @@ const Itinerary = () => {
   return (
     <ItineraryBox>
       <ItenaryHeader>
-        <ItineraryTitle>{i18n.t("generic.itenaryTitle")}</ItineraryTitle>
-        <RemoveButton onClick={handleRemove}>{i18n.t("generic.itenaryRemove")}</RemoveButton>
+        <ItineraryTitle>{i18n.t("itenary.itenaryTitle")}</ItineraryTitle>
+        <RemoveButton onClick={handleRemove}>{i18n.t("itenary.itenaryRemove")}</RemoveButton>
       </ItenaryHeader>
       <ItineraryDetails>
         <Itineraryname>{roomCardNameGenerator(itenary.room?.roomTypeName)}</Itineraryname>
@@ -195,7 +195,7 @@ const Itinerary = () => {
           <ItineraryItemValue>{numberOfRooms} room(s)</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-          <ItineraryItemLabel>{i18n.t("generic.itenarySpecialPromo")}:
+          <ItineraryItemLabel>{i18n.t("itenary.itenarySpecialPromo")}:
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
           </ItineraryItemLabel>
 
@@ -209,7 +209,7 @@ const Itinerary = () => {
         />
         <Border />
         <ItineraryItem>
-          <ItineraryItemLabel>{i18n.t("generic.itenaryTaxes")}:
+          <ItineraryItemLabel>{i18n.t("itenary.itenaryTaxes")}:
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
           </ItineraryItemLabel>
 
@@ -222,21 +222,21 @@ const Itinerary = () => {
           content={taxesContent}
         />
         <ItineraryItem>
-          <ItineraryItemLabel>{i18n.t("generic.itenaryVAT")}:</ItineraryItemLabel>
+          <ItineraryItemLabel>{i18n.t("itenary.itenaryVAT")}:</ItineraryItemLabel>
           <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <Border />
         <ItineraryItem>
-          <ItineraryItemLabel>{i18n.t("generic.itenaryDueNow")}:</ItineraryItemLabel>
+          <ItineraryItemLabel>{i18n.t("itenary.itenaryDueNow")}:</ItineraryItemLabel>
           <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
-          <ItineraryItemLabel>{i18n.t("generic.itenaryDueResort")}:</ItineraryItemLabel>
+          <ItineraryItemLabel>{i18n.t("itenary.itenaryDueResort")}:</ItineraryItemLabel>
           <ItineraryItemValue>$000</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
       <CheckoutButton onClick={handleClick} variant="outlined" color="primary" sx={{ margin: '6px' }}>
-        {step == 1 ? i18n.t("generic.itenaryCheckout") : i18n.t("generic.itenaryContinueShopping")}
+        {step == 1 ? i18n.t("itenary.itenaryCheckout") : i18n.t("itenary.itenaryContinueShopping")}
       </CheckoutButton>
     </ItineraryBox>
   );

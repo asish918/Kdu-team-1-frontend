@@ -11,6 +11,7 @@ import CustomStepper from "../components/searchpage/CustomStepper";
 import { getCurrentUser } from "aws-amplify/auth";
 import { axiosRequest, prodUrlGenerator, urlGenerator } from "../utils/util";
 import { RequestType } from "../utils/enums";
+import { Toaster, toast } from "react-hot-toast";
 
 
 const CenteredDiv = styled('div')`
@@ -44,7 +45,7 @@ export default function CheckoutPage() {
 
     const handleFeedbackSubmit = async () => {
         const res = await axiosRequest(urlGenerator(`${process.env.EMAIL_API}?email=${email}&roomTypeId=${roomTypeId}`), RequestType.GET);
-        console.log(res.data);
+        toast.success(res.data);
     };
 
     useEffect(() => {
@@ -65,6 +66,7 @@ export default function CheckoutPage() {
 
     return (
         <>
+            <Toaster />
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
             <CenteredDiv>

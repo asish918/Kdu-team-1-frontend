@@ -13,7 +13,9 @@ const initialState: FilterSortState = {
     bedTypes: null,
     roomTypes: null,
     priceSort: true,
-    kduMember: true
+    kduMember: true,
+    seniorCitizen: false,
+    military: false
 };
 
 export const filterSortSlice = createSlice({

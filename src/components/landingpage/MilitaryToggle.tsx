@@ -1,9 +1,9 @@
 import MilitaryTechIcon from '@mui/icons-material/MilitaryTech';
 import { useTranslation } from 'react-i18next';
 import { IconContainer, StyledCheckbox, StyledLabel } from './styled-components';
-import { useDispatch } from 'react-redux';
-import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { setMilitary } from '../../redux/reducers/filterSortReducer';
+import { RootState } from '../../redux/store';
 
 interface MilitaryToggleProps {
     step: number;
@@ -11,11 +11,10 @@ interface MilitaryToggleProps {
 
 const MilitaryToggle: React.FC<MilitaryToggleProps> = ({ step }) => {
     const { i18n } = useTranslation();
-    const [toggle, setToggle] = useState<boolean>(false);
+    const toggle = useSelector((state: RootState) => state.filterState.military);
     const dispatch = useDispatch();
 
     const handleChange = () => {
-        setToggle(!toggle);
         dispatch(setMilitary(!toggle));
     }
 
