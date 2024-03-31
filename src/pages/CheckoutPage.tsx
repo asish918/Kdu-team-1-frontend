@@ -1,6 +1,6 @@
 import Footer from "../components/layout/Footer";
 import Itinerary from "../components/searchpage/Itinerary";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FeedbackModal from '../components/searchpage/FeedbackModal';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
@@ -9,6 +9,10 @@ import { RootState } from "../redux/store";
 import { useSelector } from "react-redux";
 import Banner from "../components/searchpage/Banner";
 import CustomStepper from "../components/searchpage/CustomStepper";
+import { getCurrentUser } from "aws-amplify/auth";
+import axios from "axios";
+import { axiosRequest, prodUrlGenerator, urlGenerator } from "../utils/util";
+import { RequestType } from "../utils/enums";
 
 
 const CenteredDiv = styled('div')`
@@ -36,26 +40,30 @@ const EmailContainer = styled('div')`
 `
 
 export default function CheckoutPage() {
-    // Todo 
-    const itineraryData = {
-        dates: 'May 9 - May 16, 2024',
-        guests: '1 adult 1 child',
-        room: '1 room',
-        roomType: 'Executive Room',
-        specialPromo: 'Special Promoname',
-        subtotal: '$00.00',
-        taxes: '$000.00',
-        vat: '$000.00',
-        dueNow: '$0000.00',
-        dueAtResort: '$0000.00',
-    };
-
     const [email, setEmail] = useState<string>("");
     const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
+    const roomTypeId = useSelector((state: RootState) => state.itenary.room?.roomTypeId);
 
-    const handleFeedbackSubmit = () => {
-        console.log("Hemlo")
+    const handleFeedbackSubmit = async () => {
+        const res = await axiosRequest(urlGenerator(`${process.env.EMAIL_API}?email=${email}&roomTypeId=${roomTypeId}`), RequestType.GET);
+        console.log(res.data);
     };
+
+    useEffect(() => {
+        async function fetchUserSession() {
+            try {
+                const { username, userId, signInDetails } = await getCurrentUser();
+                console.log(`The username: ${username}`);
+                console.log(`The userId: ${userId}`);
+                console.log(signInDetails);
+                setEmail(signInDetails?.loginId);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        fetchUserSession();
+    }, [])
 
     return (
         <>
@@ -63,7 +71,7 @@ export default function CheckoutPage() {
             <CustomStepper />
             <CenteredDiv>
                 <div>
-                    <Itinerary itinerary={itineraryData} />
+                    <Itinerary />
                     <EmailContainer>
                         <StyledTextField
                             label="Enter email"
@@ -71,7 +79,7 @@ export default function CheckoutPage() {
                             value={email}
                             onChange={(event) => setEmail(event.target.value)}
                         />
-                        <StyledButton variant="contained" onClick={handleFeedbackSubmit}>
+                        <StyledButton disabled={email.length === 0} variant="contained" onClick={handleFeedbackSubmit}>
                             Stay Completed
                         </StyledButton>
                     </EmailContainer>

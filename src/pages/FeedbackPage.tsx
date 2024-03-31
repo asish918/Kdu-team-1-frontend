@@ -1,6 +1,6 @@
-import { styled } from "@mui/material";
-import Footer from "../components/layout/Footer";
+import { ThemeProvider, styled } from "@mui/material";
 import FeedbackModal from "../components/searchpage/FeedbackModal";
+import { muiTheme } from "../styles/theme";
 
 const FeedbackContainer = styled('div')`
     height: 90%;
@@ -9,10 +9,11 @@ const FeedbackContainer = styled('div')`
 export default function FeedbackPage() {
     return (
         <>
-            <FeedbackContainer>
-                <FeedbackModal />
-            </FeedbackContainer>
-            <Footer sticky={true} />
+            <ThemeProvider theme={muiTheme}>
+                <FeedbackContainer>
+                    <FeedbackModal />
+                </FeedbackContainer>
+            </ThemeProvider>
         </>
     )
 }

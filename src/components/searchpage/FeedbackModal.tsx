@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
-import { TextField, Button, Box, Typography, Rating, Theme, SxProps} from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { TextField, Button, Box, Typography, Rating, Theme, SxProps } from '@mui/material';
 import { styled } from '@mui/system';
+import { useLocation } from 'react-router-dom';
+import { ReviewRequest } from '../../types';
+import { axiosRequest, urlGenerator } from '../../utils/util';
+import { RequestType } from '../../utils/enums';
+import { validateAndExtractToken } from '../../utils/jwtUtils';
 
 const StyledTypography = styled(Typography)`
  margin-top: 10px;
@@ -12,16 +17,37 @@ const StyledButton = styled(Button)`
 `;
 
 const FeedbackModal: React.FC = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
   const [feedback, setFeedback] = useState('');
   const [rating, setRating] = useState<number | null>(null);
 
-  const handleSubmit = (event: React.FormEvent) => {
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const token = searchParams.get('token');
+
+  const buttonDisabled = (): boolean => {
+    return feedback.length == 0 || !token || !rating;
+  }
+
+  const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+
+    try {
+      const tokenObj = await validateAndExtractToken(token!, `${process.env.JWT_KEY}`);
+
+      const requestBody: ReviewRequest = {
+        user_email: tokenObj!.email,
+        review: feedback,
+        room_type_id: parseInt(tokenObj!.roomTypeId),
+        rating: rating!
+      }
+
+      const res = await axiosRequest(urlGenerator(`${process.env.ROOM_REVIEW_API}`), RequestType.POST, requestBody);
+      console.log(res.data);
+    } catch (error: unknown) {
+      console.log(error.toString())
+    }
   };
 
-  // Define the style for the modal content
   const modalStyle: SxProps<Theme> = {
     width: 400,
     bgcolor: 'background.paper',
@@ -30,27 +56,27 @@ const FeedbackModal: React.FC = () => {
     marginInline: 'auto'
   };
 
+  useEffect(() => {
+    if (!token) throw new Error("Unauthorized request to feedback form")
+  }, [token])
+
   return (
     <Box component="form" onSubmit={handleSubmit} noValidate autoComplete="off" sx={modalStyle}>
       <Typography variant="h6" gutterBottom>
-        Feedback Form
+        Room Review
       </Typography>
-      <TextField
-        label="Name"
-        variant="outlined"
-        value={name}
-        onChange={(e) => setName(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
-      <TextField
-        label="Email"
-        variant="outlined"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        fullWidth
-        margin="normal"
-      />
+      <Box display="flex" alignItems="center" marginTop={2}>
+        <StyledTypography variant="h6" gutterBottom>
+          Rating
+        </StyledTypography>
+        <Rating
+          name="simple-controlled"
+          value={rating}
+          onChange={(event, newValue) => {
+            setRating(newValue);
+          }}
+        />
+      </Box>
       <TextField
         label="Feedback"
         variant="outlined"
@@ -61,19 +87,7 @@ const FeedbackModal: React.FC = () => {
         multiline
         rows={4}
       />
-      <Box display="flex" alignItems="center" marginTop={2}>
-        <StyledTypography variant="h6" gutterBottom>
-          Ratings
-        </StyledTypography>
-        <Rating
-          name="simple-controlled"
-          value={rating}
-          onChange={(event, newValue) => {
-            setRating(newValue);
-          }}
-        />
-      </Box>
-      <StyledButton variant="contained" color="primary" type="submit" fullWidth>
+      <StyledButton disabled={buttonDisabled()} variant="contained" color="primary" type="submit" fullWidth>
         Submit
       </StyledButton>
     </Box>

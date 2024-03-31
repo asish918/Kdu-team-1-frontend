@@ -181,9 +181,10 @@ const Header: React.FC = () => {
   useEffect(() => {
     async function fetchUserSession() {
       try {
-        const { username, userId } = await getCurrentUser();
+        const { username, userId, signInDetails } = await getCurrentUser();
         console.log(`The username: ${username}`);
         console.log(`The userId: ${userId}`);
+        console.log(signInDetails);
         setAuthState(true);
       } catch (err) {
         console.log(err);

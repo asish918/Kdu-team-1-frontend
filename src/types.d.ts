@@ -143,3 +143,10 @@ export type PromotionType = {
   promotion_title: string;
   price_factor: number;
 }
+
+export type ReviewRequest = {
+  user_email: string;
+  rating: number;
+  review: string;
+  room_type_id: number;
+}
