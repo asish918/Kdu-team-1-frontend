@@ -3,7 +3,7 @@ import { TextField, Button, Box, Typography, Rating, Theme, SxProps } from '@mui
 import { styled } from '@mui/system';
 import { useLocation } from 'react-router-dom';
 import { ReviewRequest } from '../../types';
-import { axiosRequest, urlGenerator } from '../../utils/util';
+import { axiosRequest, prodUrlGenerator, urlGenerator } from '../../utils/util';
 import { RequestType } from '../../utils/enums';
 import { validateAndExtractToken } from '../../utils/jwtUtils';
 import { Toaster, toast } from 'react-hot-toast';
@@ -51,7 +51,7 @@ const FeedbackModal: React.FC = () => {
         rating: rating!
       }
 
-      const res = await axiosRequest(urlGenerator(`${process.env.ROOM_REVIEW_API}`), RequestType.POST, requestBody);
+      const res = await axiosRequest(prodUrlGenerator(`${process.env.ROOM_REVIEW_API}`), RequestType.POST, requestBody);
       toast.success(res.data);
       setRating(0);
       setFeedback("");
