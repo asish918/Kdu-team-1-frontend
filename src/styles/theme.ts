@@ -18,9 +18,6 @@ const appTheme: DefaultTheme = {
 
 const muiTheme = createTheme({
   palette: {
-    ochre: {
-      main: appTheme.colors.primaryNavyBlue
-    },
     primary: {
       main: appTheme.colors.primaryNavyBlue,
     },

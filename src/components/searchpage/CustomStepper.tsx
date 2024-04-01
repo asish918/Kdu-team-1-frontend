@@ -18,12 +18,12 @@ const CustomConnector = styled(StepConnector)(({ theme }) => ({
     },
     [`&.${stepConnectorClasses.active}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-            borderColor: theme.colors.primaryNavyBlue,
+            borderColor: "#26266D",
         },
     },
     [`&.${stepConnectorClasses.completed}`]: {
         [`& .${stepConnectorClasses.line}`]: {
-            borderColor: theme.colors.primaryNavyBlue,
+            borderColor: "#26266D",
         },
     },
     [`& .${stepConnectorClasses.line}`]: {
@@ -44,14 +44,14 @@ const StepIconRoot = styled('div')<{ ownerState: { active?: boolean } }>(
             zIndex: 1,
             fontSize: 25,
             padding: 5,
-            backgroundColor: theme.colors.primaryNavyBlue,
+            backgroundColor: "#26266D",
             borderRadius: '50%'
         },
         '& .CustomStepIcon-circle': {
             zIndex: 1,
             fontSize: 25,
             padding: 5,
-            backgroundColor: ownerState.active ? theme.colors.primaryRed : 'currentColor',
+            backgroundColor: ownerState.active ? "#D0182B" : 'currentColor',
             borderRadius: '50%',
         },
     }),
