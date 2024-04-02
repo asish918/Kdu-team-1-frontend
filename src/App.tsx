@@ -1,44 +1,25 @@
-import styled from "styled-components";
-import { useEffect, useState } from "react";
-import { useQuery } from "@apollo/client";
-import Content from "./components/Content";
-import axios from "axios";
-import { ROOMS_QUERY } from "./graphql/queries";
+import { store } from "./redux/store";
+import { useEffect } from "react";
+import { fetchPropertyConfig } from "./redux/thunks/fetchPropertyConfig";
+import { fetchPropertyList } from "./redux/thunks/fetchPropertyList";
+import { fetchCalendarDates } from "./redux/thunks/fetchCalendarDates";
+import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
 import AppProvider from "./providers/AppProvider";
-
-const StyledP = styled.p`
-  text-align: center;
-`;
+import { Outlet } from "react-router-dom";
 
 function App() {
-  const { data, loading, error } = useQuery(ROOMS_QUERY);
-  const [apiText, setApi] = useState("");
 
   useEffect(() => {
-    axios
-      .get(`${process.env.API_URL}`)
-      .then((res) => {
-        console.log(res.data);
-        setApi(res.data);
-      })
-      .catch((error) => console.log(error));
-  }, []);
-
-  useEffect(() => {
-    if (!loading) {
-      console.log(data);
-    }
-
-    if (error) {
-      throw error;
-    }
-  }, [loading, error]);
+    store.dispatch(fetchPropertyConfig());
+    store.dispatch(fetchPropertyList());
+    store.dispatch(fetchCalendarDates());
+    store.dispatch(fetchExchangeRates());
+  }, [])
 
   return (
-    <AppProvider>
-      <StyledP>{apiText}</StyledP>
-      <Content />
-    </AppProvider>
+      <AppProvider>
+        <Outlet />
+      </AppProvider>
   );
 }
 

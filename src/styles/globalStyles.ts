@@ -10,6 +10,15 @@ export const GlobalStyle = createGlobalStyle`
     font-family: "Lato", sans-serif;
   }
 
+  html, body {
+    height: 100%;
+  }
+
+  #root {
+    height: 100%;
+    position: relative;
+  }
+  
   fieldset {
     border: none;
     outline: none;

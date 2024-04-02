@@ -24,6 +24,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+*.idea
 
 # Config file for Bun Runtime
 bun.lockb
@@ -32,3 +33,4 @@ bun.lockb
 .env.sentry-build-plugin
 *.lockb
 package-lock.json
+coverage

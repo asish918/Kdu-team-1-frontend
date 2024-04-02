@@ -11,6 +11,8 @@ const appTheme: DefaultTheme = {
     primaryRed: "#D0182B",
     secondaryBlue: "#006EFF",
     textBlack: "#000000",
+    secondaryNavyBlue: "#c7c7de",
+    stepperGray: "#E4E4E4"
   },
 };
 
@@ -21,7 +23,7 @@ const muiTheme = createTheme({
     },
     secondary: {
       main: appTheme.colors.primaryDeepBlue,
-    },
+    }
   },
 });
 
