@@ -14,14 +14,14 @@ import PaymentInfo from "../components/searchpage/PaymentInfo";
 import Banner from "../components/searchpage/Banner";
 import CustomStepper from "../components/searchpage/CustomStepper";
 import ContactInfo from "../components/searchpage/Contactinfo"
-import PrintComponent from '../components/searchpage/PrintComponent';
-import ZipcodeValidator from '../components/searchpage/ZipcodeValidator';
+// import PrintComponent from '../components/searchpage/PrintComponent';
+// import ZipcodeValidator from '../components/searchpage/ZipcodeValidator';
 
 
 
 export default function CheckoutPage() {
     const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
-    
+
     useEffect(() => {
         async function fetchUserSession() {
             try {
@@ -29,7 +29,7 @@ export default function CheckoutPage() {
                 console.log(`The username: ${username}`);
                 console.log(`The userId: ${userId}`);
                 console.log(signInDetails);
-                
+
             } catch (err) {
                 console.log(err);
             }
@@ -44,18 +44,18 @@ export default function CheckoutPage() {
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <div style={{ width: '70%', marginLeft: '25px', marginBottom:'10px' }}>
+                <div style={{ width: '70%', marginLeft: '25px', marginBottom: '10px' }}>
                     <PaymentInfo />
                 </div>
-                <div style={{ width: '25%', display: 'flex', flexDirection: 'column', marginTop:'32px',marginLeft: '10px' }}>
+                <div style={{ width: '25%', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '10px' }}>
                     <Itinerary />
-                    <ContactInfo/>
+                    <ContactInfo />
 
                 </div>
             </div>
-            <PrintComponent/>
-            <ZipcodeValidator/>
-            
+            {/* <PrintComponent/> */}
+            {/* <ZipcodeValidator/> */}
+
             <Footer sticky={false} />
         </>
     )
