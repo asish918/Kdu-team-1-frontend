@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
-import { styled } from '@mui/system';
 import { Button, TextField } from '@mui/material';
 import { RootState } from "../redux/store";
 import { getCurrentUser } from "aws-amplify/auth";
@@ -14,10 +13,28 @@ import PaymentInfo from "../components/searchpage/PaymentInfo";
 import Banner from "../components/searchpage/Banner";
 import CustomStepper from "../components/searchpage/CustomStepper";
 import ContactInfo from "../components/searchpage/Contactinfo"
-import PrintComponent from '../components/searchpage/PrintComponent';
-import ZipcodeValidator from '../components/searchpage/ZipcodeValidator';
+import styled from 'styled-components';
 
 
+const StyledDiv = styled('div')`
+ display: flex;
+ justify-content: space-between;
+ flex-wrap: wrap;
+`;
+
+const StyledPaymentInfoContainer = styled('div')`
+ width: 70%;
+ margin-left: 25px;
+ margin-bottom: 10px;
+`;
+
+const StyledItineraryContainer = styled('div')`
+ width: 25%;
+ display: flex;
+ flex-direction: column;
+ margin-top: 32px;
+ margin-left: 10px;
+`;
 
 export default function CheckoutPage() {
     const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
@@ -43,19 +60,16 @@ export default function CheckoutPage() {
             <Toaster />
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
-            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <div style={{ width: '70%', marginLeft: '25px', marginBottom:'10px' }}>
+            <StyledDiv>
+                <StyledPaymentInfoContainer>
                     <PaymentInfo />
-                </div>
-                <div style={{ width: '25%', display: 'flex', flexDirection: 'column', marginTop:'32px',marginLeft: '10px' }}>
+                </StyledPaymentInfoContainer>
+                <StyledItineraryContainer>
                     <Itinerary />
-                    <ContactInfo/>
+                    <ContactInfo />
+                </StyledItineraryContainer>
+            </StyledDiv>
 
-                </div>
-            </div>
-            <PrintComponent/>
-            <ZipcodeValidator/>
-            
             <Footer sticky={false} />
         </>
     )
