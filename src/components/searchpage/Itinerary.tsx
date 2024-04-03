@@ -30,7 +30,7 @@ const ItineraryBox = styled.div`
  top: 544px;
  left: 1050px;
  background-color: #EFF0F1;
- border-radius: 5px 0px 0px 0px;
+ border-radius: 0px 0px 0px 0px;
  opacity: 1;
  padding: 20px;
  box-sizing: border-box;
