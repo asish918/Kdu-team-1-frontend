@@ -1,53 +1,27 @@
-import Footer from "../components/layout/Footer";
-import Itinerary from "../components/searchpage/Itinerary";
-import { useEffect, useState } from 'react';
-import { styled } from '@mui/system';
-import Button from '@mui/material/Button';
-import { TextField } from "@mui/material";
-import { RootState } from "../redux/store";
+import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
-import Banner from "../components/searchpage/Banner";
-import CustomStepper from "../components/searchpage/CustomStepper";
+import { styled } from '@mui/system';
+import { Button, TextField } from '@mui/material';
+import { RootState } from "../redux/store";
 import { getCurrentUser } from "aws-amplify/auth";
 import { axiosRequest, prodUrlGenerator, urlGenerator } from "../utils/util";
 import { RequestType } from "../utils/enums";
 import { Toaster, toast } from "react-hot-toast";
 
+import Footer from "../components/layout/Footer";
+import Itinerary from "../components/searchpage/Itinerary";
+import PaymentInfo from "../components/searchpage/PaymentInfo";
+import Banner from "../components/searchpage/Banner";
+import CustomStepper from "../components/searchpage/CustomStepper";
+import ContactInfo from "../components/searchpage/Contactinfo"
+import PrintComponent from '../components/searchpage/PrintComponent';
+import ZipcodeValidator from '../components/searchpage/ZipcodeValidator';
 
-const CenteredDiv = styled('div')`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-`;
 
-const StyledTextField = styled(TextField)`
-    width: 201px;
-    height: 48px;
-`;
-
-const StyledButton = styled(Button)`
-    height: 54px;
-    font-size: 0.7rem;
-`;
-
-const EmailContainer = styled('div')`
-    display: flex;
-    gap: 20px;
-    margin-top: 50px;
-`
 
 export default function CheckoutPage() {
-    const [email, setEmail] = useState<string>("");
     const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
-    const roomTypeId = useSelector((state: RootState) => state.itenary.room?.roomTypeId);
-
-    const handleFeedbackSubmit = async () => {
-        const res = await axiosRequest(prodUrlGenerator(`${process.env.EMAIL_API}?email=${email}&roomTypeId=${roomTypeId}`), RequestType.GET);
-        toast.success(res.data);
-    };
-
+    
     useEffect(() => {
         async function fetchUserSession() {
             try {
@@ -55,7 +29,7 @@ export default function CheckoutPage() {
                 console.log(`The username: ${username}`);
                 console.log(`The userId: ${userId}`);
                 console.log(signInDetails);
-                signInDetails ? setEmail(signInDetails!.loginId) : setEmail("");
+                
             } catch (err) {
                 console.log(err);
             }
@@ -69,23 +43,22 @@ export default function CheckoutPage() {
             <Toaster />
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
-            <CenteredDiv>
-                <div>
-                    <Itinerary />
-                    <EmailContainer>
-                        <StyledTextField
-                            label="Enter email"
-                            variant="outlined"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
-                        <StyledButton disabled={email.length === 0} variant="contained" onClick={handleFeedbackSubmit}>
-                            Stay Completed
-                        </StyledButton>
-                    </EmailContainer>
+            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
+                <div style={{ width: '70%', marginLeft: '25px', marginBottom:'10px' }}>
+                    <PaymentInfo />
                 </div>
-            </CenteredDiv>
+                <div style={{ width: '25%', display: 'flex', flexDirection: 'column', marginTop:'32px',marginLeft: '10px' }}>
+                    <Itinerary />
+                    <ContactInfo/>
+
+                </div>
+            </div>
+            <PrintComponent/>
+            <ZipcodeValidator/>
+            
             <Footer sticky={false} />
         </>
     )
 }
+
+
