@@ -31,8 +31,7 @@ const PaymentInfo: React.FC = () => {
   const [showPaymentInfo, setShowPaymentInfo] = useState(false);
   const [selectedCountry, setSelectedCountry] = useState<ICountry>();
   const [selectedState, setSelectedState] = useState<IState>();
-
-
+  
 
   const [countries, setCountries] = useState<ICountry[]>([]);
   const [states, setStates] = useState<IState[]>([]);
