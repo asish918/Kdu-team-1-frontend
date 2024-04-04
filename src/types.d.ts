@@ -188,3 +188,31 @@ export type ItenaryTranslation = {
   itenaryStayCompleted: string;
   itenaryRemove: string;
 }
+
+export type ZipCodeApiItem = {
+  postal_code: string;
+  country_code: string;
+  latitude: string;
+  longitude: string;
+  city: string;
+  state: string;
+  city_en: string;
+  state_en: string;
+  state_code: string;
+  province: string;
+  province_code: string;
+}
+
+export type ZipCodeApiResults = {
+  [postalCode: string]: ZipCodeApiItem[];
+}
+
+export type ZipCodeApiQuery = {
+  codes: string[];
+  country: string;
+}
+
+export type ZipCodeApiResponse = {
+  query: ZipCodeApiQuery;
+  results: ZipCodeApiResults;
+}

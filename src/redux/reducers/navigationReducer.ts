@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 interface NavigationState {
     step: number;
+    checkoutStep: number;
 }
 
 const initialState: NavigationState = {
     step: 0,
+    checkoutStep: 0,
 };
 
 export const navigationSlice = createSlice({

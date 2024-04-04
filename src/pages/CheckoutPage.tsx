@@ -14,6 +14,10 @@ import CustomStepper from "../components/searchpage/CustomStepper";
 import ContactInfo from "../components/searchpage/Contactinfo"
 import CountdownTimer from '../components/searchpage/CountdownTimer';
 
+import FormTrial from '../components/checkoutpage/Form';
+import TravelForm from '../components/checkoutpage/TravelForm';
+// import PrintComponent from '../components/searchpage/PrintComponent';
+// import ZipcodeValidator from '../components/searchpage/ZipcodeValidator';
 
 
 
@@ -46,9 +50,10 @@ export default function CheckoutPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
                 <div style={{ width: '70%', marginLeft: '25px', marginBottom: '10px' }}>
                     <PaymentInfo />
+                    {/* <FormTrial /> */}
                 </div>
                 <div style={{ width: '25%', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '10px' }}>
-                    <Itinerary />
+                    {/* <Itinerary /> */}
                     <ContactInfo />
 
                 </div>
