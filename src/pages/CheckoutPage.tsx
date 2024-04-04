@@ -14,8 +14,8 @@ import PaymentInfo from "../components/searchpage/PaymentInfo";
 import Banner from "../components/searchpage/Banner";
 import CustomStepper from "../components/searchpage/CustomStepper";
 import ContactInfo from "../components/searchpage/Contactinfo"
-// import PrintComponent from '../components/searchpage/PrintComponent';
-// import ZipcodeValidator from '../components/searchpage/ZipcodeValidator';
+import CountdownTimer from '../components/searchpage/CountdownTimer';
+
 
 
 
@@ -53,10 +53,10 @@ export default function CheckoutPage() {
 
                 </div>
             </div>
-            {/* <PrintComponent/> */}
-            {/* <ZipcodeValidator/> */}
+            
 
             <Footer sticky={false} />
+            <CountdownTimer/>
         </>
     )
 }
