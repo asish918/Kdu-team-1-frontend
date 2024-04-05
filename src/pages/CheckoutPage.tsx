@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect } from 'react';
 import { useSelector } from "react-redux";
-import { styled } from '@mui/system';
-import { Button, TextField } from '@mui/material';
 import { RootState } from "../redux/store";
 import { getCurrentUser } from "aws-amplify/auth";
-import { axiosRequest, prodUrlGenerator, urlGenerator } from "../utils/util";
-import { RequestType } from "../utils/enums";
-import { Toaster, toast } from "react-hot-toast";
+
+import { Toaster } from "react-hot-toast";
+import { useNavigate } from 'react-router-dom';
 
 import Footer from "../components/layout/Footer";
 import Itinerary from "../components/searchpage/Itinerary";
@@ -20,6 +18,8 @@ import CountdownTimer from '../components/searchpage/CountdownTimer';
 
 
 export default function CheckoutPage() {
+    const navigate = useNavigate();
+
     const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
 
     useEffect(() => {
@@ -56,7 +56,8 @@ export default function CheckoutPage() {
             
 
             <Footer sticky={false} />
-            <CountdownTimer/>
+            
+            <CountdownTimer  endTime={600} navigateTo="/" />
         </>
     )
 }
