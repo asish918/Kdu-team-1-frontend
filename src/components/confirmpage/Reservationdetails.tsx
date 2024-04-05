@@ -1,7 +1,9 @@
-import React from 'react';
+
+import React, { useState } from 'react';
 import { Grid, Typography, Box, Button } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PeopleIcon from '@mui/icons-material/People';
+import CancelRoomModal from './CancelRoomModal';
 
 // Styled components 
 const StyledBox = styled(Box)({
@@ -115,6 +117,23 @@ const ReservationDetails = () => {
  const checkInDate = { day: '15', month: '04', year: '2024' };
  const checkOutDate = { day: '20', month: '04', year: '2024' };
 
+ const [open, setOpen] = useState(false);
+ const [otp, setOtp] = useState('');
+
+ const handleClickOpen = () => {
+    setOpen(true);
+ };
+
+ const handleClose = () => {
+    setOpen(false);
+ };
+
+ const handleConfirmOtp = () => {
+    // Handle OTP confirmation logic here
+    console.log('OTP confirmed:', otp);
+    handleClose();
+ };
+
  return (
     <>
       <StyledBox>
@@ -127,9 +146,16 @@ const ReservationDetails = () => {
             2 adults, 1 child
           </StyledTypography>
         </StyledBox>
-        <CancelButton variant="text">
-          Cancel Room
-        </CancelButton>
+        <CancelButton variant="text" onClick={handleClickOpen}>
+        Cancel Room
+      </CancelButton>
+      <CancelRoomModal
+        open={open}
+        handleClose={handleClose}
+        handleConfirmOtp={handleConfirmOtp}
+        otp={otp}
+        setOtp={setOtp}
+      />
       </StyledBox>
       <Grid container spacing={2}>
         <LeftDiv item xs={3}>
