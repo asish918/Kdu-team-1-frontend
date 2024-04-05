@@ -7,6 +7,8 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ZipCodeApiResponse } from "../../types";
 import axios from "axios";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
 
 const InfoBox = styled(Box)({
@@ -37,7 +39,7 @@ const formSchema = z.object({
         .email('Please specify a valid email'),
     mailingAddress1: z.string(),
     mailingAddress2: z.string(),
-    zipCode: z.string().regex(/^\d{5,6}$/, {
+    zipcode: z.string().regex(/^\d{5,6}$/, {
         message: "Zip code must contain only digits and be of length 5 or 6",
     }),
     country: z.string(),
@@ -53,21 +55,23 @@ interface BillingFormProps {
 }
 
 export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerInfo }: BillingFormProps) {
+    const billingInfo = useSelector((state: RootState) => state.checkoutForm.billing_info);
+
     const { control, handleSubmit } = useForm<BillingFormFields>({
         mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: zodResolver(formSchema),
         defaultValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: '',
-            mailingAddress1: '',
-            mailingAddress2: '',
-            city: '',
-            country: '',
-            state: '',
-            zipCode: ''
+            firstName: billingInfo.firstName,
+            lastName: billingInfo.lastName,
+            email: billingInfo.email,
+            phone: billingInfo.phone,
+            mailingAddress1: billingInfo.mailingAddress1,
+            mailingAddress2: billingInfo.mailingAddress2,
+            city: billingInfo.city,
+            country: billingInfo.country,
+            state: billingInfo.state,
+            zipcode: billingInfo.zipcode
         },
     });
 
@@ -91,13 +95,13 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
     };
 
     const validateZipCode = async (data: BillingFormFields) => {
-        // const res = await axios.get(`${process.env.ZIP_CODE_API_URL}?apikey=${process.env.ZIP_CODE_API_KEY}&codes=${data.zipCode}&country=${selectedCountry?.isoCode}`);
+        // const res = await axios.get(`${process.env.ZIP_CODE_API_URL}?apikey=${process.env.ZIP_CODE_API_KEY}&codes=${data.zipcode}&country=${selectedCountry?.isoCode}`);
 
         // if (res.data.results.length === 0) {
         //     setZipCodeError("Invalid Zip Code");
         //     return;
         // }
-        // else if (res.data.results[data.zipCode][0].state_code !== selectedState?.isoCode) {
+        // else if (res.data.results[data.zipcode][0].state_code !== selectedState?.isoCode) {
         //     setZipCodeError("Invalid Zip Code");
         //     return;
         // }
@@ -202,22 +206,6 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                         )}
                     />
 
-                    {/* <TextField
-                        select
-                        label="Country"
-                        {...register('country')}
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        onChange={(e) => handleCountryChange(e.target.value)}
-                    >
-                        {countries.map((country) => (
-                            <MenuItem key={country.name} value={country}>
-                                {country.name}
-                            </MenuItem>
-                        ))}
-                    </TextField> */}
-
                     <Controller
                         name="city"
                         control={control}
@@ -251,22 +239,6 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                             </FormControl>
                         )}
                     />
-
-                    {/* <TextField
-                        select
-                        label="City"
-                        {...register('city')}
-                        variant="outlined"
-                        fullWidth
-                        disabled={cities.length === 0}
-                        margin="normal"
-                    >
-                        {cities.map((city) => (
-                            <MenuItem key={city.name} value={city}>
-                                {city.name}
-                            </MenuItem>
-                        ))}
-                    </TextField> */}
 
                     <Controller
                         name="phone"
@@ -361,7 +333,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                     <Grid container spacing={2}>
                         <Grid item xs={6}>
                             <Controller
-                                name="lastName"
+                                name="state"
                                 control={control}
                                 render={({
                                     field: { value, onChange, onBlur, ref },
@@ -414,7 +386,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                         </Grid>
                         <Grid item xs={6}>
                             <Controller
-                                name="zipCode"
+                                name="zipcode"
                                 control={control}
                                 render={({
                                     field: { value, onChange, onBlur, ref },
@@ -438,7 +410,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                             }}
                                         >
                                             {error?.message ?? ''}
-                                            {zipCodeError ?? ''}
+                                            {zipCodeError && error?.message?.length === 0 ? zipCodeError : ''}
                                         </FormHelperText>
                                     </FormControl>
                                 )}

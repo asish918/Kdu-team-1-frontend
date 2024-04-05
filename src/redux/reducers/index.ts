@@ -9,6 +9,7 @@ import filterSortReducer from './filterSortReducer';
 import roomResultReducer from './roomResultReducer';
 import promoReducer from './promoReducer';
 import itenaryReducer from './itenaryReducer';
+import checkoutFormReducer from './checkoutFormReducer';
 
 const rootReducer = combineReducers({
     propertyConfig: propertyConfigReducer,
@@ -20,7 +21,8 @@ const rootReducer = combineReducers({
     filterState: filterSortReducer,
     roomResult: roomResultReducer,
     promoCode: promoReducer,
-    itenary: itenaryReducer
+    itenary: itenaryReducer,
+    checkoutForm: checkoutFormReducer
 });
 
 export default rootReducer;

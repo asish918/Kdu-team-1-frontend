@@ -1,7 +1,9 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Box, Button, FormControl, FormHelperText, TextField, styled } from "@mui/material";
 import { Controller, useForm } from 'react-hook-form';
+import { useSelector } from "react-redux";
 import { z } from "zod";
+import { RootState } from "../../redux/store";
 
 
 const StyledBox = styled(Box)({
@@ -50,15 +52,17 @@ interface TravelFormProps {
 }
 
 export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
+    const travelInfo = useSelector((state: RootState) => state.checkoutForm.traveller_info);
+
     const { control, handleSubmit } = useForm<TravelFormFields>({
         mode: 'onChange',
         reValidateMode: 'onChange',
         resolver: zodResolver(formSchema),
         defaultValues: {
-            firstName: '',
-            lastName: '',
-            email: '',
-            phone: '',
+            firstName: travelInfo.firstName,
+            lastName: travelInfo.lastName,
+            email: travelInfo.email,
+            phone: travelInfo.phone,
         },
     });
 

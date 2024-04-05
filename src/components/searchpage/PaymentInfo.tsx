@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom';
 import TravelForm, { TravelFormFields } from '../checkoutpage/TravelForm';
 import BillingForm, { BillingFormFields } from '../checkoutpage/BillingForm';
 import PaymentForm from '../checkoutpage/PaymentForm';
+import { useDispatch } from 'react-redux';
+import { setBillingInfo, setTravellerInfo } from '../../redux/reducers/checkoutFormReducer';
 
 const PaymentInfo: React.FC = () => {
   const [showTravellerInfo, setShowTravellerInfo] = useState(true);
@@ -12,15 +14,17 @@ const PaymentInfo: React.FC = () => {
   const [showPaymentInfo, setShowPaymentInfo] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onSubmitTravellerInfo = (data: TravelFormFields) => {
-    console.log(data);
+    dispatch(setTravellerInfo(data));
     setShowBillingInfo(true);
     setShowTravellerInfo(false);
   };
 
   const onSubmitBillingInfo = (data: BillingFormFields) => {
     console.log(data);
+    dispatch(setBillingInfo(data));
     setShowPaymentInfo(true);
     setShowBillingInfo(false);
   };
