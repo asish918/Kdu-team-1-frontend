@@ -63,11 +63,25 @@ const TypographyStyle = {
     color: '#5D5D5D', 
   };
 
-const CustomizedAccordions: React.FC = () => {
- const [expanded, setExpanded] = React.useState<string[]>([]);
+const CustomizedAccordions: React.FC <{ allOpen?: boolean }> = ({ allOpen })=> {
+ const [expanded, setExpanded] = React.useState<string[]>(allOpen ? ['panel1', 'panel2', 'panel3', 'panel4'] : []);
+
+ React.useEffect(() => {
+   if(allOpen) {
+      setExpanded(['panel1', 'panel2', 'panel3', 'panel4'])
+   }
+ }, [allOpen])
 
  const handleChange = (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-  setExpanded(isExpanded ? [...expanded, panel] : expanded.filter(id => id !== panel));
+ if (allOpen) {
+  if (isExpanded) {
+    setExpanded(prev => [...prev, panel]);
+  } else {
+    setExpanded(prev => prev.filter(id => id !== panel));
+  }
+ } else {
+    setExpanded(isExpanded ? [...expanded, panel] : expanded.filter(id => id !== panel));
+ }
 };
 
  return (
