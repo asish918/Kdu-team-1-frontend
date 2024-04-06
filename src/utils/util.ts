@@ -189,3 +189,38 @@ export function clearLocalStorage() {
 export function capitalize(str: string): string {
   return str.toString().charAt(0).toUpperCase() + str.toString().slice(1);
 }
+
+export function itenaryDates(start: string, end: string, rates: number[]): { date: string; rate: number }[] {
+  const startDate = new Date(start);
+  const endDate = new Date(end);
+
+  const formattedDates: { date: string; rate: number }[] = [];
+
+  const currentDate = new Date(startDate);
+  while (currentDate <= endDate) {
+    const formattedDate = currentDate.toLocaleDateString('en-US', {
+      weekday: 'short',
+      month: 'long',
+      day: 'numeric',
+      year: '2-digit'
+    });
+
+    console.log(rates);
+
+    const index = (currentDate.getTime() - startDate.getTime()) / (24 * 60 * 60 * 1000);
+    const rate = rates[Math.floor(index)];
+
+    formattedDates.push({ date: formattedDate, rate: rate });
+
+    currentDate.setDate(currentDate.getDate() + 1);
+  }
+
+  return formattedDates;
+}
+
+export function calculateTotal(rates: number[], rooms: number) {
+  const total = rates.reduce((acc, rate) => acc + rate, 0);
+  const totalPrice = total * rooms;
+
+  return totalPrice;
+}

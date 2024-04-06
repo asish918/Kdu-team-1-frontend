@@ -78,6 +78,11 @@ export type HotelProperties = {
   siteLogoUrl: string;
   maxLengthStay: number;
   footerLogoUrl: string;
+  vat: number;
+  taxes: number;
+  duePercent: number;
+  resortFee: number;
+  occupancyTax: number;
 };
 
 export type APIStatus = "success" | "error" | "loading" | null;
@@ -140,7 +145,8 @@ export type Result = {
   lowResImages: string[];
   bestPromotion: PromotionType;
   validPromotions: List<PromotionType>;
-  amenities: List<string>;
+  amenities: string[];
+  rates: number[];
   description: string;
 }
 

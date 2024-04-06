@@ -126,7 +126,8 @@ const RoomCard: React.FC<Result> = ({
   amenities,
   description,
   roomTypeId,
-  bestPromotion
+  bestPromotion,
+  rates
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
@@ -254,7 +255,8 @@ const RoomCard: React.FC<Result> = ({
           amenities,
           description,
           averageRate,
-          roomTypeId
+          roomTypeId,
+          rates
         }}
       />
     </>
