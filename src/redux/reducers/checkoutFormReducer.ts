@@ -1,13 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface TransactionInfo {
-    nightlyRate: number;
-    subtotal: number;
-    taxes: number;
-    vat: number;
-    total: number;
-}
-
 interface TravellerInfo {
     firstName: string;
     lastName: string;
@@ -31,17 +23,9 @@ interface BillingInfo {
 interface CheckoutFormReducer {
     traveller_info: TravellerInfo;
     billing_info: BillingInfo;
-    transaction_info: TransactionInfo;
 }
 
 const initialState: CheckoutFormReducer = {
-    transaction_info: {
-        nightlyRate: 0,
-        subtotal: 0,
-        taxes: 0,
-        total: 0,
-        vat: 0
-    },
     traveller_info: {
         email: "",
         firstName: "",
@@ -71,12 +55,9 @@ const checkoutFormReducer = createSlice({
         },
         setBillingInfo: (state, action: PayloadAction<BillingInfo>) => {
             state.billing_info = action.payload;
-        },
-        setTransactionInfo: (state, action: PayloadAction<TransactionInfo>) => {
-            state.transaction_info = action.payload;
         }
     }
 })
 
-export const { setTravellerInfo, setBillingInfo, setTransactionInfo } = checkoutFormReducer.actions;
+export const { setTravellerInfo, setBillingInfo } = checkoutFormReducer.actions;
 export default checkoutFormReducer.reducer;

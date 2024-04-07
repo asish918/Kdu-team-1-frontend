@@ -12,7 +12,8 @@ interface ItenaryReducerProps {
     due_resort: number | null,
     promo_total: number | null,
     subtotal: number | null,
-    resortFee: number | null
+    resortFee: number | null,
+    promoCodeId: number | null,
 }
 
 interface Extras {
@@ -36,6 +37,7 @@ const initialState: ItenaryReducerProps = {
     due_now: null,
     due_resort: null,
     resortFee: null,
+    promoCodeId: null
 }
 
 const itenaryReducer = createSlice({
@@ -51,6 +53,9 @@ const itenaryReducer = createSlice({
         setPromotion: (state, action: PayloadAction<PromotionType>) => {
             state.promotion = action.payload;
         },
+        setPromoCode: (state, action: PayloadAction<number>) => {
+            state.promoCodeId = action.payload;
+        },
         setExtras: (state, action: PayloadAction<Extras>) => {
             state.subtotal = action.payload.total;
             state.occupancy_tax = action.payload.occupancy_tax * action.payload.total;
@@ -64,6 +69,6 @@ const itenaryReducer = createSlice({
     }
 });
 
-export const { setVisible, setRoom, setPromotion, setExtras } = itenaryReducer.actions;
+export const { setVisible, setRoom, setPromotion, setExtras, setPromoCode } = itenaryReducer.actions;
 export default itenaryReducer.reducer;
 

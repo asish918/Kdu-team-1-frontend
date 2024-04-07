@@ -85,11 +85,14 @@ const ItineraryItemLabel = styled.span`
  color: #5D5D5D;
  display: flex;
  align-items: center;
+ text-align: left;
+ font-size: 0.85rem;
 `;
 
 const ItineraryItemValue = styled.span`
  font-size: 14px;
  color: #5D5D5D; 
+ text-align: right;
 `;
 
 const CheckoutButton = styled(Button)`

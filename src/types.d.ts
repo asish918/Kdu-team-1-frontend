@@ -222,3 +222,53 @@ export type ZipCodeApiResponse = {
   query: ZipCodeApiQuery;
   results: ZipCodeApiResults;
 }
+
+export type BookingRequest = {
+  booking_info:     BookingInfo;
+  traveller_info:   TravellerInfo;
+  billing_info:     BillingInfo;
+  transaction_info: TransactionInfo;
+}
+
+export type BillingInfo = {
+  firstName:       string;
+  lastName:        string;
+  mailingAddress1: string;
+  mailingAddress2: string;
+  country:         string;
+  city:            string;
+  state:           string;
+  zipcode:         number;
+  phone:           number;
+  email:           string;
+}
+
+export type BookingInfo = {
+  checkInDate:     string;
+  checkOutDate:    string;
+  adultCount:      number;
+  childCount:      number;
+  totalCost:       number;
+  amountDueResort: number;
+  guestName:       string;
+  roomTypeId:      number;
+  rooms:           number;
+  promotionId:     number;
+  email:           string;
+  offers:          boolean;
+}
+
+export type TransactionInfo = {
+  nightlyRate: number;
+  subtotal:    number;
+  taxes:       number;
+  vat:         number;
+  total:       number;
+}
+
+export type TravellerInfo = {
+  firstName: string;
+  lastName:  string;
+  phone:     number;
+  email:     string;
+}

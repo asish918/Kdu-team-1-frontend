@@ -34,8 +34,11 @@ const formSchema = z.object({
     cvv: z.string().refine(value => /^[0-9]{3,4}$/.test(value), {
         message: "CVV must be a 3 or 4-digit number",
     }),
-    specialOffers: z.boolean(),
-    agreeToTerms: z.boolean()
+    specialOffers: z.boolean().optional(),
+    agreeToTerms: z.boolean().refine(value => value === true, {
+        message: "You must agree to terms.",
+        path: ["agreeToTerms"]
+    }),
 });
 
 export type PaymentFormFields = z.infer<typeof formSchema>;
@@ -153,7 +156,7 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                             field: { value, onChange, onBlur, ref },
                             fieldState: { error },
                         }) => (
-                            <FormControl fullWidth>
+                            <FormControl required fullWidth>
                                 <FormControlLabel
                                     control={<Checkbox inputRef={ref} onChange={onChange} onBlur={onBlur} value={value} />}
                                     label="I agree to the Terms and Policies of travel"

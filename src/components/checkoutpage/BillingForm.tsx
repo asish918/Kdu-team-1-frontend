@@ -42,9 +42,9 @@ const formSchema = z.object({
     zipcode: z.string().regex(/^\d{5,6}$/, {
         message: "Zip code must contain only digits and be of length 5 or 6",
     }),
-    country: z.string(),
-    city: z.string(),
-    state: z.string()
+    country: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional()
 });
 
 export type BillingFormFields = z.infer<typeof formSchema>;
@@ -106,7 +106,11 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
         //     return;
         // }
 
-        onSubmitBillingInfo(data);
+        onSubmitBillingInfo({
+            ...data,
+            state: selectedState?.name,
+            country: selectedCountry?.name
+        });
     }
 
     return (
@@ -174,6 +178,36 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                     />
 
                     <Controller
+                        name="mailingAddress2"
+                        control={control}
+                        render={({
+                            field: { value, onChange, onBlur, ref },
+                            fieldState: { error },
+                        }) => (
+                            <FormControl fullWidth>
+                                <TextField
+                                    margin="normal"
+                                    fullWidth
+                                    name="Mailing Address 2"
+                                    label="Mailing Address 2"
+                                    inputRef={ref}
+                                    value={value}
+                                    onChange={onChange}
+                                    onBlur={onBlur}
+                                    error={Boolean(error)}
+                                />
+                                <FormHelperText
+                                    sx={{
+                                        color: 'error.main',
+                                    }}
+                                >
+                                    {error?.message ?? ''}
+                                </FormHelperText>
+                            </FormControl>
+                        )}
+                    />
+
+                    <Controller
                         name="country"
                         control={control}
                         render={({
@@ -219,7 +253,6 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                     label="City"
                                     variant="outlined"
                                     fullWidth
-                                    disabled={cities.length === 0}
                                     margin="normal"
                                     onChange={onChange}
                                 >
