@@ -75,6 +75,30 @@ export const en: LanguageType = {
       itenaryTitle: "Your Trip Itenary",
       itenaryVAT: "VAT",
       itenaryRemove: "Remove"
+    },
+    confirmation: {
+      billingAddress: "Billing Address",
+      cancellationPolicy: "Copy explaining the cancellation policy, if applicable.",
+      cancelRoom: "Cancel Room",
+      city: "City",
+      country: "Country",
+      email: "Email",
+      firstName: "First Name",
+      lastName: "Last Name",
+      guestInformation: "Guest Information",
+      nightlyRate: "Nightly Rate",
+      paymentId: "Payment ID",
+      paymentInformation: "Payment Information",
+      phone: "Phone",
+      print: "Print",
+      roomTotalSummary: "Room Total Summary",
+      state: "State",
+      subTotal: "Subtotal",
+      total: "Total",
+      upcomingReservation: "Upcoming Reservation",
+      vat: "VAT",
+      zipCode: "Zipcode",
+      cancelled: "Cancelled"
     }
   },
 };

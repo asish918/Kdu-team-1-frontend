@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { BookingRequest, RoomResult, RoomResultRequestBody } from "../../types";
+import { BookingRequest } from "../../types";
 import { axiosRequest, prodUrlGenerator, urlGenerator } from "../../utils/util";
 import { RequestType } from "../../utils/enums";
 

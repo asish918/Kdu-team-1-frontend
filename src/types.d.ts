@@ -26,6 +26,32 @@ export type LandingPageFormTranslation = {
   seniorCitizen: string;
 }
 
+export type ConfirmationTranslation = {
+  upcomingReservation: string;
+  print: string;
+  email: string;
+  cancelRoom: string;
+  cancellationPolicy: string;
+  roomTotalSummary: string;
+  nightlyRate: string;
+  subTotal: string;
+  vat: string;
+  total: string;
+  guestInformation: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  billingAddress: string;
+  country: string;
+  state: string;
+  city: string;
+  zipCode: string;
+  paymentInformation: string;
+  paymentId: string;
+  cancelled: string;
+}
+
 export type RoomResultFormTranslation = {
   filterTitle: string;
   roomResultTitle: string;
@@ -59,6 +85,7 @@ export type Translation = {
   generic: GenericInfo;
   itenary: ItenaryTranslation;
   error: ErrorTranslation;
+  confirmation: ConfirmationTranslation
 };
 
 export type LanguageType = {
@@ -224,51 +251,84 @@ export type ZipCodeApiResponse = {
 }
 
 export type BookingRequest = {
-  booking_info:     BookingInfo;
-  traveller_info:   TravellerInfo;
-  billing_info:     BillingInfo;
+  booking_info: BookingInfo;
+  traveller_info: TravellerInfo;
+  billing_info: BillingInfo;
   transaction_info: TransactionInfo;
 }
 
 export type BillingInfo = {
-  firstName:       string;
-  lastName:        string;
+  firstName: string;
+  lastName: string;
   mailingAddress1: string;
   mailingAddress2: string;
-  country:         string;
-  city:            string;
-  state:           string;
-  zipcode:         number;
-  phone:           number;
-  email:           string;
+  country: string;
+  city: string;
+  state: string;
+  zipcode: number;
+  phone: number;
+  email: string;
 }
 
 export type BookingInfo = {
-  checkInDate:     string;
-  checkOutDate:    string;
-  adultCount:      number;
-  childCount:      number;
-  totalCost:       number;
+  checkInDate: string;
+  checkOutDate: string;
+  adultCount: number;
+  childCount: number;
+  totalCost: number;
   amountDueResort: number;
-  guestName:       string;
-  roomTypeId:      number;
-  rooms:           number;
-  promotionId:     number;
-  email:           string;
-  offers:          boolean;
+  guestName: string;
+  roomTypeId: number;
+  rooms: number;
+  promotionId: number;
+  email: string;
+  offers: boolean;
 }
 
 export type TransactionInfo = {
   nightlyRate: number;
-  subtotal:    number;
-  taxes:       number;
-  vat:         number;
-  total:       number;
+  subtotal: number;
+  taxes: number;
+  vat: number;
+  total: number;
 }
 
 export type TravellerInfo = {
   firstName: string;
-  lastName:  string;
-  phone:     number;
-  email:     string;
+  lastName: string;
+  phone: number;
+  email: string;
+}
+
+export type BookingDetails = {
+  cancelled: boolean;
+  roomTypeName: string;
+  roomTypeId: number;
+  reservationId: string;
+  checkInDate: string;
+  checkOutDate: string;
+  promotionTitle: string;
+  promotionDescription: string;
+  adults: number;
+  children: number;
+  nightlyRate: number;
+  subtotal: number;
+  taxes: number;
+  vat: number;
+  total: number;
+  firstName: string;
+  lastName: string;
+  phone: number;
+  email: string;
+  billingFirstName: string;
+  billingLastName: string;
+  mailingAddress1: string;
+  mailingAddress2: string;
+  country: string;
+  city: string;
+  state: string;
+  zipcode: number;
+  billingPhone: number;
+  billingEmail: string;
+  transactionId: string;
 }

@@ -75,6 +75,30 @@ export const fr: LanguageType = {
       itenaryTitle: "Votre Itinéraire de Voyage",
       itenaryVAT: "TVA",
       itenaryRemove: "supprimer"
+    },
+    confirmation: {
+      billingAddress: "Adresse de facturation",
+      cancellationPolicy: "Copie expliquant la politique d'annulation, le cas échéant.",
+      cancelRoom: "Annuler la chambre",
+      city: "Ville",
+      country: "Pays",
+      email: "E-mail",
+      firstName: "Prénom",
+      lastName: "Nom de famille",
+      guestInformation: "Information sur l'invité",
+      nightlyRate: "Tarif par nuit",
+      paymentId: "Identifiant de paiement",
+      paymentInformation: "Informations de paiement",
+      phone: "Téléphone",
+      print: "Imprimer",
+      roomTotalSummary: "Résumé total de la chambre",
+      state: "État",
+      subTotal: "Sous-total",
+      total: "Total",
+      upcomingReservation: "Réservation à venir",
+      vat: "TVA",
+      zipCode: "Code postal",
+      cancelled: "Annulé"
     }
   },
 };

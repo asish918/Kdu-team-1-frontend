@@ -1,8 +1,15 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Grid, Typography, Box, Button, useTheme, useMediaQuery } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PeopleIcon from '@mui/icons-material/People';
 import CancelRoomModal from './CancelRoomModal';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { generateDescription, getDateObject } from '../../utils/util';
+import { useTranslation } from 'react-i18next';
+import { ExchangeRateData } from '../../types';
+import { formatCurrency } from '../../utils/i18next';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 // Styled components 
 const StyledBox = styled(Box)({
@@ -109,48 +116,69 @@ const ReservationDetails = () => {
   const isSm768 = useMediaQuery(theme.breakpoints.down('sm'));
   const isXs450 = useMediaQuery('(max-width:450px)');
 
- const [open, setOpen] = useState(false);
- const [otp, setOtp] = useState('');
+  const [loginId, setLoginId] = useState<string>(null);
+  const [open, setOpen] = useState(false);
+  const [otp, setOtp] = useState('');
 
- const handleClickOpen = () => {
-    setOpen(true);
- };
+  const handleClickOpen = () => {
+    if (!loginId) {
+      setOpen(true);
+    }
+  };
 
- const handleClose = () => {
+  const handleClose = () => {
     setOpen(false);
- };
+  };
 
- const handleConfirmOtp = () => {
-    // Handle OTP confirmation logic here
+  const handleConfirmOtp = () => {
     console.log('OTP confirmed:', otp);
     handleClose();
- };
+  };
 
- const checkInDate = { day: '15', month: '04', year: '2024' };
- const checkOutDate = { day: '20', month: '04', year: '2024' };
- 
- return (
+  useEffect(() => {
+    async function fetchUserSession() {
+      try {
+        const { username, userId, signInDetails } = await getCurrentUser();
+        console.log(`The username: ${username}`);
+        console.log(`The userId: ${userId}`);
+        console.log(signInDetails);
+        setLoginId(signInDetails?.loginId);
+
+      } catch (err) {
+        console.log(err);
+      }
+    }
+
+    fetchUserSession();
+  }, [])
+
+  const bookingDetails = useSelector((state: RootState) => state.bookingDetails.result);
+  const { t, i18n } = useTranslation();
+  const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
+  const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+
+  return (
     <>
       <StyledBox>
         <StyledBox alignItems="center">
           <StyledTypography variant="h5" gutterBottom>
-            Room 1: Executive Room
+            Room {bookingDetails?.roomTypeId}: {bookingDetails?.roomTypeName}
           </StyledTypography>
           <StyledPeopleIcon />
           <StyledTypography variant="body1">
-            2 adults, 1 child
+            {generateDescription(bookingDetails?.adults, bookingDetails?.children, 0)}
           </StyledTypography>
         </StyledBox>
         <CancelButton variant="text" onClick={handleClickOpen}>
-        Cancel Room
-      </CancelButton>
-      <CancelRoomModal
-        open={open}
-        handleClose={handleClose}
-        handleConfirmOtp={handleConfirmOtp}
-        otp={otp}
-        setOtp={setOtp}
-      />
+          Cancel Room
+        </CancelButton>
+        <CancelRoomModal
+          open={open}
+          handleClose={handleClose}
+          handleConfirmOtp={handleConfirmOtp}
+          otp={otp}
+          setOtp={setOtp}
+        />
       </StyledBox>
       <Grid container spacing={2}>
         <LeftDiv item xs={12} md={3} sm={6}>
@@ -160,21 +188,20 @@ const ReservationDetails = () => {
           <OuterStyledBox>
             <DateBox>
               <FirstDateStyledTypography>Check-in</FirstDateStyledTypography>
-              <SecondDateStyledTypography>{checkInDate.day}</SecondDateStyledTypography>
-              <SecondDateStyledTypography>{getMonthName(checkInDate.month)} {checkInDate.year}</SecondDateStyledTypography>
+              <SecondDateStyledTypography>{getDateObject(bookingDetails?.checkInDate).day}</SecondDateStyledTypography>
+              <SecondDateStyledTypography>{getMonthName(getDateObject(bookingDetails?.checkInDate).month)} {getDateObject(bookingDetails?.checkInDate).year}</SecondDateStyledTypography>
             </DateBox>
             <DateBox>
               <FirstDateStyledTypography>Check-out</FirstDateStyledTypography>
-              <SecondDateStyledTypography>{checkOutDate.day}</SecondDateStyledTypography>
-              <SecondDateStyledTypography>{getMonthName(checkOutDate.month)} {checkOutDate.year}</SecondDateStyledTypography>
+              <SecondDateStyledTypography>{getDateObject(bookingDetails?.checkOutDate).day}</SecondDateStyledTypography>
+              <SecondDateStyledTypography>{getMonthName(getDateObject(bookingDetails?.checkOutDate).month)} {getDateObject(bookingDetails?.checkOutDate).year}</SecondDateStyledTypography>
             </DateBox>
           </OuterStyledBox>
           <TitleStyledTypography variant="h5" gutterBottom>
-            <strong>$150 Dining Credit Package</strong>
+            <strong>{bookingDetails?.promotionTitle}</strong>
           </TitleStyledTypography>
           <InnerStyledTypography>
-            Spend $10 every night you stay and earn $150 on dining
-            <br />credit at the resort.
+            {bookingDetails?.promotionDescription}
           </InnerStyledTypography>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} sm={6}>
@@ -184,7 +211,7 @@ const ReservationDetails = () => {
             </Grid>
             <Grid item xs={12} sm={6}>
               <RateStyledTypography align="right" sx={Ratesxprop}>
-                $XXX/night total
+                {formatCurrency(bookingDetails?.nightlyRate, activeCurrency, exchangeRates, i18n)}/night total
               </RateStyledTypography>
             </Grid>
           </Grid>

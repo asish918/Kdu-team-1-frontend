@@ -75,6 +75,30 @@ export const hn: LanguageType = {
       itenaryTitle: "आपकी यात्रा योजना",
       itenaryVAT: "वैट",
       itenaryRemove: "हटाएं"
+    },
+    confirmation: {
+      billingAddress: "बिलिंग पता",
+      cancellationPolicy: "अस्वीकृति नीति की व्याख्या कॉपी, यदि लागू हो",
+      cancelRoom: "कमरा रद्द करें",
+      city: "शहर",
+      country: "देश",
+      email: "ईमेल",
+      firstName: "पहला नाम",
+      lastName: "उपनाम",
+      guestInformation: "अतिथि जानकारी",
+      nightlyRate: "हर रात की दर",
+      paymentId: "भुगतान आईडी",
+      paymentInformation: "भुगतान की जानकारी",
+      phone: "फ़ोन",
+      print: "प्रिंट",
+      roomTotalSummary: "कुल कमरे का संक्षिप्त",
+      state: "राज्य",
+      subTotal: "उप-योग",
+      total: "कुल",
+      upcomingReservation: "आगामी आरक्षण",
+      vat: "वीएटी",
+      zipCode: "पिन कोड",
+      cancelled: "रद्द"
     }
   },
 };
