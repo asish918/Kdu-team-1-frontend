@@ -331,4 +331,5 @@ export type BookingDetails = {
   billingPhone: number;
   billingEmail: string;
   transactionId: string;
+  imageUrl: string;
 }

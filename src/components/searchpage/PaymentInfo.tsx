@@ -10,7 +10,6 @@ import { setBillingInfo, setTravellerInfo } from '../../redux/reducers/checkoutF
 import { RootState } from '../../redux/store';
 import { BookingRequest } from '../../types';
 import { getCurrentUser } from 'aws-amplify/auth';
-import axios from 'axios';
 import { createBooking } from '../../redux/thunks/createBooking';
 
 const PaymentInfo: React.FC = () => {
@@ -49,7 +48,9 @@ const PaymentInfo: React.FC = () => {
     setShowBillingInfo(false);
   };
 
-  const handlePurchase = () => {
+  const handlePurchase = (event) => {
+    event.preventDefault();
+
     const bookingRequest: BookingRequest = {
       billing_info: {
         city: checkoutForm.billing_info.city,
@@ -97,7 +98,6 @@ const PaymentInfo: React.FC = () => {
       url: `${process.env.CREATE_BOOKING}`,
       requestBody: bookingRequest
     }));
-    // navigate("/confirmation")
   }
 
   useEffect(() => {

@@ -62,7 +62,7 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
     });
 
     return (
-        <form noValidate onSubmit={handleSubmit(handlePurchase)}>
+        <form noValidate onSubmit={handlePurchase}>
             <Grid container spacing={2}>
                 <Grid item xs={6}>
                     <Controller

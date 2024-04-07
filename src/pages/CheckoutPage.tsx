@@ -12,8 +12,36 @@ import ContactInfo from "../components/searchpage/Contactinfo"
 import CountdownTimer from '../components/searchpage/CountdownTimer';
 
 import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material';
 
 
+const StyledDiv = styled('div')({
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+});
+
+const LeftDiv = styled('div')({
+    width: '70%',
+    marginLeft: '25px',
+    marginBottom: '10px',
+
+    '@media (max-width: 768px)': {
+        width: '100%',
+    },
+});
+
+const RightDiv = styled('div')({
+    width: '25%',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '32px',
+    marginLeft: '10px',
+
+    '@media (max-width: 768px)': {
+        width: '90%',
+    },
+});
 
 export default function CheckoutPage() {
     const navigate = useNavigate();
@@ -41,21 +69,20 @@ export default function CheckoutPage() {
             <Toaster />
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
-            <div style={{ display: 'flex', justifyContent: 'space-between', flexWrap: 'wrap' }}>
-                <div style={{ width: '70%', marginLeft: '25px', marginBottom: '10px' }}>
+            <StyledDiv>
+                <LeftDiv>
                     <PaymentInfo />
-                </div>
-                <div style={{ width: '25%', display: 'flex', flexDirection: 'column', marginTop: '32px', marginLeft: '10px' }}>
+                </LeftDiv>
+                <RightDiv>
                     <Itinerary />
                     <ContactInfo />
+                </RightDiv>
+            </StyledDiv>
 
-                </div>
-            </div>
-            
 
             <Footer sticky={false} />
-            
-            <CountdownTimer  endTime={600} navigateTo="/" />
+
+            <CountdownTimer endTime={600} navigateTo="/" />
         </>
     )
 }

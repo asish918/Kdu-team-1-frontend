@@ -1,19 +1,24 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
 const BoxStyle = {
-        textAlign: 'left',
-        backgroundColor: '#EFF0F1',
-        padding: '10px',
-        marginLeft: '2px',
-        marginRight: '20px',
-        marginTop:'10px',
-        marginBottom: '10px',
- };
- const TopographyStyle ={
-    mt: 1,
- }
+  textAlign: 'left',
+  backgroundColor: '#EFF0F1',
+  padding: '10px',
+  marginLeft: '2px',
+  marginRight: '20px',
+  marginTop: '10px',
+  marginBottom: '10px',
+  '@media (max-width: 768px)': {
+    marginLeft: '10px',
+    width: '100%',
+    marginRight: '10px',
+  },
+};
+const TopographyStyle = {
+  mt: 1,
+}
 const ContactInfo: React.FC = () => {
- return (
+  return (
     <Box
       sx={BoxStyle}
     >
@@ -27,7 +32,7 @@ const ContactInfo: React.FC = () => {
         Mon-Fr 8a-5p EST
       </Typography>
     </Box>
- );
+  );
 };
 
 export default ContactInfo;

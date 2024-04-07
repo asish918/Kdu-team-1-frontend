@@ -5,11 +5,13 @@ import PeopleIcon from '@mui/icons-material/People';
 import CancelRoomModal from './CancelRoomModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { generateDescription, getDateObject } from '../../utils/util';
+import { generateDescription, getDateObject, urlGenerator } from '../../utils/util';
 import { useTranslation } from 'react-i18next';
 import { ExchangeRateData } from '../../types';
 import { formatCurrency } from '../../utils/i18next';
 import { getCurrentUser } from 'aws-amplify/auth';
+import axios from 'axios';
+import toast, { Toaster } from 'react-hot-toast';
 
 // Styled components 
 const StyledBox = styled(Box)({
@@ -111,28 +113,51 @@ const SecondDateStyledTypography = styled(Typography)({
   variant: 'body2',
 });
 
+const config = {
+  headers: {
+    'X-Api-Key': `${process.env.X_API_KEY}`
+  }
+};
+
 const ReservationDetails = () => {
   const theme = useTheme();
   const isSm768 = useMediaQuery(theme.breakpoints.down('sm'));
   const isXs450 = useMediaQuery('(max-width:450px)');
 
-  const [loginId, setLoginId] = useState<string>(null);
+  const [loginId, setLoginId] = useState<string | null>(null);
   const [open, setOpen] = useState(false);
   const [otp, setOtp] = useState('');
 
-  const handleClickOpen = () => {
+  const handleClickOpen = async () => {
     if (!loginId) {
+      const res = await axios.get(urlGenerator(`${process.env.SEND_OTP}?email=${bookingDetails?.billingEmail}`), config);
+      if (res.status === 200) toast.success("OTP Sent Successfully");
       setOpen(true);
+      return;
     }
+
+    const deleteRes = await axios.get(urlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
+    if (deleteRes.status === 200) toast.success("Booking Cancelled");
+    console.log(deleteRes);
   };
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const handleConfirmOtp = () => {
-    console.log('OTP confirmed:', otp);
-    handleClose();
+  const handleConfirmOtp = async () => {
+    try {
+      const res = await axios.get(urlGenerator(`${process.env.VERIFY_OTP}?email=${bookingDetails?.billingEmail}&otp=${otp}`), config);
+      if (res.status === 200) {
+        toast.success("OTP Confirmed. Booking Cancelled")
+      }
+
+      const deleteRes = await axios.get(urlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
+      console.log(deleteRes.data);
+      handleClose();
+    } catch (error) {
+      toast.error("Invalid/Expired OTP")
+    }
   };
 
   useEffect(() => {
@@ -159,6 +184,7 @@ const ReservationDetails = () => {
 
   return (
     <>
+      <Toaster />
       <StyledBox>
         <StyledBox alignItems="center">
           <StyledTypography variant="h5" gutterBottom>
@@ -182,7 +208,7 @@ const ReservationDetails = () => {
       </StyledBox>
       <Grid container spacing={2}>
         <LeftDiv item xs={12} md={3} sm={6}>
-          <StyledImage src="https://picsum.photos/200/200" alt="Package" />
+          <StyledImage src={bookingDetails?.imageUrl} alt="Booking Image" />
         </LeftDiv>
         <RightDiv item xs={12} md={9} sm={6}>
           <OuterStyledBox>
