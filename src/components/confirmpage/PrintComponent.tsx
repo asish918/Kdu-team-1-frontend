@@ -5,6 +5,9 @@ import CompositionPage from './Composition';
 import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
+import axios from 'axios';
+import { urlGenerator } from '../../utils/util';
+import toast, { Toaster } from 'react-hot-toast';
 
 // Define your custom button component
 const CustomButton = styled('button')({
@@ -38,6 +41,12 @@ const InnerBoxStyle = {
   gap: 2,
 };
 
+const config = {
+  headers: {
+    'X-Api-Key': `${process.env.X_API_KEY}`
+  }
+};
+
 const PrintComponent: React.FC = () => {
   const bookingDetails = useSelector((state: RootState) => state.bookingDetails.result);
   const componentRef = useRef<HTMLDivElement>(null);
@@ -56,8 +65,9 @@ const PrintComponent: React.FC = () => {
     }, 100)
   };
 
-  const handleEmail = () => {
-    console.log("Hello Email");
+  const handleEmail = async () => {
+    const res = await axios.get(urlGenerator(`${process.env.SEND_EMAIL}?email=${bookingDetails?.billingEmail}&reservationId=${bookingDetails?.reservationId}`), config);
+    if (res.status === 200) toast.success("Email Sent Successfully");
   };
 
 
@@ -72,6 +82,7 @@ const PrintComponent: React.FC = () => {
 
   return (
     <div>
+      <Toaster />
       <Box sx={OuttermostBoxStyle}>
         <Typography variant="h6">Upcoming reservation {bookingDetails?.reservationId}</Typography>
         {bookingDetails?.cancelled && <CancelledText>Cancelled</CancelledText>}
