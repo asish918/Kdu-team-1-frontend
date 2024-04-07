@@ -6,7 +6,7 @@ import { styled } from '@mui/material/styles';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import axios from 'axios';
-import { urlGenerator } from '../../utils/util';
+import { prodUrlGenerator, urlGenerator } from '../../utils/util';
 import toast, { Toaster } from 'react-hot-toast';
 
 // Define your custom button component
@@ -66,7 +66,7 @@ const PrintComponent: React.FC = () => {
   };
 
   const handleEmail = async () => {
-    const res = await axios.get(urlGenerator(`${process.env.SEND_EMAIL}?email=${bookingDetails?.billingEmail}&reservationId=${bookingDetails?.reservationId}`), config);
+    const res = await axios.get(prodUrlGenerator(`${process.env.SEND_EMAIL}?email=${bookingDetails?.billingEmail}&reservationId=${bookingDetails?.reservationId}`), config);
     if (res.status === 200) toast.success("Email Sent Successfully");
   };
 

@@ -5,7 +5,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import CancelRoomModal from './CancelRoomModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { generateDescription, getDateObject, urlGenerator } from '../../utils/util';
+import { generateDescription, getDateObject, prod, prodUrlGenerator, prodUrlGeneratorUrlGenerator } from '../../utils/util';
 import { useTranslation } from 'react-i18next';
 import { ExchangeRateData } from '../../types';
 import { formatCurrency } from '../../utils/i18next';
@@ -130,13 +130,13 @@ const ReservationDetails = () => {
 
   const handleClickOpen = async () => {
     if (!loginId) {
-      const res = await axios.get(urlGenerator(`${process.env.SEND_OTP}?email=${bookingDetails?.billingEmail}`), config);
+      const res = await axios.get(prodUrlGenerator(`${process.env.SEND_OTP}?email=${bookingDetails?.billingEmail}`), config);
       if (res.status === 200) toast.success("OTP Sent Successfully");
       setOpen(true);
       return;
     }
 
-    const deleteRes = await axios.get(urlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
+    const deleteRes = await axios.get(prodUrlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
     if (deleteRes.status === 200) toast.success("Booking Cancelled");
     console.log(deleteRes);
   };
@@ -147,12 +147,12 @@ const ReservationDetails = () => {
 
   const handleConfirmOtp = async () => {
     try {
-      const res = await axios.get(urlGenerator(`${process.env.VERIFY_OTP}?email=${bookingDetails?.billingEmail}&otp=${otp}`), config);
+      const res = await axios.get(prodUrlGenerator(`${process.env.VERIFY_OTP}?email=${bookingDetails?.billingEmail}&otp=${otp}`), config);
       if (res.status === 200) {
         toast.success("OTP Confirmed. Booking Cancelled")
       }
 
-      const deleteRes = await axios.get(urlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
+      const deleteRes = await axios.get(prodUrlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
       console.log(deleteRes.data);
       handleClose();
     } catch (error) {

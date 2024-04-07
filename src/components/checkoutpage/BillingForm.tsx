@@ -95,16 +95,17 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
     };
 
     const validateZipCode = async (data: BillingFormFields) => {
-        // const res = await axios.get(`${process.env.ZIP_CODE_API_URL}?apikey=${process.env.ZIP_CODE_API_KEY}&codes=${data.zipcode}&country=${selectedCountry?.isoCode}`);
+        const res = await axios.get(`${process.env.ZIP_CODE_API_URL}?apikey=${process.env.ZIP_CODE_API_KEY}&codes=${data.zipcode}&country=${selectedCountry?.isoCode}`);
 
-        // if (res.data.results.length === 0) {
-        //     setZipCodeError("Invalid Zip Code");
-        //     return;
-        // }
-        // else if (res.data.results[data.zipcode][0].state_code !== selectedState?.isoCode) {
-        //     setZipCodeError("Invalid Zip Code");
-        //     return;
-        // }
+        if (res.data.results.length === 0) {
+            console.log("Hemlo")
+            setZipCodeError("Invalid Zip Code");
+            return;
+        }
+        else if (res.data.results[data.zipcode][0].state_code !== selectedState?.isoCode) {
+            setZipCodeError("Invalid Zip Code");
+            return;
+        }
 
         onSubmitBillingInfo({
             ...data,
@@ -443,7 +444,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                             }}
                                         >
                                             {error?.message ?? ''}
-                                            {zipCodeError && error?.message?.length === 0 ? zipCodeError : ''}
+                                            {zipCodeError ?? ''}
                                         </FormHelperText>
                                     </FormControl>
                                 )}
