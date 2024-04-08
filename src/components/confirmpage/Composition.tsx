@@ -3,6 +3,7 @@ import { Box } from '@mui/material';
 
 import CustomizedAccordions from './CustomizedAccordions';
 import ReservationDetails from './Reservationdetails';
+import { useTranslation } from 'react-i18next';
 
 const OuttermostBoxStyle = {
  display: 'flex',
@@ -30,7 +31,6 @@ interface CompositionPageProps {
 }
 
 const CompositionPage: React.FC<CompositionPageProps> = ({ allAccordionsOpen }) => {
-
   
  return (
     <Box sx={OuttermostBoxStyle}>

@@ -162,8 +162,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name={i18n.t("confirmation.mailingAddresss1")}
-                                    label={i18n.t("confirmation.mailingAddresss1")}
+                                    name={i18n.t("confirmation.mailingAddress1")}
+                                    label={i18n.t("confirmation.mailingAddress1")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -192,8 +192,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name={i18n.t("confirmation.mailingAddresss2")}
-                                    label={i18n.t("confirmation.mailingAddresss2")}
+                                    name={i18n.t("confirmation.mailingAddress2")}
+                                    label={i18n.t("confirmation.mailingAddress2")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}

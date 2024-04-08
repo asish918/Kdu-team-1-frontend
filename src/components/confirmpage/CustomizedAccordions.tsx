@@ -98,28 +98,28 @@ const CustomizedAccordions: React.FC<{ allOpen?: boolean }> = ({ allOpen }) => {
     <div style={{ width: "100%" }}>
       <Accordion expanded={expanded.includes('panel1')} onChange={handleChange('panel1')}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-          <Typography>Room Total Summary</Typography>
+          <Typography>{i18n.t("confirmation.roomTotalSummary")}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <DetailsContainer>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Nightly Rate</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.nightlyRate")}</Typography>
               <Typography>{formatCurrency(bookingDetails?.nightlyRate, activeCurrency, exchangeRates, i18n)}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>SubTotal</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.subTotal")}</Typography>
               <Typography>{formatCurrency(bookingDetails?.subtotal, activeCurrency, exchangeRates, i18n)}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Taxes, Surcharges, Fees</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("itenary.itenaryTaxes")}</Typography>
               <Typography>{formatCurrency(bookingDetails?.taxes, activeCurrency, exchangeRates, i18n)}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>VAT</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("itenary.itenaryVAT")}</Typography>
               <Typography>{formatCurrency(bookingDetails?.vat, activeCurrency, exchangeRates, i18n)}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Total</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.total")}</Typography>
               <Typography>{formatCurrency(bookingDetails?.total, activeCurrency, exchangeRates, i18n)}</Typography>
             </DetailRow>
           </DetailsContainer>
@@ -128,24 +128,24 @@ const CustomizedAccordions: React.FC<{ allOpen?: boolean }> = ({ allOpen }) => {
       </Accordion>
       <Accordion expanded={expanded.includes('panel2')} onChange={handleChange('panel2')}>
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>Guest Information</Typography>
+          <Typography>{i18n.t("confirmation.guestInformation")}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <DetailsContainer>
             <DetailRow>
-              <Typography sx={TypographyStyle}>First Name</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.firstName")}</Typography>
               <Typography>{bookingDetails?.firstName}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Last Name</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.lastName")}</Typography>
               <Typography>{bookingDetails?.lastName}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Email</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.email")}</Typography>
               <Typography>{bookingDetails?.email}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Phone</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.phone")}</Typography>
               <Typography>{bookingDetails?.phone}</Typography>
             </DetailRow>
           </DetailsContainer>
@@ -153,24 +153,24 @@ const CustomizedAccordions: React.FC<{ allOpen?: boolean }> = ({ allOpen }) => {
       </Accordion>
       <Accordion expanded={expanded.includes('panel3')} onChange={handleChange('panel3')}>
         <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>Billing Address</Typography>
+          <Typography>{i18n.t("confirmation.billingAddress")}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <DetailsContainer>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Country</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.country")}</Typography>
               <Typography>{bookingDetails?.country}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>State</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.state")}</Typography>
               <Typography>{bookingDetails?.state}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>City</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.city")}</Typography>
               <Typography>{bookingDetails?.city}</Typography>
             </DetailRow>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Zip Code</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.zipCode")}</Typography>
               <Typography>{bookingDetails?.zipcode}</Typography>
             </DetailRow>
           </DetailsContainer>
@@ -178,12 +178,12 @@ const CustomizedAccordions: React.FC<{ allOpen?: boolean }> = ({ allOpen }) => {
       </Accordion>
       <Accordion expanded={expanded.includes('panel4')} onChange={handleChange('panel4')}>
         <AccordionSummary aria-controls="panel4d-content" id="panel4d-header">
-          <Typography>Payment Information</Typography>
+          <Typography>{i18n.t("confirmation.paymentInformation")}</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <DetailsContainer>
             <DetailRow>
-              <Typography sx={TypographyStyle}>Payment Id</Typography>
+              <Typography sx={TypographyStyle}>{i18n.t("confirmation.paymentId")}</Typography>
               <Typography>{bookingDetails?.transactionId}</Typography>
             </DetailRow>
           </DetailsContainer>

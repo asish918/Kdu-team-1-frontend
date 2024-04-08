@@ -5,8 +5,11 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { isFuture, isSameYear, isValid, parse } from "date-fns";
 import valid from 'card-validator'
 import { useTranslation } from "react-i18next";
+<<<<<<< HEAD
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
+=======
+>>>>>>> 3a29623 (Implemented language translations)
 
 
 const InfoBox = styled(Box)({

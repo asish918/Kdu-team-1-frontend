@@ -219,7 +219,7 @@ const ReservationDetails = () => {
           </StyledTypography>
         </StyledBox>
         <CancelButton variant="text" onClick={handleClickOpen}>
-          Cancel Room
+          {i18n.t("confirmation.cancelRoom")}
         </CancelButton>
         <CancelRoomModal
           open={open}
@@ -236,12 +236,12 @@ const ReservationDetails = () => {
         <RightDiv item xs={12} md={9} sm={6}>
           <OuterStyledBox>
             <DateBox>
-              <FirstDateStyledTypography>Check-in</FirstDateStyledTypography>
+              <FirstDateStyledTypography>{i18n.t("landingPageForm.checkIn")}</FirstDateStyledTypography>
               <SecondDateStyledTypography>{getDateObject(bookingDetails?.checkInDate).day}</SecondDateStyledTypography>
               <SecondDateStyledTypography>{getMonthName(getDateObject(bookingDetails?.checkInDate).month)} {getDateObject(bookingDetails?.checkInDate).year}</SecondDateStyledTypography>
             </DateBox>
             <DateBox>
-              <FirstDateStyledTypography>Check-out</FirstDateStyledTypography>
+              <FirstDateStyledTypography>{i18n.t("landingPageForm.checkOut")}</FirstDateStyledTypography>
               <SecondDateStyledTypography>{getDateObject(bookingDetails?.checkOutDate).day}</SecondDateStyledTypography>
               <SecondDateStyledTypography>{getMonthName(getDateObject(bookingDetails?.checkOutDate).month)} {getDateObject(bookingDetails?.checkOutDate).year}</SecondDateStyledTypography>
             </DateBox>

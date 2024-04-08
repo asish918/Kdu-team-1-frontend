@@ -8,6 +8,7 @@ import { RootState } from '../../redux/store';
 import axios from 'axios';
 import { prodUrlGenerator, urlGenerator } from '../../utils/util';
 import toast, { Toaster } from 'react-hot-toast';
+import { useTranslation } from 'react-i18next';
 
 // Define your custom button component
 const CustomButton = styled('button')({
@@ -51,6 +52,7 @@ const PrintComponent: React.FC = () => {
   const bookingDetails = useSelector((state: RootState) => state.bookingDetails.result);
   const componentRef = useRef<HTMLDivElement>(null);
   const [allAccordionsOpen, setAllAccordionsOpen] = useState(false);
+  const { t, i18n } = useTranslation();
 
   const reactToPrint =
     useReactToPrint({
@@ -84,11 +86,11 @@ const PrintComponent: React.FC = () => {
     <div>
       <Toaster />
       <Box sx={OuttermostBoxStyle}>
-        <Typography variant="h6">Upcoming reservation {bookingDetails?.reservationId}</Typography>
-        {bookingDetails?.cancelled && <CancelledText>Cancelled</CancelledText>}
+        <Typography variant="h6">{i18n.t("confirmation.upcomingReservation")} {bookingDetails?.reservationId}</Typography>
+        {bookingDetails?.cancelled && <CancelledText>{i18n.t("confirmation.cancelled")}</CancelledText>}
         <Box sx={InnerBoxStyle}>
-          <CustomButton onClick={handlePrint}>Print</CustomButton>
-          <CustomButton onClick={handleEmail}>Email</CustomButton>
+          <CustomButton onClick={handlePrint}>{i18n.t("confirmation.print")}</CustomButton>
+          <CustomButton onClick={handleEmail}>{i18n.t("confirmation.email")}</CustomButton>
         </Box>
       </Box>
       <div ref={componentRef}>
