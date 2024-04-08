@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isFuture, isSameYear, isValid, parse } from "date-fns";
 import valid from 'card-validator'
+import { useTranslation } from "react-i18next";
 
 
 const InfoBox = styled(Box)({
@@ -49,6 +50,9 @@ interface PaymentFormProps {
 }
 
 export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: PaymentFormProps) {
+
+    const { t, i18n } = useTranslation();
+
     const { control, handleSubmit } = useForm<PaymentFormFields>({
         mode: 'onChange',
         reValidateMode: 'onChange',
@@ -76,8 +80,8 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Card Number"
-                                    label="Card Number"
+                                    name={i18n.t("confirmation.cardNumber")}
+                                    label={i18n.t("confirmation.cardNumber")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -136,7 +140,7 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                             <FormControl fullWidth>
                                 <FormControlLabel
                                     control={<Checkbox inputRef={ref} onChange={onChange} onBlur={onBlur} value={value} />}
-                                    label="Send me special offers"
+                                    label={i18n.t("confirmation.specialOffers")}
                                 />
                                 <FormHelperText
                                     sx={{
@@ -159,7 +163,7 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                             <FormControl required fullWidth>
                                 <FormControlLabel
                                     control={<Checkbox inputRef={ref} onChange={onChange} onBlur={onBlur} value={value} />}
-                                    label="I agree to the Terms and Policies of travel"
+                                    label={i18n.t("confirmation.agreeToTerms")}
                                 />
                                 <FormHelperText
                                     sx={{
@@ -249,10 +253,10 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                     onClick={handleEditBillingInfo}
                     sx={buttonStyletwo}
                 >
-                    Edit Billing Info
+                    {i18n.t("generic.nextBillingInfo")}
                 </Button>
                 <Button onClick={handlePurchase} type="submit" variant="contained" color="primary">
-                    PURCHASE
+                    {i18n.t("generic.purchase")}
                 </Button>
             </InfoBox>
         </form>

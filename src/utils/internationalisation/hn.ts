@@ -61,7 +61,13 @@ export const hn: LanguageType = {
       reviews: "समीक्षाएँ",
       selectPackageButton: "पैकेज चुनें",
       selectRoomButton: "कमरा चुनें",
-      specialDealTitle: "विशेष सौदा"
+      specialDealTitle: "विशेष सौदा",
+      editBillingInfo: "बिलिंग जानकारी संपादित करें",
+      editTravellerInfo: "यात्री जानकारी संपादित करें",
+      nextBillingInfo: "अगला: बिलिंग जानकारी",
+      nextPaymentInfo: "अगला: भुगतान जानकारी",
+      purchase: "क्रय"
+
     },
     itenary: {
       itenaryCheckout: "चेक-आउट",
@@ -98,7 +104,17 @@ export const hn: LanguageType = {
       upcomingReservation: "आगामी आरक्षण",
       vat: "वीएटी",
       zipCode: "पिन कोड",
-      cancelled: "रद्द"
+      cancelled: "रद्द",
+      agreeToTerms: "मैं यात्रा की नियम और नीतियों से सहमत हूँ",
+      specialOffers: "मुझे विशेष प्रस्ताव भेजें",
+      cardNumber: "कार्ड नंबर",
+      mailingAddress1: "मेलिंग पता 1",
+      mailingAddress2: "मेलिंग पता 2",
+      needHelp: "मदद चाहिए",
+      call: "कॉल करें",
+      travellerInfo: "यात्री सूचना",
+      billingInfo: "बिलिंग सूचना",
+      paymentInfo: "भुगतान सूचना"
     }
   },
 };

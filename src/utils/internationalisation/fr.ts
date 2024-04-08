@@ -61,7 +61,12 @@ export const fr: LanguageType = {
       reviews: "Avis",
       selectPackageButton: "Sélectionner le Forfait",
       selectRoomButton: "Sélectionner la Chambre",
-      specialDealTitle: "Offre Spéciale"
+      specialDealTitle: "Offre Spéciale",
+      editBillingInfo: "Modifier les informations de facturation",
+      editTravellerInfo: "Modifier les informations du voyageur",
+      nextBillingInfo: "Suivant : Informations de facturation",
+      nextPaymentInfo: "Suivant : Informations de paiement",
+      purchase: "Acheter"
     },
     itenary: {
       itenaryCheckout: "Check-out",
@@ -98,7 +103,17 @@ export const fr: LanguageType = {
       upcomingReservation: "Réservation à venir",
       vat: "TVA",
       zipCode: "Code postal",
-      cancelled: "Annulé"
+      cancelled: "Annulé",
+      agreeToTerms: "J'accepte les conditions et politiques de voyage",
+      specialOffers: "Envoyez-moi des offres spéciales",
+      cardNumber: "Numéro de carte",
+      mailingAddress1: "Adresse postale 1",
+      mailingAddress2: "Adresse postale 2",
+      needHelp: "Besoin d'aide",
+      call: "Appeler",
+      travellerInfo: "Informations du voyageur",
+      billingInfo: "Informations de facturation",
+      paymentInfo: "Informations de paiement"
     }
   },
 };

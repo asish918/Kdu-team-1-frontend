@@ -11,6 +11,7 @@ import { RootState } from '../../redux/store';
 import { BookingRequest } from '../../types';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { createBooking } from '../../redux/thunks/createBooking';
+import { useTranslation } from 'react-i18next';
 
 const PaymentInfo: React.FC = () => {
   const [showTravellerInfo, setShowTravellerInfo] = useState(true);
@@ -47,6 +48,9 @@ const PaymentInfo: React.FC = () => {
     setShowTravellerInfo(true);
     setShowBillingInfo(false);
   };
+
+  const { t, i18n } = useTranslation();
+
 
   const handlePurchase = (event) => {
     event.preventDefault();
@@ -137,22 +141,22 @@ const PaymentInfo: React.FC = () => {
   return (
     <Box>
       <Typography variant="h5" sx={MainTitle}>
-        Payment Info
+        {i18n.t("confirmation.paymentInfo")}
       </Typography>
       <Typography variant="h6" sx={sectionTitleStyle}>
-        1. Traveller Info
+        1. {i18n.t("confirmation.travellerInfo")}
       </Typography>
       {showTravellerInfo && (
         <TravelForm onSubmitTravellerInfo={onSubmitTravellerInfo} />
       )}
       <Typography variant="h6" sx={sectionTitleStyle}>
-        2. Billing Info
+        2. {i18n.t("confirmation.billingInfo")}
       </Typography>
       {showBillingInfo && (
         <BillingForm onSubmitBillingInfo={onSubmitBillingInfo} handleEditTravellerInfo={handleEditTravellerInfo} />
       )}
       <Typography variant="h6" sx={sectionTitleStyle}>
-        3. Payment Info
+        3. {i18n.t("confirmation.paymentInfo")}
       </Typography>
       {showPaymentInfo && (
         <PaymentForm handleEditBillingInfo={handleEditBillingInfo} handlePurchase={handlePurchase} />

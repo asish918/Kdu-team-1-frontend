@@ -9,6 +9,7 @@ import { ZipCodeApiResponse } from "../../types";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
+import { useTranslation } from "react-i18next";
 
 
 const InfoBox = styled(Box)({
@@ -114,6 +115,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
         });
     }
 
+    const { t, i18n } = useTranslation();
+
     return (
         <form noValidate onSubmit={handleSubmit(validateZipCode)}>
             <Grid container spacing={2}>
@@ -129,8 +132,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="First Name"
-                                    label="First Name"
+                                    name={i18n.t("confirmation.firstName")}
+                                    label={i18n.t("confirmation.firstName")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -159,8 +162,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Mailing Address 1"
-                                    label="Mailing Address 1"
+                                    name={i18n.t("confirmation.mailingAddresss1")}
+                                    label={i18n.t("confirmation.mailingAddresss1")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -189,8 +192,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Mailing Address 2"
-                                    label="Mailing Address 2"
+                                    name={i18n.t("confirmation.mailingAddresss2")}
+                                    label={i18n.t("confirmation.mailingAddresss2")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -218,7 +221,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                             <FormControl fullWidth>
                                 <TextField
                                     select
-                                    label="Country"
+                                    label={i18n.t("confirmation.country")}
                                     variant="outlined"
                                     fullWidth
                                     margin="normal"
@@ -251,7 +254,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                             <FormControl fullWidth>
                                 <TextField
                                     select
-                                    label="City"
+                                    label={i18n.t("confirmation.city")}
                                     variant="outlined"
                                     fullWidth
                                     margin="normal"
@@ -285,8 +288,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Phone"
-                                    label="Phone"
+                                    name={i18n.t("confirmation.phone")}
+                                    label={i18n.t("confirmation.phone")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -314,8 +317,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Email"
-                                    label="Email"
+                                    name={i18n.t("confirmation.email")}
+                                    label={i18n.t("confirmation.email")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -345,8 +348,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Last Name"
-                                    label="Last Name"
+                                    name={i18n.t("confirmation.lastName")}
+                                    label={i18n.t("confirmation.lastName")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -376,7 +379,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                     <FormControl fullWidth>
                                         <TextField
                                             select
-                                            label="State"
+                                            label={i18n.t("confirmation.state")}
                                             variant="outlined"
                                             fullWidth
                                             disabled={states.length === 0}
@@ -430,8 +433,8 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                         <TextField
                                             margin="normal"
                                             fullWidth
-                                            name="Zip Code"
-                                            label="Zip Code"
+                                            name={i18n.t("confirmation.zipCode")}
+                                            label={i18n.t("confirmation.zipCode")}
                                             inputRef={ref}
                                             value={value}
                                             onChange={onChange}
@@ -461,10 +464,10 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                     onClick={handleEditTravellerInfo}
                     sx={buttonStyle}
                 >
-                    Edit Traveller Info
+                    {i18n.t("generic.editTravellerInfo")}
                 </Button>
                 <Button type="submit" variant="contained" color="primary" sx={buttonStyle}>
-                    NEXT:PAYMENT INFO
+                    {i18n.t("generic.nextPaymentInfo")}
                 </Button>
             </InfoBox>
         </form>

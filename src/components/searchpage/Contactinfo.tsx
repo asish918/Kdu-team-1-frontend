@@ -1,5 +1,6 @@
 import React from 'react';
 import { Typography, Box } from '@mui/material';
+import { useTranslation } from 'react-i18next';
 const BoxStyle = {
   textAlign: 'left',
   backgroundColor: '#EFF0F1',
@@ -18,15 +19,18 @@ const TopographyStyle = {
   mt: 1,
 }
 const ContactInfo: React.FC = () => {
+  const { t, i18n } = useTranslation();
+
+
   return (
     <Box
       sx={BoxStyle}
     >
       <Typography variant="h5" fontWeight="bold">
-        Need help?
+        {i18n.t("confirmation.needHelp")}
       </Typography>
       <Typography variant="h6" fontWeight="bold" sx={TopographyStyle}>
-        Call 1-800-555-5555
+        {i18n.t("confirmation.call")} 1-800-555-5555
       </Typography>
       <Typography variant="body1" sx={TopographyStyle}>
         Mon-Fr 8a-5p EST

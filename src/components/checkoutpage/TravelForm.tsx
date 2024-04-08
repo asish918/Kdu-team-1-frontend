@@ -4,6 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useSelector } from "react-redux";
 import { z } from "zod";
 import { RootState } from "../../redux/store";
+import { useTranslation } from "react-i18next";
 
 
 const StyledBox = styled(Box)({
@@ -53,6 +54,7 @@ interface TravelFormProps {
 
 export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
     const travelInfo = useSelector((state: RootState) => state.checkoutForm.traveller_info);
+    const { t, i18n } = useTranslation();
 
     const { control, handleSubmit } = useForm<TravelFormFields>({
         mode: 'onChange',
@@ -82,8 +84,8 @@ export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="First Name"
-                                    label="First Name"
+                                    name={i18n.t("confirmation.firstName")}
+                                    label={i18n.t("confirmation.firstName")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -112,8 +114,8 @@ export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Phone"
-                                    label="Phone"
+                                    name={i18n.t("confirmation.phone")}
+                                    label={i18n.t("confirmation.phone")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -141,8 +143,8 @@ export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Email"
-                                    label="Email"
+                                    name={i18n.t("confirmation.email")}
+                                    label={i18n.t("confirmation.email")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -172,8 +174,8 @@ export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
                                 <TextField
                                     margin="normal"
                                     fullWidth
-                                    name="Last Name"
-                                    label="Last Name"
+                                    name={i18n.t("confirmation.lastName")}
+                                    label={i18n.t("confirmation.lastName")}
                                     inputRef={ref}
                                     value={value}
                                     onChange={onChange}
@@ -194,7 +196,7 @@ export default function TravelForm({ onSubmitTravellerInfo }: TravelFormProps) {
             </StyledBox>
             <InfoBox>
                 <Button type="submit" variant="contained" color="primary" sx={buttonStyle}>
-                    NEXT:BILLING INFO
+                    {i18n.t("generic.nextBillingInfo")}
                 </Button>
             </InfoBox>
         </form>

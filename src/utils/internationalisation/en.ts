@@ -61,7 +61,12 @@ export const en: LanguageType = {
       reviews: "Reviews",
       selectPackageButton: "Select Package",
       selectRoomButton: "Select Room",
-      specialDealTitle: "Special Deal"
+      specialDealTitle: "Special Deal",
+      editBillingInfo: "Edit Billing Info",
+      editTravellerInfo: "Edit Traveller Info",
+      nextBillingInfo: "Next: Billing Info",
+      nextPaymentInfo: "Next: Payment Info",
+      purchase: "Purchase"
     },
     itenary: {
       itenaryCheckout: "Checkout",
@@ -98,7 +103,17 @@ export const en: LanguageType = {
       upcomingReservation: "Upcoming Reservation",
       vat: "VAT",
       zipCode: "Zipcode",
-      cancelled: "Cancelled"
+      cancelled: "Cancelled",
+      agreeToTerms: "I agree to the Terms and Policies of travel",
+      specialOffers: "Send me special offers",
+      cardNumber: "Card Number",
+      mailingAddress1: "Mailing Address 1",
+      mailingAddress2: "Mailing Address 2",
+      needHelp: "Need Help",
+      call: "Call",
+      travellerInfo: "Traveller Info",
+      billingInfo: "Billing Info",
+      paymentInfo: "Payment Info"
     }
   },
 };

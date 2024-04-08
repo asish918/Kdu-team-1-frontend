@@ -50,6 +50,17 @@ export type ConfirmationTranslation = {
   paymentInformation: string;
   paymentId: string;
   cancelled: string;
+  mailingAddress1: string;
+  mailingAddress2: string;
+  cardNumber: string;
+  specialOffers: string;
+  agreeToTerms: string;
+  needHelp: string;
+  call: string;
+  paymentInfo: string;
+  travellerInfo: string;
+  billingInfo: string;
+  paymentInfo: string;
 }
 
 export type RoomResultFormTranslation = {
@@ -206,6 +217,11 @@ export type GenericInfo = {
   dealsAndPackagesTitle: string;
   promoCodeButton: string;
   promoCodeInput: string;
+  editBillingInfo: string;
+  purchase: string;
+  nextBillingInfo: string;
+  editTravellerInfo: string;
+  nextPaymentInfo: string;
 }
 
 export type ItenaryTranslation = {

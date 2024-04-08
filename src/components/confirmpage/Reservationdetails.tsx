@@ -148,8 +148,11 @@ const ReservationDetails = () => {
   const handleConfirmOtp = async () => {
     try {
       const res = await axios.get(prodUrlGenerator(`${process.env.VERIFY_OTP}?email=${bookingDetails?.billingEmail}&otp=${otp}`), config);
-      if (res.status === 200) {
+      if (res.data === "OTP Verified") {
         toast.success("OTP Confirmed. Booking Cancelled")
+      }
+      else if (res.data == "Expired OTP" || res.data == "Invalid OTP") {
+        toast.error("Invalid/Expired OTP")
       }
 
       const deleteRes = await axios.get(prodUrlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
