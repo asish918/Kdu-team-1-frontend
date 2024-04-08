@@ -13,6 +13,7 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import { createBooking } from '../../redux/thunks/createBooking';
 import { useTranslation } from 'react-i18next';
 import ReactGA from "react-ga";
+import toast, { Toaster } from 'react-hot-toast';
 
 const PaymentInfo: React.FC = () => {
   const [showTravellerInfo, setShowTravellerInfo] = useState(true);
@@ -116,6 +117,9 @@ const PaymentInfo: React.FC = () => {
     if (confirmationBooking.status === "success") {
       navigate(`/confirmation?id=${confirmationBooking.result}`)
     }
+    if (confirmationBooking.status === "error") {
+      toast.error(confirmationBooking.message);
+    }
   }, [confirmationBooking])
 
   useEffect(() => {
@@ -148,6 +152,7 @@ const PaymentInfo: React.FC = () => {
 
   return (
     <Box>
+      <Toaster />
       <Typography variant="h5" sx={MainTitle}>
         {i18n.t("confirmation.paymentInfo")}
       </Typography>

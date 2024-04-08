@@ -90,7 +90,7 @@ const PrintComponent: React.FC = () => {
         {bookingDetails?.cancelled && <CancelledText>{i18n.t("confirmation.cancelled")}</CancelledText>}
         <Box sx={InnerBoxStyle}>
           <CustomButton onClick={handlePrint}>{i18n.t("confirmation.print")}</CustomButton>
-          <CustomButton onClick={handleEmail}>{i18n.t("confirmation.email")}</CustomButton>
+          <CustomButton disabled={bookingDetails?.cancelled} onClick={handleEmail}>{i18n.t("confirmation.email")}</CustomButton>
         </Box>
       </Box>
       <div ref={componentRef}>

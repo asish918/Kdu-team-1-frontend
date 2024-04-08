@@ -5,7 +5,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import CancelRoomModal from './CancelRoomModal';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import { generateDescription, getDateObject, prod, prodUrlGenerator, prodUrlGeneratorUrlGenerator } from '../../utils/util';
+import { generateDescription, getDateObject, prodUrlGenerator } from '../../utils/util';
 import { useTranslation } from 'react-i18next';
 import { ExchangeRateData } from '../../types';
 import { formatCurrency } from '../../utils/i18next';
@@ -161,11 +161,12 @@ const ReservationDetails = () => {
   const handleConfirmOtp = async () => {
     try {
       const res = await axios.get(prodUrlGenerator(`${process.env.VERIFY_OTP}?email=${bookingDetails?.billingEmail}&otp=${otp}`), config);
-      if (res.data === "OTP Verified") {
+      if (res.status === 200) {
         toast.success("OTP Confirmed. Booking Cancelled")
       }
-      else if (res.data == "Expired OTP" || res.data == "Invalid OTP") {
+      else if (res.status === 401) {
         toast.error("Invalid/Expired OTP")
+        return;
       }
 
       const deleteRes = await axios.get(prodUrlGenerator(`${process.env.DELETE_BOOKING}?reservationId=${bookingDetails?.reservationId}`), config)
@@ -218,9 +219,12 @@ const ReservationDetails = () => {
             {generateDescription(bookingDetails?.adults, bookingDetails?.children, 0)}
           </StyledTypography>
         </StyledBox>
-        <CancelButton variant="text" onClick={handleClickOpen}>
-          {i18n.t("confirmation.cancelRoom")}
-        </CancelButton>
+        {
+          !bookingDetails?.cancelled &&
+          <CancelButton variant="text" onClick={handleClickOpen}>
+            {i18n.t("confirmation.cancelRoom")}
+          </CancelButton>
+        }
         <CancelRoomModal
           open={open}
           handleClose={handleClose}
