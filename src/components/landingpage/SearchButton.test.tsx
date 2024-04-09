@@ -24,7 +24,7 @@ describe('SearchButton component', () => {
           </Provider>
         </CustomThemeProvider>
       </ThemeProvider>
-    );
+    ); 
 
     const button = screen.getByText(/Search/i);
     fireEvent.click(button);

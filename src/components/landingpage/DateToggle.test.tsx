@@ -1,17 +1,18 @@
 import { render, screen } from '@testing-library/react';
-import SearchForm from './SearchForm';
 import AppProvider from '../../providers/AppProvider';
 import { BrowserRouter } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
-test('renders SearchForm component', () => {
+import DateToggle from './DateToggle';
+
+test('renders DateToggle component', () => {
   render(
     <Authenticator.Provider> 
     <BrowserRouter>
       <AppProvider>
-        <SearchForm />
+        <DateToggle/>
       </AppProvider>
     </BrowserRouter>
     </Authenticator.Provider>
   );
-
+ 
 });

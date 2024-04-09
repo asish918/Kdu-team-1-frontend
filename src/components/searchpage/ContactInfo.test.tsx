@@ -1,23 +1,24 @@
+// ContactInfo.test.jsx
+import React from 'react';
 import { render, screen } from '@testing-library/react';
-import NumberOfBeds from './NumberOfBeds'; 
+import ContactInfo from './Contactinfo';
 import AppProvider from '../../providers/AppProvider';
 import { BrowserRouter } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
 
-test('renders the correct text for the number of beds', () => {
- 
- render(
-  <Authenticator.Provider> 
+describe('ContactInfo component', () => {
+ it('renders ContactInfo component correctly', () => {
+    render(
+      <Authenticator.Provider> 
     <BrowserRouter>
     <AppProvider>
-    <NumberOfBeds />
+    <ContactInfo />
    </AppProvider>
     </BrowserRouter>
     </Authenticator.Provider>
  
-  );
-
+    );
  
+  
+ });
 });
-
-

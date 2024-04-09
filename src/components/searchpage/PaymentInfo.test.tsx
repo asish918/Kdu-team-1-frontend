@@ -1,17 +1,21 @@
 import { render, screen } from '@testing-library/react';
-import SearchForm from './SearchForm';
 import AppProvider from '../../providers/AppProvider';
 import { BrowserRouter } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
-test('renders SearchForm component', () => {
-  render(
-    <Authenticator.Provider> 
+import PaymentInfo from './PaymentInfo';
+
+
+test('renders the correct PaymentInfo', () => {
+ 
+ render(
+  <Authenticator.Provider> 
     <BrowserRouter>
-      <AppProvider>
-        <SearchForm />
-      </AppProvider>
+    <AppProvider>
+    <PaymentInfo/>
+   </AppProvider>
     </BrowserRouter>
     </Authenticator.Provider>
+ 
   );
 
 });

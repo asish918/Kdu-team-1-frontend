@@ -1,17 +1,19 @@
 import { render, screen } from '@testing-library/react';
-import SearchForm from './SearchForm';
 import AppProvider from '../../providers/AppProvider';
 import { BrowserRouter } from "react-router-dom";
 import { Authenticator } from "@aws-amplify/ui-react";
-test('renders SearchForm component', () => {
+import SeniorCitizenToggle from './SeniorCitizenToggle';
+
+
+test('renders SeniorCitizenToggle component', () => {
   render(
     <Authenticator.Provider> 
     <BrowserRouter>
       <AppProvider>
-        <SearchForm />
+        <SeniorCitizenToggle/>
       </AppProvider>
     </BrowserRouter>
     </Authenticator.Provider>
   );
-
+ 
 });
