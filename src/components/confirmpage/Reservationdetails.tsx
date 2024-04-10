@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Grid, Typography, Box, Button, useTheme, useMediaQuery } from '@mui/material';
+import { Grid, Typography, Box, Button, useTheme, useMediaQuery,Modal } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import PeopleIcon from '@mui/icons-material/People';
 import CancelRoomModal from './CancelRoomModal';
@@ -12,6 +12,12 @@ import { formatCurrency } from '../../utils/i18next';
 import { getCurrentUser } from 'aws-amplify/auth';
 import axios from 'axios';
 import toast, { Toaster } from 'react-hot-toast';
+import Dialog from '@mui/material/Dialog';
+import DialogTitle from '@mui/material/DialogTitle';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 // Styled components 
 const StyledBox = styled(Box)({
@@ -96,6 +102,7 @@ const BottomStyledTypography = styled(Typography)({
   color: '#5D5D5D',
   variant: 'body2',
   gutterBottom: true,
+  cursor: 'pointer',
 });
 const RateStyledTypography = styled(Typography)({
   variant: 'body2',
@@ -112,6 +119,12 @@ const FirstDateStyledTypography = styled(Typography)({
 const SecondDateStyledTypography = styled(Typography)({
   variant: 'body2',
 });
+ const IconButtonStyle = {
+  position: 'absolute',
+  right: 8,
+  top: 8,
+  color: (theme) => theme.palette.grey[500],
+ }
 
 const config = {
   headers: {
@@ -184,7 +197,14 @@ const ReservationDetails = () => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
   const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+  const [cancellationPolicyOpen, setCancellationPolicyOpen] = useState(false); // New state for Cancellation Policy modal
+  const handleCancellationPolicyOpen = () => {
+    setCancellationPolicyOpen(true);
+ };
 
+ const handleCancellationPolicyClose = () => {
+    setCancellationPolicyOpen(false);
+ };
   return (
     <>
       <Toaster />
@@ -234,10 +254,39 @@ const ReservationDetails = () => {
           </InnerStyledTypography>
           <Grid container spacing={2} alignItems="center">
             <Grid item xs={12} sm={6}>
-              <BottomStyledTypography>
-                Copy explaining the cancellation policy, if applicable.
-              </BottomStyledTypography>
+            <BottomStyledTypography onClick={handleCancellationPolicyOpen}>
+                  Copy explaining the cancellation policy, if applicable.
+            </BottomStyledTypography>
             </Grid>
+            <Dialog
+               open={cancellationPolicyOpen}
+               onClose={handleCancellationPolicyClose}
+               maxWidth="md"
+               fullWidth={true}
+               PaperProps={{
+                 style: {
+                      height: '80vh',
+                      overflow: 'auto',
+                         },
+                   }}
+                >
+               <DialogTitle>
+                  Cancellation Policy
+             <IconButton
+               aria-label="close"
+                onClick={handleCancellationPolicyClose}
+                sx={IconButtonStyle}
+                  >
+                <CloseIcon />
+                </IconButton>
+                </DialogTitle>
+                <DialogContent>
+          <DialogContentText>
+                 Your cancellation policy details go here.
+          </DialogContentText>
+          </DialogContent>
+          </Dialog>
+
             <Grid item xs={12} sm={6}>
               <RateStyledTypography align="right" sx={Ratesxprop}>
                 {formatCurrency(bookingDetails?.nightlyRate, activeCurrency, exchangeRates, i18n)}/night total

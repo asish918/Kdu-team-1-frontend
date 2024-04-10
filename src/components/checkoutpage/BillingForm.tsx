@@ -402,22 +402,7 @@ export default function BillingForm({ onSubmitBillingInfo, handleEditTravellerIn
                                     </FormControl>
                                 )}
                             />
-                            {/* <TextField
-                                select
-                                label="State"
-                                {...register('state')}
-                                variant="outlined"
-                                fullWidth
-                                disabled={states.length === 0}
-                                margin="normal"
-                                onChange={(e) => handleStateChange(e.target.value)}
-                            >
-                                {states.map((state) => (
-                                    <MenuItem key={state.name} value={state}>
-                                        {state.name}
-                                    </MenuItem>
-                                ))}
-                            </TextField> */}
+                            
 
 
                         </Grid>

@@ -16,7 +16,12 @@ const InfoBox = styled(Box)({
 const buttonStyletwo = {
     mr: 1,
 }
-
+const IconButtonStyle = {
+    position: 'absolute',
+    right: 8,
+    top: 8,
+    color: (theme) => theme.palette.grey[500],
+   }
 const formSchema = z.object({
     cardNumber: z.string().refine(value => valid.number(value).isValid),
     expMM: z.string().refine(value => {
@@ -212,12 +217,7 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                     <IconButton
                         aria-label="close"
                         onClick={handleClose}
-                        sx={{
-                            position: 'absolute',
-                            right: 8,
-                            top: 8,
-                            color: (theme) => theme.palette.grey[500],
-                        }}
+                        sx={IconButtonStyle}
                     >
                         <CloseIcon />
                     </IconButton>
