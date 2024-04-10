@@ -1,11 +1,12 @@
-import { Box, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Grid, TextField, styled } from "@mui/material";
+import { Box, Button, Checkbox, FormControl, FormControlLabel, FormHelperText, Grid, TextField, styled,Dialog, DialogTitle, DialogContent, DialogActions, DialogContentText, IconButton  } from "@mui/material";
 import { z } from "zod";
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from "@hookform/resolvers/zod";
 import { isFuture, isSameYear, isValid, parse } from "date-fns";
 import valid from 'card-validator'
 import { useTranslation } from "react-i18next";
-
+import CloseIcon from '@mui/icons-material/Close';
+import React from 'react';
 
 const InfoBox = styled(Box)({
     display: "flex",
@@ -64,6 +65,16 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
             cvv: '',
         },
     });
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <form noValidate onSubmit={handlePurchase}>
@@ -154,27 +165,69 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                     />
                     <br />
                     <Controller
-                        name="agreeToTerms"
-                        control={control}
-                        render={({
-                            field: { value, onChange, onBlur, ref },
-                            fieldState: { error },
-                        }) => (
-                            <FormControl required fullWidth>
-                                <FormControlLabel
-                                    control={<Checkbox inputRef={ref} onChange={onChange} onBlur={onBlur} value={value} />}
-                                    label={i18n.t("confirmation.agreeToTerms")}
-                                />
-                                <FormHelperText
-                                    sx={{
-                                        color: 'error.main',
+                name="agreeToTerms"
+                control={control}
+                render={({ field: { value, onChange, onBlur, ref }, fieldState: { error } }) => (
+                    <FormControl required fullWidth>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    inputRef={ref}
+                                    onChange={(e) => {
+                                        onChange(e.target.checked);
+                                        if (e.target.checked) {
+                                            handleClickOpen();
+                                        }
                                     }}
-                                >
-                                    {error?.message ?? ''}
-                                </FormHelperText>
-                            </FormControl>
-                        )}
-                    />
+                                    onBlur={onBlur}
+                                    value={value}
+                                />
+                            }
+                            label={i18n.t("confirmation.agreeToTerms")}
+                        />
+                        <FormHelperText
+                            sx={{
+                                color: 'error.main',
+                            }}
+                        >
+                            {error?.message ?? ''}
+                        </FormHelperText>
+                    </FormControl>
+                )}
+            />            
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                maxWidth="md"
+                fullWidth={true} 
+                PaperProps={{
+                    style: {
+                        height: '80vh', 
+                        overflow: 'auto', 
+                    },
+                }}
+            >
+                <DialogTitle>
+                    {i18n.t("Terms and Conditions")}
+                    <IconButton
+                        aria-label="close"
+                        onClick={handleClose}
+                        sx={{
+                            position: 'absolute',
+                            right: 8,
+                            top: 8,
+                            color: (theme) => theme.palette.grey[500],
+                        }}
+                    >
+                        <CloseIcon />
+                    </IconButton>
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        {i18n.t("Terms and Conditions to be Mentioned Here...")}
+                    </DialogContentText>
+                </DialogContent>    
+            </Dialog>
 
                 </Grid>
                 <Grid item xs={6}>
