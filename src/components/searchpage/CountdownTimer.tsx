@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { styled } from '@mui/system';
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 
 const TimerDisplay = styled('div')({
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    fontSize: '1.8rem',
+    fontSize: '1.2rem',
     color: 'white', 
     backgroundColor: '#9794b7', 
-    padding: '8px',
+    padding: '6px',
     justifyContent: 'center',
+    marginTop: '6px',
+    marginBottom: '6px',
+    
 });
 
 const TimerIcon = styled(AccessAlarmIcon)({
-    fontSize: '2.0rem',
+    fontSize: '1.6rem',
     color: 'white', 
 });
 

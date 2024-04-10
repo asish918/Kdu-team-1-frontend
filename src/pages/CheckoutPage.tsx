@@ -69,6 +69,7 @@ export default function CheckoutPage() {
             <Toaster />
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
+            <CountdownTimer endTime={600} navigateTo="/" />
             <StyledDiv>
                 <LeftDiv>
                     <PaymentInfo />
@@ -82,7 +83,7 @@ export default function CheckoutPage() {
 
             <Footer sticky={false} />
 
-            <CountdownTimer endTime={600} navigateTo="/" />
+            
         </>
     )
 }
