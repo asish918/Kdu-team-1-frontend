@@ -265,7 +265,7 @@ const Itinerary = () => {
         </ItineraryItem>
       </ItineraryDetails>
       <CheckoutButton onClick={handleClick} variant="outlined" color="primary" sx={{ margin: '6px' }}>
-        {step == 1 ? i18n.t("itenary.itenaryCheckout") : i18n.t("itenary.itenaryContinueShopping")}
+        {step == 1 || step == 0 ? i18n.t("itenary.itenaryCheckout") : i18n.t("itenary.itenaryContinueShopping")}
       </CheckoutButton>
     </ItineraryBox>
   );

@@ -73,7 +73,7 @@ const PaymentInfo: React.FC = () => {
         lastName: checkoutForm.billing_info.lastName,
         mailingAddress1: checkoutForm.billing_info.mailingAddress1,
         mailingAddress2: checkoutForm.billing_info.mailingAddress2,
-        phone: parseInt(checkoutForm.billing_info.phone),
+        phone: checkoutForm.billing_info.phone,
         state: checkoutForm.billing_info.state,
         zipcode: parseInt(checkoutForm.billing_info.zipcode)
       },
@@ -81,7 +81,7 @@ const PaymentInfo: React.FC = () => {
         email: checkoutForm.traveller_info.email,
         firstName: checkoutForm.traveller_info.firstName,
         lastName: checkoutForm.traveller_info.lastName,
-        phone: parseInt(checkoutForm.traveller_info.phone)
+        phone: checkoutForm.traveller_info.phone
       },
       transaction_info: {
         nightlyRate: itenary.room?.averageRate,
@@ -99,7 +99,7 @@ const PaymentInfo: React.FC = () => {
         email: loginId ?? checkoutForm.billing_info.email,
         guestName: checkoutForm.billing_info.firstName,
         offers: true,
-        promotionId: parseInt(itenary.promotion?.promotion_id),
+        promotionId: itenary.promotion?.promotion_id,
         rooms: otherInfo.numberOfRooms,
         roomTypeId: itenary.room?.roomTypeId,
         totalCost: itenary.subtotal

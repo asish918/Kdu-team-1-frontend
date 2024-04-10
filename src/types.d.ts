@@ -282,7 +282,7 @@ export type BillingInfo = {
   city: string;
   state: string;
   zipcode: number;
-  phone: number;
+  phone: string;
   email: string;
 }
 
@@ -312,7 +312,7 @@ export type TransactionInfo = {
 export type TravellerInfo = {
   firstName: string;
   lastName: string;
-  phone: number;
+  phone: string;
   email: string;
 }
 
@@ -334,7 +334,7 @@ export type BookingDetails = {
   total: number;
   firstName: string;
   lastName: string;
-  phone: number;
+  phone: string;
   email: string;
   billingFirstName: string;
   billingLastName: string;
@@ -344,7 +344,7 @@ export type BookingDetails = {
   city: string;
   state: string;
   zipcode: number;
-  billingPhone: number;
+  billingPhone: string;
   billingEmail: string;
   transactionId: string;
   imageUrl: string;

@@ -47,6 +47,13 @@ export default function CheckoutPage() {
     const navigate = useNavigate();
 
     const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
+    const itenary = useSelector((state: RootState) => state.itenary)
+
+    useEffect(() => {
+        if (itenary.occupancy_tax == null) {
+            setTimeout(() => toast.error("Error in Itenary. Please go back and checkout again"), 1000);
+        }
+    }, [])
 
     useEffect(() => {
         async function fetchUserSession() {

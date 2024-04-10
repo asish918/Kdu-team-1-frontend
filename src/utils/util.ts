@@ -77,8 +77,10 @@ export function convertStatesToQueryString(searchParams: SearchFormState, filter
 
   const startDate: Date = new Date(searchParams.startDate!);
   startDate.setUTCHours(0, 0, 0);
+  startDate.setDate(startDate.getDate() + 1);
   const endDate: Date = new Date(searchParams.endDate!);
   endDate.setUTCHours(0, 0, 0);
+  endDate.setDate(endDate.getDate() + 1);
 
   queryParams.set('startDate', startDate.toISOString());
   queryParams.set('endDate', endDate.toISOString());
@@ -181,6 +183,7 @@ export function checkLocalStorageForKey(key: string): boolean {
 export function clearLocalStorage() {
   try {
     persistor.purge();
+    localStorage.removeItem('startTime');
   } catch (error) {
     console.log("Error in clearing local storage");
   }

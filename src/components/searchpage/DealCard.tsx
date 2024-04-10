@@ -74,6 +74,7 @@ const Price = styled(Typography)`
 const SelectPackageButton = styled(Button)`
    color: white;
    width: 100%;
+   font-size: 0.8rem;
    @media (max-width: 768px) {
       font-size: 0.8rem;
    };
