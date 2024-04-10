@@ -61,7 +61,13 @@ export const hn: LanguageType = {
       reviews: "समीक्षाएँ",
       selectPackageButton: "पैकेज चुनें",
       selectRoomButton: "कमरा चुनें",
-      specialDealTitle: "विशेष सौदा"
+      specialDealTitle: "विशेष सौदा",
+      editBillingInfo: "बिलिंग जानकारी संपादित करें",
+      editTravellerInfo: "यात्री जानकारी संपादित करें",
+      nextBillingInfo: "अगला: बिलिंग जानकारी",
+      nextPaymentInfo: "अगला: भुगतान जानकारी",
+      purchase: "क्रय"
+
     },
     itenary: {
       itenaryCheckout: "चेक-आउट",
@@ -75,6 +81,40 @@ export const hn: LanguageType = {
       itenaryTitle: "आपकी यात्रा योजना",
       itenaryVAT: "वैट",
       itenaryRemove: "हटाएं"
+    },
+    confirmation: {
+      billingAddress: "बिलिंग पता",
+      cancellationPolicy: "अस्वीकृति नीति की व्याख्या कॉपी, यदि लागू हो",
+      cancelRoom: "कमरा रद्द करें",
+      city: "शहर",
+      country: "देश",
+      email: "ईमेल",
+      firstName: "पहला नाम",
+      lastName: "उपनाम",
+      guestInformation: "अतिथि जानकारी",
+      nightlyRate: "हर रात की दर",
+      paymentId: "भुगतान आईडी",
+      paymentInformation: "भुगतान की जानकारी",
+      phone: "फ़ोन",
+      print: "प्रिंट",
+      roomTotalSummary: "कुल कमरे का संक्षिप्त",
+      state: "राज्य",
+      subTotal: "उप-योग",
+      total: "कुल",
+      upcomingReservation: "आगामी आरक्षण",
+      vat: "वीएटी",
+      zipCode: "पिन कोड",
+      cancelled: "रद्द",
+      agreeToTerms: "मैं यात्रा की नियम और नीतियों से सहमत हूँ",
+      specialOffers: "मुझे विशेष प्रस्ताव भेजें",
+      cardNumber: "कार्ड नंबर",
+      mailingAddress1: "मेलिंग पता 1",
+      mailingAddress2: "मेलिंग पता 2",
+      needHelp: "मदद चाहिए",
+      call: "कॉल करें",
+      travellerInfo: "यात्री सूचना",
+      billingInfo: "बिलिंग सूचना",
+      paymentInfo: "भुगतान सूचना"
     }
   },
 };

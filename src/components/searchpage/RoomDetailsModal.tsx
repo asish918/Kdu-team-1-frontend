@@ -237,7 +237,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                         </StyledAmenitiesContainer>
                     </RoomInfoContainer>
                     <DealsPromoContainer>
-                        <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
+                        {/* <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
                             {i18n.t("generic.standardRatesTitle")}
                         </Typography>
                         <DealCard
@@ -246,7 +246,7 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             price={formatCurrency(roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
                             room={roomDetails}
 
-                        />
+                        /> */}
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
                             {i18n.t("generic.dealsAndPackagesTitle")}
                         </Typography>

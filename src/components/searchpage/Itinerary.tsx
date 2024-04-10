@@ -1,5 +1,5 @@
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Button } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
@@ -8,9 +8,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
 import { decreaseStep, increaseStep, resetStep } from '../../redux/reducers/navigationReducer';
 import { useNavigate } from 'react-router-dom';
-import { generateDescription, itenaryDateFormat, roomCardNameGenerator } from '../../utils/util';
-import { setVisible } from '../../redux/reducers/itenaryReducer';
+import { calculateTotal, generateDescription, itenaryDateFormat, itenaryDates, roomCardNameGenerator } from '../../utils/util';
+import { setExtras, setVisible } from '../../redux/reducers/itenaryReducer';
 import { useTranslation } from 'react-i18next';
+import { ExchangeRateData } from '../../types';
+import { formatCurrency } from '../../utils/i18next';
 
 const size = {
   mobile: '320px',
@@ -26,11 +28,11 @@ const device = {
 
 const ItineraryBox = styled.div`
  width: 330px;
- height: 494px;
+ /* height: 494px; */
  top: 544px;
  left: 1050px;
  background-color: #EFF0F1;
- border-radius: 5px 0px 0px 0px;
+ border-radius: 0px 0px 0px 0px;
  opacity: 1;
  padding: 20px;
  box-sizing: border-box;
@@ -83,11 +85,14 @@ const ItineraryItemLabel = styled.span`
  color: #5D5D5D;
  display: flex;
  align-items: center;
+ text-align: left;
+ font-size: 0.85rem;
 `;
 
 const ItineraryItemValue = styled.span`
  font-size: 14px;
  color: #5D5D5D; 
+ text-align: right;
 `;
 
 const CheckoutButton = styled(Button)`
@@ -133,6 +138,9 @@ const Itinerary = () => {
 
   const step = useSelector((state: RootState) => state.appNavigation.step)
   const itenary = useSelector((state: RootState) => state.itenary)
+  const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
+  const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+  const { resortFee, occupancyTax, taxes, vat, duePercent } = useSelector((state: RootState) => state.propertyConfig.property);
   const { adults, kids, teens, numberOfRooms, startDate, endDate } = useSelector((state: RootState) => state.searchForm);
 
   const dispatch = useDispatch();
@@ -140,19 +148,19 @@ const Itinerary = () => {
 
   const promotionContent = (
     <div>
-      <p>Circus Savings Promotion</p>
-      <p>SAVE up to 30% OFF room rates w / 2-night minimum stay</p>
-      <p>Package Total: $173.60</p>
+      <p>{itenary.promotion?.promotion_title}</p>
+      <p>{itenary.promotion?.promotion_description}</p>
+      <p>Package Total: {formatCurrency(itenary.subtotal, activeCurrency, exchangeRates, i18n)}</p>
     </div>
   );
 
   const taxesContent = (
     <div>
       <p>Taxes and Fees (Per Room):</p>
-      <p>Resort Fee: $83.90</p>
-      <p>Occupancy Tax: $23.22</p>
-      <p>Due now: $75.45</p>
-      <p>Due at Resort: $205.27</p>
+      <p>Resort Fee: {formatCurrency(itenary.resortFee, activeCurrency, exchangeRates, i18n)}</p>
+      <p>Occupancy Tax: {formatCurrency(itenary.occupancy_tax, activeCurrency, exchangeRates, i18n)}</p>
+      <p>Due now: {formatCurrency(itenary.due_now, activeCurrency, exchangeRates, i18n)}</p>
+      <p>Due at Resort: {formatCurrency(itenary.due_resort, activeCurrency, exchangeRates, i18n)}</p>
     </div>
   );
 
@@ -179,6 +187,19 @@ const Itinerary = () => {
     dispatch(setVisible(false));
   }
 
+  useEffect(() => {
+    const total = calculateTotal(itenary.room?.rates, numberOfRooms);
+    console.log(itenary);
+    dispatch(setExtras({
+      due_percent: duePercent,
+      occupancy_tax: occupancyTax,
+      taxes,
+      total,
+      vat,
+      resortFee
+    }))
+  }, [])
+
   return (
     <ItineraryBox>
       <ItenaryHeader>
@@ -194,6 +215,14 @@ const Itinerary = () => {
           <ItineraryItemValue>{roomCardNameGenerator(itenary.room?.roomTypeName)}</ItineraryItemValue>
           <ItineraryItemValue>{numberOfRooms} room(s)</ItineraryItemValue>
         </ItineraryItem>
+        {
+          itenaryDates(startDate, endDate, itenary.room?.rates).map((item, index) => (
+            <ItineraryItem key={index}>
+              <ItineraryItemValue>{item.date}</ItineraryItemValue>
+              <ItineraryItemValue>{formatCurrency(item.rate, activeCurrency, exchangeRates, i18n)}</ItineraryItemValue>
+            </ItineraryItem>
+          ))
+        }
         <ItineraryItem>
           <ItineraryItemLabel>{i18n.t("itenary.itenarySpecialPromo")}:
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenSpecialPromo} />
@@ -213,7 +242,7 @@ const Itinerary = () => {
             <InfoIcon color="disabled" fontSize="small" onClick={handleOpenTaxes} />
           </ItineraryItemLabel>
 
-          <ItineraryItemValue>$000</ItineraryItemValue>
+          <ItineraryItemValue>{formatCurrency(itenary.taxes, activeCurrency, exchangeRates, i18n)}</ItineraryItemValue>
         </ItineraryItem>
         <ModalComponent
           open={openTaxes}
@@ -223,16 +252,16 @@ const Itinerary = () => {
         />
         <ItineraryItem>
           <ItineraryItemLabel>{i18n.t("itenary.itenaryVAT")}:</ItineraryItemLabel>
-          <ItineraryItemValue>$000</ItineraryItemValue>
+          <ItineraryItemValue>{formatCurrency(itenary.vat, activeCurrency, exchangeRates, i18n)}</ItineraryItemValue>
         </ItineraryItem>
         <Border />
         <ItineraryItem>
           <ItineraryItemLabel>{i18n.t("itenary.itenaryDueNow")}:</ItineraryItemLabel>
-          <ItineraryItemValue>$000</ItineraryItemValue>
+          <ItineraryItemValue>{formatCurrency(itenary.due_now, activeCurrency, exchangeRates, i18n)}</ItineraryItemValue>
         </ItineraryItem>
         <ItineraryItem>
           <ItineraryItemLabel>{i18n.t("itenary.itenaryDueResort")}:</ItineraryItemLabel>
-          <ItineraryItemValue>$000</ItineraryItemValue>
+          <ItineraryItemValue>{formatCurrency(itenary.due_resort, activeCurrency, exchangeRates, i18n)}</ItineraryItemValue>
         </ItineraryItem>
       </ItineraryDetails>
       <CheckoutButton onClick={handleClick} variant="outlined" color="primary" sx={{ margin: '6px' }}>

@@ -26,6 +26,43 @@ export type LandingPageFormTranslation = {
   seniorCitizen: string;
 }
 
+export type ConfirmationTranslation = {
+  upcomingReservation: string;
+  print: string;
+  email: string;
+  cancelRoom: string;
+  cancellationPolicy: string;
+  roomTotalSummary: string;
+  nightlyRate: string;
+  subTotal: string;
+  vat: string;
+  total: string;
+  guestInformation: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  billingAddress: string;
+  country: string;
+  state: string;
+  city: string;
+  zipCode: string;
+  paymentInformation: string;
+  paymentId: string;
+  cancelled: string;
+  mailingAddress1: string;
+  mailingAddress2: string;
+  cardNumber: string;
+  specialOffers: string;
+  agreeToTerms: string;
+  needHelp: string;
+  call: string;
+  paymentInfo: string;
+  travellerInfo: string;
+  billingInfo: string;
+  paymentInfo: string;
+}
+
 export type RoomResultFormTranslation = {
   filterTitle: string;
   roomResultTitle: string;
@@ -59,6 +96,7 @@ export type Translation = {
   generic: GenericInfo;
   itenary: ItenaryTranslation;
   error: ErrorTranslation;
+  confirmation: ConfirmationTranslation
 };
 
 export type LanguageType = {
@@ -78,6 +116,11 @@ export type HotelProperties = {
   siteLogoUrl: string;
   maxLengthStay: number;
   footerLogoUrl: string;
+  vat: number;
+  taxes: number;
+  duePercent: number;
+  resortFee: number;
+  occupancyTax: number;
 };
 
 export type APIStatus = "success" | "error" | "loading" | null;
@@ -140,7 +183,8 @@ export type Result = {
   lowResImages: string[];
   bestPromotion: PromotionType;
   validPromotions: List<PromotionType>;
-  amenities: List<string>;
+  amenities: string[];
+  rates: number[];
   description: string;
 }
 
@@ -173,6 +217,11 @@ export type GenericInfo = {
   dealsAndPackagesTitle: string;
   promoCodeButton: string;
   promoCodeInput: string;
+  editBillingInfo: string;
+  purchase: string;
+  nextBillingInfo: string;
+  editTravellerInfo: string;
+  nextPaymentInfo: string;
 }
 
 export type ItenaryTranslation = {
@@ -187,4 +236,116 @@ export type ItenaryTranslation = {
   itenaryEmail: string;
   itenaryStayCompleted: string;
   itenaryRemove: string;
+}
+
+export type ZipCodeApiItem = {
+  postal_code: string;
+  country_code: string;
+  latitude: string;
+  longitude: string;
+  city: string;
+  state: string;
+  city_en: string;
+  state_en: string;
+  state_code: string;
+  province: string;
+  province_code: string;
+}
+
+export type ZipCodeApiResults = {
+  [postalCode: string]: ZipCodeApiItem[];
+}
+
+export type ZipCodeApiQuery = {
+  codes: string[];
+  country: string;
+}
+
+export type ZipCodeApiResponse = {
+  query: ZipCodeApiQuery;
+  results: ZipCodeApiResults;
+}
+
+export type BookingRequest = {
+  booking_info: BookingInfo;
+  traveller_info: TravellerInfo;
+  billing_info: BillingInfo;
+  transaction_info: TransactionInfo;
+}
+
+export type BillingInfo = {
+  firstName: string;
+  lastName: string;
+  mailingAddress1: string;
+  mailingAddress2: string;
+  country: string;
+  city: string;
+  state: string;
+  zipcode: number;
+  phone: number;
+  email: string;
+}
+
+export type BookingInfo = {
+  checkInDate: string;
+  checkOutDate: string;
+  adultCount: number;
+  childCount: number;
+  totalCost: number;
+  amountDueResort: number;
+  guestName: string;
+  roomTypeId: number;
+  rooms: number;
+  promotionId: number;
+  email: string;
+  offers: boolean;
+}
+
+export type TransactionInfo = {
+  nightlyRate: number;
+  subtotal: number;
+  taxes: number;
+  vat: number;
+  total: number;
+}
+
+export type TravellerInfo = {
+  firstName: string;
+  lastName: string;
+  phone: number;
+  email: string;
+}
+
+export type BookingDetails = {
+  cancelled: boolean;
+  roomTypeName: string;
+  roomTypeId: number;
+  reservationId: string;
+  checkInDate: string;
+  checkOutDate: string;
+  promotionTitle: string;
+  promotionDescription: string;
+  adults: number;
+  children: number;
+  nightlyRate: number;
+  subtotal: number;
+  taxes: number;
+  vat: number;
+  total: number;
+  firstName: string;
+  lastName: string;
+  phone: number;
+  email: string;
+  billingFirstName: string;
+  billingLastName: string;
+  mailingAddress1: string;
+  mailingAddress2: string;
+  country: string;
+  city: string;
+  state: string;
+  zipcode: number;
+  billingPhone: number;
+  billingEmail: string;
+  transactionId: string;
+  imageUrl: string;
 }

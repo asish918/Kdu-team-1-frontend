@@ -126,7 +126,8 @@ const RoomCard: React.FC<Result> = ({
   amenities,
   description,
   roomTypeId,
-  bestPromotion
+  bestPromotion,
+  rates
 }) => {
   const { t, i18n } = useTranslation();
   const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
@@ -231,7 +232,7 @@ const RoomCard: React.FC<Result> = ({
             {bestPromotion.promotion_title}
           </Typography>
           <SpecialDealText variant="body1" color="text.secondary">
-            {formatCurrency(averageRate, activeCurrency, exchangeRates, i18n)}
+            {formatCurrency(averageRate * bestPromotion.price_factor, activeCurrency, exchangeRates, i18n)}
           </SpecialDealText>
           <Typography variant="body1" color="text.secondary" sx={{ mb: 1 }}>
             {i18n.t("generic.perNight")}
@@ -254,7 +255,8 @@ const RoomCard: React.FC<Result> = ({
           amenities,
           description,
           averageRate,
-          roomTypeId
+          roomTypeId,
+          rates
         }}
       />
     </>

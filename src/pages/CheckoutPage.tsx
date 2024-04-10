@@ -1,52 +1,52 @@
+import { useEffect } from 'react';
+import { useSelector } from "react-redux";
+import { RootState } from "../redux/store";
+import { getCurrentUser } from "aws-amplify/auth";
+import { Toaster, toast } from "react-hot-toast";
 import Footer from "../components/layout/Footer";
 import Itinerary from "../components/searchpage/Itinerary";
-import { useEffect, useState } from 'react';
-import { styled } from '@mui/system';
-import Button from '@mui/material/Button';
-import { TextField } from "@mui/material";
-import { RootState } from "../redux/store";
-import { useSelector } from "react-redux";
+import PaymentInfo from "../components/searchpage/PaymentInfo";
 import Banner from "../components/searchpage/Banner";
 import CustomStepper from "../components/searchpage/CustomStepper";
-import { getCurrentUser } from "aws-amplify/auth";
-import { axiosRequest, prodUrlGenerator, urlGenerator } from "../utils/util";
-import { RequestType } from "../utils/enums";
-import { Toaster, toast } from "react-hot-toast";
+import ContactInfo from "../components/searchpage/Contactinfo"
+import CountdownTimer from '../components/searchpage/CountdownTimer';
+
+import { useNavigate } from 'react-router-dom';
+import { styled } from '@mui/material';
 
 
-const CenteredDiv = styled('div')`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    height: 100%;
-`;
+const StyledDiv = styled('div')({
+    display: 'flex',
+    justifyContent: 'space-between',
+    flexWrap: 'wrap',
+});
 
-const StyledTextField = styled(TextField)`
-    width: 201px;
-    height: 48px;
-`;
+const LeftDiv = styled('div')({
+    width: '70%',
+    marginLeft: '25px',
+    marginBottom: '10px',
 
-const StyledButton = styled(Button)`
-    height: 54px;
-    font-size: 0.7rem;
-`;
+    '@media (max-width: 768px)': {
+        width: '100%',
+    },
+});
 
-const EmailContainer = styled('div')`
-    display: flex;
-    gap: 20px;
-    margin-top: 50px;
-`
+const RightDiv = styled('div')({
+    width: '25%',
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '32px',
+    marginLeft: '10px',
+
+    '@media (max-width: 768px)': {
+        width: '90%',
+    },
+});
 
 export default function CheckoutPage() {
-    const [email, setEmail] = useState<string>("");
-    const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
-    const roomTypeId = useSelector((state: RootState) => state.itenary.room?.roomTypeId);
+    const navigate = useNavigate();
 
-    const handleFeedbackSubmit = async () => {
-        const res = await axiosRequest(prodUrlGenerator(`${process.env.EMAIL_API}?email=${email}&roomTypeId=${roomTypeId}`), RequestType.GET);
-        toast.success(res.data);
-    };
+    const propertyConfig = useSelector((state: RootState) => state.propertyConfig.property)
 
     useEffect(() => {
         async function fetchUserSession() {
@@ -55,7 +55,7 @@ export default function CheckoutPage() {
                 console.log(`The username: ${username}`);
                 console.log(`The userId: ${userId}`);
                 console.log(signInDetails);
-                signInDetails ? setEmail(signInDetails!.loginId) : setEmail("");
+
             } catch (err) {
                 console.log(err);
             }
@@ -69,23 +69,23 @@ export default function CheckoutPage() {
             <Toaster />
             <Banner imageUrl={propertyConfig.bannerImageUrl} />
             <CustomStepper />
-            <CenteredDiv>
-                <div>
+            <CountdownTimer endTime={600} navigateTo="/" />
+            <StyledDiv>
+                <LeftDiv>
+                    <PaymentInfo />
+                </LeftDiv>
+                <RightDiv>
                     <Itinerary />
-                    <EmailContainer>
-                        <StyledTextField
-                            label="Enter email"
-                            variant="outlined"
-                            value={email}
-                            onChange={(event) => setEmail(event.target.value)}
-                        />
-                        <StyledButton disabled={email.length === 0} variant="contained" onClick={handleFeedbackSubmit}>
-                            Stay Completed
-                        </StyledButton>
-                    </EmailContainer>
-                </div>
-            </CenteredDiv>
+                    <ContactInfo />
+                </RightDiv>
+            </StyledDiv>
+
+
             <Footer sticky={false} />
+
+            
         </>
     )
 }
+
+

@@ -7,6 +7,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import roomResultReducer from '../../redux/reducers/roomResultReducer';
 import AppProvider from '../../providers/AppProvider';
 import { BrowserRouter } from "react-router-dom";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const store = configureStore({
  reducer: {
@@ -17,11 +18,13 @@ const store = configureStore({
 describe('RoomResultsPanel', () => {
  it('renders the RoomResultsPanel component', () => {
     render(
+      <Authenticator.Provider> 
         <BrowserRouter>
          <AppProvider>
         <RoomResultsPanel />
         </AppProvider>
         </BrowserRouter>
+      </Authenticator.Provider> 
           
     );  
     expect(screen.getByText('Room Results')).toBeInTheDocument();
