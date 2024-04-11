@@ -15,6 +15,8 @@ import { validatePromoCode } from '../../redux/thunks/validatePromo';
 import { resetStatus } from '../../redux/reducers/promoReducer';
 import { useEffect } from 'react';
 
+import ReviewSection from './ReviewSection';
+
 const ImageContainer = styled.div`
  position: relative;
  width: 100%;
@@ -148,6 +150,31 @@ const AmenitiesTitle = styled(Typography)`
 const InvalidPromo = styled.span`
     color: red;
 `
+// Example array of review data
+const reviewData = [
+    {
+       name: 'John',
+       rating: 4,
+       review: 'This room was amazing!',
+    },
+    {
+       name: 'Jane ',
+       rating: 5,
+       review: 'Excellent service and cleanliness.',
+    },
+    {
+        name: 'King',
+        rating: 5,
+        review: 'Excellent service and cleanliness.',
+     },
+     {
+        name: 'Queen',
+        rating: 5,
+        review: 'Excellent service and cleanliness.',
+     },
+    // Add more reviews as needed
+   ];
+   
 
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const half = Math.ceil(roomDetails.amenities.length / 2);
@@ -237,16 +264,6 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                         </StyledAmenitiesContainer>
                     </RoomInfoContainer>
                     <DealsPromoContainer>
-                        {/* <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
-                            {i18n.t("generic.standardRatesTitle")}
-                        </Typography>
-                        <DealCard
-                            dealTitle="Standard Rate"
-                            dealDescription="Spend $10 every night you stay and earn $150 in dining credit at the resort. "
-                            price={formatCurrency(roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
-                            room={roomDetails}
-
-                        /> */}
                         <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
                             {i18n.t("generic.dealsAndPackagesTitle")}
                         </Typography>
@@ -280,9 +297,11 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             <InvalidPromo>{message}</InvalidPromo>
                         }
                     </DealsPromoContainer>
+                    <ReviewSection reviews={reviewData} />
                 </MainContainer>
-            </DialogContent>
-            <DialogActions>
+                
+            </DialogContent>             
+            <DialogActions> 
                 <Button onClick={onClose} color="primary">
                     Close
                 </Button>
