@@ -204,20 +204,20 @@ const Header: React.FC = () => {
     if (authState) {
       signOut();
       setAuthState(false);
-    // Track logout event
-    ReactGA.event({
-      category: 'User',
-      action: 'Logged Out',
-      label: 'Header Logout Button'
-    });
+      // Track logout event
+      ReactGA.event({
+        category: 'User',
+        action: 'Logged Out',
+        label: 'Header Logout Button'
+      });
     } else {
       navigate("/login");
-    // Track login event
-    ReactGA.event({
-      category: 'User',
-      action: 'Logged In',
-      label: 'Header Login Button'
-    });
+      // Track login event
+      ReactGA.event({
+        category: 'User',
+        action: 'Logged In',
+        label: 'Header Login Button'
+      });
     }
   }
 
@@ -247,7 +247,8 @@ const Header: React.FC = () => {
       </Info>
       <NavbarActions>
         <DesktopActions>
-          {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>}
+          {/* {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>} */}
+          <BookingButton onClick={() => navigate("/my-bookings")}>{i18n.t("header.myBookings")}</BookingButton>
 
           <LanguageContainer>
             <LanguageDropDown>
