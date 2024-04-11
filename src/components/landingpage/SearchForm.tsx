@@ -13,7 +13,7 @@ import { searchFieldParamsValidator } from '../../utils/validator';
 import { convertStatesToQueryString } from '../../utils/util';
 import MilitaryToggle from './MilitaryToggle';
 import SeniorCitizenToggle from './SeniorCitizenToggle';
-
+import ReactGA from "react-ga";
 
 const SearchForm: React.FC = () => {
    const { propertyName } = useSelector((state: RootState) => state.searchForm);
@@ -26,6 +26,12 @@ const SearchForm: React.FC = () => {
       const searchParams = convertStatesToQueryString(searchFormParams, filterParams);
 
       const pathWithQuery = `/room-result?${searchParams}`;
+      // Track the search event
+      ReactGA.event({
+             category: 'Search',
+             action: 'Search Submitted',
+             label: 'Search Form'
+      });
 
       navigate(pathWithQuery);
    };

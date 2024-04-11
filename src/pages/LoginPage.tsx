@@ -2,7 +2,7 @@ import { Authenticator } from '@aws-amplify/ui-react';
 import '@aws-amplify/ui-react/styles.css';
 import { Hub } from 'aws-amplify/utils';
 import { useNavigate } from 'react-router-dom';
-
+import ReactGA from "react-ga";
 
 export default function LoginPage() {
     const navigate = useNavigate();
@@ -10,6 +10,12 @@ export default function LoginPage() {
     Hub.listen('auth', ({ payload }) => {
         switch (payload.event) {
             case 'signedIn':
+                // Track login event
+                ReactGA.event({
+                    category: 'User',
+                    action: 'Logged In',
+                    label: 'AWS Amplify Sign In'
+                  });
                 console.log('user have been signedIn successfully.');
                 navigate(-1);
                 break;

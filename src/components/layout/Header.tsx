@@ -8,6 +8,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
 import { setActiveCurrency } from "../../redux/reducers/intelReducer";
 import { Currency } from "../../utils/enums";
+import ReactGA from "react-ga";
 
 import {
   Button,
@@ -203,8 +204,20 @@ const Header: React.FC = () => {
     if (authState) {
       signOut();
       setAuthState(false);
+    // Track logout event
+    ReactGA.event({
+      category: 'User',
+      action: 'Logged Out',
+      label: 'Header Logout Button'
+    });
     } else {
       navigate("/login");
+    // Track login event
+    ReactGA.event({
+      category: 'User',
+      action: 'Logged In',
+      label: 'Header Login Button'
+    });
     }
   }
 

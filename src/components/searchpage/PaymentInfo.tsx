@@ -12,6 +12,7 @@ import { BookingRequest } from '../../types';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { createBooking } from '../../redux/thunks/createBooking';
 import { useTranslation } from 'react-i18next';
+import ReactGA from "react-ga";
 
 const PaymentInfo: React.FC = () => {
   const [showTravellerInfo, setShowTravellerInfo] = useState(true);
@@ -54,6 +55,13 @@ const PaymentInfo: React.FC = () => {
 
   const handlePurchase = (event) => {
     event.preventDefault();
+
+    // Track Purchase event
+    ReactGA.event({
+      category: 'User',
+      action: 'Purchase Item',
+      label: 'Rooms',
+     });
 
     const bookingRequest: BookingRequest = {
       billing_info: {

@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import CloseIcon from '@mui/icons-material/Close';
 import React from 'react';
 
+
 const InfoBox = styled(Box)({
     display: "flex",
     justifyContent: "flex-end",
@@ -80,6 +81,7 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
     const handleClose = () => {
         setOpen(false);
     };
+    
 
     return (
         <form noValidate onSubmit={handlePurchase}>
