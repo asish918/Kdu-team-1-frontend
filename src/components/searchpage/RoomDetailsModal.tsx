@@ -13,9 +13,12 @@ import { RootState } from '../../redux/store';
 import { formatCurrency } from '../../utils/i18next';
 import { validatePromoCode } from '../../redux/thunks/validatePromo';
 import { resetStatus } from '../../redux/reducers/promoReducer';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 
 import ReviewSection from './ReviewSection';
+import ReviewSectionSkeleton from '../layout/ReviewSectionSkeleton';
+import Box from '@mui/material/Box';
+
 
 const ImageContainer = styled.div`
  position: relative;
@@ -201,6 +204,15 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
         }
     }, [status])
 
+    const [loading, setLoading] = useState(true); 
+
+    useEffect(() => {
+        setTimeout(() => {
+            setLoading(false); 
+        }, 2000); 
+    }, []);
+
+
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
             sx: DialogSxProps
@@ -297,7 +309,15 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             <InvalidPromo>{message}</InvalidPromo>
                         }
                     </DealsPromoContainer>
+                    
+                    {loading ? (
+                     
+                     <ReviewSectionSkeleton reviews ={reviewData} />
+                   
+                ) : (
                     <ReviewSection reviews={reviewData} />
+                )}
+                    
                 </MainContainer>
                 
             </DialogContent>             

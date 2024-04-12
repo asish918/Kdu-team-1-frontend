@@ -6,10 +6,12 @@ import Pagination from './Pagination';
 import SortDropdown from './SortDropDown';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../redux/store';
-import Spinner from '../layout/Spinner';
 import { setPriceSort } from '../../redux/reducers/filterSortReducer';
 import { useTranslation } from 'react-i18next';
 import Itinerary from './Itinerary';
+import Box from '@mui/material/Box';
+
+import RoomCardSkeleton from '../layout/RoomCardSkeleton';
 
 const RoomCardsContainer = styled.div`
  display: flex;
@@ -44,6 +46,7 @@ const RoomCardWrapper = styled.div`
  }
 `;
 
+
 const RoomResultsTitle = styled.h3`
  margin-left: 20px; 
  margin-bottom: 2px; 
@@ -66,6 +69,12 @@ const RoomResultAction = styled.div`
 const NoResultDiv = styled.div`
   margin-left: 20px;
 `
+const StyledBox = styled(Box)`
+ display: flex;
+ justify-content: space-between;
+ flex-wrap: wrap;
+ width: 68%;
+`;
 
 const RoomResultsPanel: React.FC = () => {
   const [sortCriteria, setSortCriteria] = useState('price low');
@@ -94,7 +103,11 @@ const RoomResultsPanel: React.FC = () => {
       </HeaderAndControlsContainer >
 
       {status === "loading" ?
-        <Spinner size={80} />
+        <StyledBox>
+        <RoomCardSkeleton />
+        <RoomCardSkeleton />
+        </StyledBox>
+        
         :
         roomResults?.results.length === 0 ?
           <NoResultDiv>

@@ -18,7 +18,7 @@ import FeedbackPage from "./pages/FeedbackPage.tsx";
 import BasicErrorPage from "./pages/BasicErrorPage.tsx";
 import ConfirmationPage from "./pages/ConfirmationPage.tsx";
 import MyBookingsPage from "./pages/MyBookingsPage.tsx";
-import { ThemeContextProvider } from "./ThemeContextProvider.tsx";
+
 
 const client = new ApolloClient({
   uri: urlGenerator(`${process.env.GRAPHQL_PATH}`),
