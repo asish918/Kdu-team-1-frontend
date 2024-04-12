@@ -8,6 +8,7 @@ import AppProvider from "./providers/AppProvider";
 import { Outlet } from "react-router-dom";
 import ReactGA from "react-ga";
 
+
 const TRACKING_ID = "	G-V3X2ZT4TT3";
 
 ReactGA.initialize(TRACKING_ID);
@@ -22,9 +23,11 @@ function App() {
   }, [])
 
   return (
+      
       <AppProvider>
         <Outlet />
       </AppProvider>
+      
   );
 }
 
