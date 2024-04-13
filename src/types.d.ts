@@ -357,3 +357,15 @@ export type RoomReviews = {
   userEmail: string;
   roomTypeId: number;
 }
+
+export type PersonalBooking = {
+  status: boolean;
+  reservationId: string;
+  roomTypeName: string;
+  images: string[];
+  adult_count: number;
+  check_in_date: string;
+  check_out_date: string;
+  child_count: number;
+  total_cost: number;
+}

@@ -14,7 +14,6 @@ import {
   Button,
   Drawer,
   IconButton,
-  InputLabel,
   Menu,
   MenuItem,
   Paper,
@@ -23,7 +22,7 @@ import {
   SelectChangeEvent,
   Typography,
 } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { getCurrentUser } from "aws-amplify/auth";
 import { useAuthenticator } from "@aws-amplify/ui-react";
 import { capitalize } from "../../utils/util";
@@ -161,6 +160,7 @@ const LanguageContainer = styled.div`
 // Header component
 const Header: React.FC = () => {
   const [authState, setAuthState] = useState<boolean>(false);
+  const [loginId, setLoginId] = useState<string>("");
   const dispatch: AppDispatch = useDispatch();
   const { user, signOut } = useAuthenticator((context) => [context.user]);
 
@@ -174,7 +174,6 @@ const Header: React.FC = () => {
 
   const [anchorEl, setAnchorEl] = useState(null);
   const open1 = Boolean(anchorEl);
-  // const [selectedLabel, setSelectedLabel] = useState(''); // State to store the selected language label
 
   const handleClick = (event) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
@@ -200,7 +199,10 @@ const Header: React.FC = () => {
     dispatch(setActiveCurrency(e.target.value as string));
   };
 
+  const location = useLocation();
+
   const handleAuth = () => {
+
     if (authState) {
       signOut();
       setAuthState(false);
@@ -210,6 +212,10 @@ const Header: React.FC = () => {
         action: 'Logged Out',
         label: 'Header Logout Button'
       });
+
+      if (location.pathname.substring(location.pathname.lastIndexOf('/') + 1) === "my-bookings") {
+        navigate(-1);
+      }
     } else {
       navigate("/login");
       // Track login event
@@ -221,13 +227,21 @@ const Header: React.FC = () => {
     }
   }
 
+  const handleMyBooking = () => {
+    if (authState) {
+      navigate("/my-bookings")
+    }
+  }
+
   useEffect(() => {
     async function fetchUserSession() {
       try {
-        const { username, userId } = await getCurrentUser();
+        const { username, userId, signInDetails } = await getCurrentUser();
         console.log(`The username: ${username}`);
         console.log(`The userId: ${userId}`);
         setAuthState(true);
+        setLoginId(signInDetails?.loginId);
+        console.log(signInDetails)
       } catch (err) {
         console.log(err);
         setAuthState(false);
@@ -247,8 +261,7 @@ const Header: React.FC = () => {
       </Info>
       <NavbarActions>
         <DesktopActions>
-          {/* {authState && <BookingButton>{i18n.t("header.myBookings")}</BookingButton>} */}
-          <BookingButton onClick={() => navigate("/my-bookings")}>{i18n.t("header.myBookings")}</BookingButton>
+          {authState && <BookingButton onClick={handleMyBooking}>{i18n.t("header.myBookings")}</BookingButton>}
 
           <LanguageContainer>
             <LanguageDropDown>

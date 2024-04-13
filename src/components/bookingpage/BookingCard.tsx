@@ -2,14 +2,17 @@ import React from 'react';
 import { Card, CardContent, Typography } from '@mui/material';
 import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
+import QRCode from "react-qr-code";
 
 interface BookingCardProps {
- roomName: string;
- roomLocation: string;
- bookingDates: string;
- costPerNight: number;
- images: string[];
- booking: boolean;
+  roomName: string;
+  roomLocation: string;
+  bookingDates: string;
+  costPerNight: number;
+  images: string[];
+  booking: boolean;
+  reservationId: string;
 }
 
 const StyledImage = styled.img`
@@ -72,21 +75,32 @@ const StyledSticker = styled.div`
  }
 `;
 
+const StyledQRCode = styled(QRCode)`
+  height: 100px;
+  width: 100px;
+`
 
-const BookingCard: React.FC<BookingCardProps> = ({ roomName, roomLocation, bookingDates, costPerNight, images,booking }) => {
-    const stickerText = booking ? 'Booked' : 'Cancelled';
-    const stickerColor = booking ? '#0e7d04' : '#FF5733'; 
- 
-    return (
-        <StyledCard>
-        <StyledCarousel aria-label="Room images carousel">
-          {images.map((image, index) => (
-            <div key={index}>
-              <StyledImage src={image} alt={`Room ${index + 1}`} />
-            </div>
-          ))}
-        </StyledCarousel>
-        <CardContent>
+const BookingCard: React.FC<BookingCardProps> = ({ roomName, roomLocation, bookingDates, costPerNight, images, booking, reservationId }) => {
+  const stickerText = !booking ? 'Booked' : 'Cancelled';
+  const stickerColor = !booking ? '#0e7d04' : '#FF5733';
+
+  const navigate = useNavigate();
+
+  const navigateToInfoPage = (reservation: string) => {
+    navigate(`/confirmation?id=${reservation}`)
+  }
+
+  return (
+    <StyledCard onClick={() => navigateToInfoPage(reservationId)}>
+      <StyledCarousel aria-label="Room images carousel">
+        {images.map((image, index) => (
+          <div key={index}>
+            <StyledImage src={image} alt={`Room ${index + 1}`} />
+          </div>
+        ))}
+      </StyledCarousel>
+      <CardContent sx={{ display: 'flex', justifyContent: 'space-between' }}>
+        <div>
           <IconTextContainer>
             <StyledTypography variant="h5" component="div">
               {roomName}
@@ -107,12 +121,14 @@ const BookingCard: React.FC<BookingCardProps> = ({ roomName, roomLocation, booki
               ${costPerNight} per night
             </StyledTypography>
           </IconTextContainer>
-        </CardContent>
-        <StyledSticker style={{ backgroundColor: stickerColor }}>
-          {stickerText}
-        </StyledSticker>
-      </StyledCard>
- );
+        </div>
+        <StyledQRCode value={`${window.location.origin}/confirmation?id=${reservationId}`} />
+      </CardContent>
+      <StyledSticker style={{ backgroundColor: stickerColor }}>
+        {stickerText}
+      </StyledSticker>
+    </StyledCard>
+  );
 };
 
 export default BookingCard;

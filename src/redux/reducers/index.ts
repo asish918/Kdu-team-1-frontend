@@ -13,6 +13,7 @@ import checkoutFormReducer from './checkoutFormReducer';
 import bookingConfirmation from './bookingConfirmation';
 import bookingDetailsReducer from './bookingDetailsReducer';
 import roomReviewReducer from './roomReviewReducer';
+import personalBookingReducer from './personalBookingReducer';
 
 const rootReducer = combineReducers({
     propertyConfig: propertyConfigReducer,
@@ -28,7 +29,8 @@ const rootReducer = combineReducers({
     checkoutForm: checkoutFormReducer,
     confirmationBooking: bookingConfirmation,
     bookingDetails: bookingDetailsReducer,
-    roomReviews: roomReviewReducer
+    roomReviews: roomReviewReducer,
+    personalBookings: personalBookingReducer
 });
 
 export default rootReducer;
