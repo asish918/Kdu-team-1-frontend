@@ -13,6 +13,7 @@ import { fetchPersonalBookings } from '../redux/thunks/fetchPersonalBookings';
 import { RootState } from '../redux/store';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { itenaryDateFormat } from '../utils/util';
+import Map from '../components/layout/Map';
 
 export default function MyBookingsPage() {
     const [loginId, setLoginId] = useState<string>("");

@@ -13,12 +13,12 @@ import { RootState } from '../../redux/store';
 import { formatCurrency } from '../../utils/i18next';
 import { validatePromoCode } from '../../redux/thunks/validatePromo';
 import { resetStatus } from '../../redux/reducers/promoReducer';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 
 import ReviewSection from './ReviewSection';
 import ReviewSectionSkeleton from '../layout/ReviewSectionSkeleton';
 import { fetchRoomReviews } from '../../redux/thunks/fetchRoomReviews';
-
+import Map from '../layout/Map';
 
 const ImageContainer = styled.div`
  position: relative;
@@ -154,29 +154,25 @@ const InvalidPromo = styled.span`
     color: red;
 `
 
-const reviewData = [
-    {
-        name: 'John',
-        rating: 4,
-        review: 'This room was amazing!',
-    },
-    {
-        name: 'Jane ',
-        rating: 5,
-        review: 'Excellent service and cleanliness.',
-    },
-    {
-        name: 'King',
-        rating: 5,
-        review: 'Excellent service and cleanliness.',
-    },
-    {
-        name: 'Queen',
-        rating: 5,
-        review: 'Excellent service and cleanliness.',
-    },
-];
-
+const CenterFlexContainer = styled.div`
+    display: flex;
+    justify-content: space-between;
+    gap: 150px;
+    
+    @media (max-width: 800px) {
+        gap: 30px;
+        flex-wrap: wrap;
+    }
+`
+const MapContainer = styled.div`
+    width: fit-content;
+    height: fit-content;
+    margin-top: 100px;
+    
+    @media (max-width: 800px) {
+        margin-top: 0px;
+    }
+`
 
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const half = Math.ceil(roomDetails.amenities.length / 2);
@@ -275,40 +271,45 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             </StyledAmenitiesColumn>
                         </StyledAmenitiesContainer>
                     </RoomInfoContainer>
-                    <DealsPromoContainer>
-                        <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
-                            {i18n.t("generic.dealsAndPackagesTitle")}
-                        </Typography>
-                        {roomDetails.validPromotions.map((deal: PromotionType, index: number) => (
-                            <DealCard
-                                key={index}
-                                dealTitle={deal.promotion_title}
-                                dealDescription={deal.promotion_description}
-                                price={formatCurrency(deal.price_factor * roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
-                                promotion={deal}
-                                room={roomDetails}
-                            />
-                        ))}
-                        {
-                            status === "success" && promo?.room_type_id == roomDetails.roomTypeId &&
-                            <>
-                                <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
-                                    Promotion
-                                </Typography>
+                    <CenterFlexContainer>
+                        <DealsPromoContainer>
+                            <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
+                                {i18n.t("generic.dealsAndPackagesTitle")}
+                            </Typography>
+                            {roomDetails.validPromotions.map((deal: PromotionType, index: number) => (
                                 <DealCard
-                                    dealTitle={promo?.promotion_title}
-                                    dealDescription={promo?.promotion_description}
-                                    price={formatCurrency(roomDetails.averageRate * promo?.price_factor, activeCurrency, exchangeRates, i18n)}
+                                    key={index}
+                                    dealTitle={deal.promotion_title}
+                                    dealDescription={deal.promotion_description}
+                                    price={formatCurrency(deal.price_factor * roomDetails.averageRate, activeCurrency, exchangeRates, i18n)}
+                                    promotion={deal}
                                     room={roomDetails}
-                                    promotion={promo}
                                 />
-                            </>
-                        }
-                        <PromoCode onApplyPromoCode={handleApplyPromoCode} />
-                        {message === "The Promo Code is invalid" &&
-                            <InvalidPromo>{message}</InvalidPromo>
-                        }
-                    </DealsPromoContainer>
+                            ))}
+                            {
+                                status === "success" && promo?.room_type_id == roomDetails.roomTypeId &&
+                                <>
+                                    <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 2 }}>
+                                        Promotion
+                                    </Typography>
+                                    <DealCard
+                                        dealTitle={promo?.promotion_title}
+                                        dealDescription={promo?.promotion_description}
+                                        price={formatCurrency(roomDetails.averageRate * promo?.price_factor, activeCurrency, exchangeRates, i18n)}
+                                        room={roomDetails}
+                                        promotion={promo}
+                                    />
+                                </>
+                            }
+                            <PromoCode onApplyPromoCode={handleApplyPromoCode} />
+                            {message === "The Promo Code is invalid" &&
+                                <InvalidPromo>{message}</InvalidPromo>
+                            }
+                        </DealsPromoContainer>
+                        <MapContainer>
+                            <Map />
+                        </MapContainer>
+                    </CenterFlexContainer>
 
                     {reviewStatus === "loading" ? (
                         <ReviewSectionSkeleton />

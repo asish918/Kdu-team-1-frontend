@@ -18,6 +18,7 @@ import FeedbackPage from "./pages/FeedbackPage.tsx";
 import BasicErrorPage from "./pages/BasicErrorPage.tsx";
 import ConfirmationPage from "./pages/ConfirmationPage.tsx";
 import MyBookingsPage from "./pages/MyBookingsPage.tsx";
+import MapPage from "./pages/MapPage.tsx";
 
 
 const client = new ApolloClient({
@@ -68,6 +69,11 @@ const router = createBrowserRouter([
         element: <MyBookingsPage />,
         errorElement: <ErrorPage />,
       },
+      {
+        path: "/maps",
+        element: <MapPage />,
+        errorElement: <ErrorPage />,
+      },
     ]
   },
   {
@@ -84,7 +90,7 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <Authenticator.Provider>    
+    <Authenticator.Provider>
       <ApolloProvider client={client}>
         <RouterProvider router={router} />
       </ApolloProvider>
