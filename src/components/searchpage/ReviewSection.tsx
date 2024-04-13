@@ -2,7 +2,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Typography } from '@mui/material';
-import RatingsStars from './RatingsStars'; 
+import RatingsStars from './RatingsStars';
+import { RoomReviews } from '../../types';
 
 // Define the styled components for the ReviewSection
 const ReviewSectionContainer = styled.div`
@@ -28,39 +29,33 @@ const ReviewText = styled.div`
 `;
 
 
-interface Review {
- name: string;
- rating: number;
- review: string;
-}
-
-
 interface ReviewSectionProps {
- reviews: Review[];
+  reviews: RoomReviews[];
 }
 
 
 const ReviewSection: React.FC<ReviewSectionProps> = ({ reviews }) => {
- return (
+  return (
     <>
-    <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
-     Reviews & Ratings
-    </Typography>
-    <ReviewSectionContainer>
-      {reviews.map((review, index) => (
-        <div key={index}>
-          <Typography variant="h6" component="div" sx={{fontWeight: 'bold' }}> {review.name}</Typography>           
-          <div>
-            <RatingsStars rating={review.rating} />
-          </div>          
-          <ReviewText>
-            <Typography variant="h6" component="div"> {review.review}</Typography>
-          </ReviewText>
-        </div>
-      ))}
-    </ReviewSectionContainer>
+      <Typography variant="body1" sx={{ color: 'black', fontWeight: 'bold', fontSize: '1.5rem', mt: 5 }}>
+        Reviews & Ratings
+      </Typography>
+      <ReviewSectionContainer>
+        {reviews.length === 0 && <div>No Room Reviews</div>}
+        {reviews.length !== 0 && reviews.map((review, index) => (
+          <div key={index}>
+            <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}> {review.userEmail}</Typography>
+            <div>
+              <RatingsStars rating={review.rating} />
+            </div>
+            <ReviewText>
+              <Typography variant="h6" component="div"> {review.review}</Typography>
+            </ReviewText>
+          </div>
+        ))}
+      </ReviewSectionContainer>
     </>
- );
+  );
 };
 
 export default ReviewSection;

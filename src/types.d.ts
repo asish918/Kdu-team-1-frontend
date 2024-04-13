@@ -349,3 +349,11 @@ export type BookingDetails = {
   transactionId: string;
   imageUrl: string;
 }
+
+export type RoomReviews = {
+  reviewId: string;
+  rating: number;
+  review: string;
+  userEmail: string;
+  roomTypeId: number;
+}

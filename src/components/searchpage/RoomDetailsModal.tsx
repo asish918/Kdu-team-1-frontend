@@ -13,11 +13,11 @@ import { RootState } from '../../redux/store';
 import { formatCurrency } from '../../utils/i18next';
 import { validatePromoCode } from '../../redux/thunks/validatePromo';
 import { resetStatus } from '../../redux/reducers/promoReducer';
-import { useEffect,useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import ReviewSection from './ReviewSection';
 import ReviewSectionSkeleton from '../layout/ReviewSectionSkeleton';
-import Box from '@mui/material/Box';
+import { fetchRoomReviews } from '../../redux/thunks/fetchRoomReviews';
 
 
 const ImageContainer = styled.div`
@@ -153,31 +153,30 @@ const AmenitiesTitle = styled(Typography)`
 const InvalidPromo = styled.span`
     color: red;
 `
-// Example array of review data
+
 const reviewData = [
     {
-       name: 'John',
-       rating: 4,
-       review: 'This room was amazing!',
+        name: 'John',
+        rating: 4,
+        review: 'This room was amazing!',
     },
     {
-       name: 'Jane ',
-       rating: 5,
-       review: 'Excellent service and cleanliness.',
+        name: 'Jane ',
+        rating: 5,
+        review: 'Excellent service and cleanliness.',
     },
     {
         name: 'King',
         rating: 5,
         review: 'Excellent service and cleanliness.',
-     },
-     {
+    },
+    {
         name: 'Queen',
         rating: 5,
         review: 'Excellent service and cleanliness.',
-     },
-    // Add more reviews as needed
-   ];
-   
+    },
+];
+
 
 const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
     const half = Math.ceil(roomDetails.amenities.length / 2);
@@ -204,14 +203,15 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
         }
     }, [status])
 
-    const [loading, setLoading] = useState(true); 
-
     useEffect(() => {
-        setTimeout(() => {
-            setLoading(false); 
-        }, 2000); 
-    }, []);
+        if (open === true) {
+            dispatch(fetchRoomReviews({
+                url: `${process.env.FETCH_ROOM_REVIEWS}?id=${roomDetails.roomTypeId}`
+            }))
+        }
+    }, [open])
 
+    const { status: reviewStatus, result } = useSelector((state: RootState) => state.roomReviews);
 
     return (
         <Dialog open={open} onClose={onClose} PaperProps={{
@@ -309,19 +309,19 @@ const RoomDetailsModal = ({ open, onClose, roomDetails }) => {
                             <InvalidPromo>{message}</InvalidPromo>
                         }
                     </DealsPromoContainer>
-                    
-                    {loading ? (
-                     
-                     <ReviewSectionSkeleton reviews ={reviewData} />
-                   
-                ) : (
-                    <ReviewSection reviews={reviewData} />
-                )}
-                    
+
+                    {reviewStatus === "loading" ? (
+                        <ReviewSectionSkeleton />
+                    ) : reviewStatus === "error" ? (
+                        <div>No room reviews</div>
+                    ) : (
+                        <ReviewSection reviews={result!} />
+                    )}
+
                 </MainContainer>
-                
-            </DialogContent>             
-            <DialogActions> 
+
+            </DialogContent>
+            <DialogActions>
                 <Button onClick={onClose} color="primary">
                     Close
                 </Button>

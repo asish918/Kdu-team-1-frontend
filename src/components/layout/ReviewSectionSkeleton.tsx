@@ -38,16 +38,9 @@ const ReviewSkeletonName = styled(Skeleton)`
  margin-top: 10px;
 `;
 
- interface Review {
-    name: string;
-    rating: number;
-    review: string;
-   }
-
-
-const ReviewSectionSkeleton: React.FC<{ reviews: Review[] }> = ({ reviews }) => {
+const ReviewSectionSkeleton: React.FC = () => {
  
- const skeletonItems = Array.from({ length: reviews.length }).fill(null);
+ const skeletonItems = Array.from({ length: 2 }).fill(null);
 
  return (
     <ReviewSectionSkeletonContainer>

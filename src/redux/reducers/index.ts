@@ -12,6 +12,7 @@ import itenaryReducer from './itenaryReducer';
 import checkoutFormReducer from './checkoutFormReducer';
 import bookingConfirmation from './bookingConfirmation';
 import bookingDetailsReducer from './bookingDetailsReducer';
+import roomReviewReducer from './roomReviewReducer';
 
 const rootReducer = combineReducers({
     propertyConfig: propertyConfigReducer,
@@ -26,7 +27,8 @@ const rootReducer = combineReducers({
     itenary: itenaryReducer,
     checkoutForm: checkoutFormReducer,
     confirmationBooking: bookingConfirmation,
-    bookingDetails: bookingDetailsReducer
+    bookingDetails: bookingDetailsReducer,
+    roomReviews: roomReviewReducer
 });
 
 export default rootReducer;

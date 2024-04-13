@@ -14,7 +14,6 @@ const TRACKING_ID = "	G-V3X2ZT4TT3";
 ReactGA.initialize(TRACKING_ID);
 
 function App() {
-
   useEffect(() => {
     store.dispatch(fetchPropertyConfig());
     store.dispatch(fetchPropertyList());

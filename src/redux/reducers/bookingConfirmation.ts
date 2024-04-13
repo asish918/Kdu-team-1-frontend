@@ -25,7 +25,7 @@ const bookingConfirmation = createSlice({
             state.message = "Booking created successfully";
         });
         builder.addCase(createBooking.pending, (state) => {
-            state.result = "Room Results loading";
+            state.result = "Booking in progress";
             state.status = 'loading';
         });
         builder.addCase(createBooking.rejected, (state) => {

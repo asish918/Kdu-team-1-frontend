@@ -50,12 +50,6 @@ export default function CheckoutPage() {
     const itenary = useSelector((state: RootState) => state.itenary)
 
     useEffect(() => {
-        if (itenary.occupancy_tax == null) {
-            setTimeout(() => toast.error("Error in Itenary. Please go back and checkout again"), 1000);
-        }
-    }, [])
-
-    useEffect(() => {
         async function fetchUserSession() {
             try {
                 const { username, userId, signInDetails } = await getCurrentUser();

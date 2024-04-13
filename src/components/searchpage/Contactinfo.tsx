@@ -9,6 +9,7 @@ const BoxStyle = {
   marginRight: '20px',
   marginTop: '10px',
   marginBottom: '10px',
+  width: '330px',
   '@media (max-width: 768px)': {
     marginLeft: '10px',
     width: '100%',
