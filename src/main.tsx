@@ -2,12 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 import { Amplify } from 'aws-amplify';
 
 import ErrorPage from "./pages/ErrorPage.tsx";
 import { sentryConfig } from "./utils/sentryConfig.ts";
-import { urlGenerator } from "./utils/util.ts";
 import { authConfig } from "./auth/authConfig.ts";
 import LoginPage from "./pages/LoginPage.tsx";
 import LandingPage from "./pages/LandingPage.tsx";
@@ -19,15 +17,16 @@ import BasicErrorPage from "./pages/BasicErrorPage.tsx";
 import ConfirmationPage from "./pages/ConfirmationPage.tsx";
 import MyBookingsPage from "./pages/MyBookingsPage.tsx";
 import MapPage from "./pages/MapPage.tsx";
-
-
-const client = new ApolloClient({
-  uri: urlGenerator(`${process.env.GRAPHQL_PATH}`),
-  cache: new InMemoryCache(),
-});
+import ReactGA from "react-ga4";
 
 Amplify.configure({
   Auth: authConfig
+});
+
+const TRACKING_ID = "G-6B896LFBRT";
+
+ReactGA.initialize(TRACKING_ID, {
+  gtagUrl: "https://www.googletagmanager.com/gtag/js?id=G-6B896LFBRT"
 });
 
 // Check if the environment is production
@@ -91,9 +90,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Authenticator.Provider>
-      <ApolloProvider client={client}>
-        <RouterProvider router={router} />
-      </ApolloProvider>
+      <RouterProvider router={router} />
     </Authenticator.Provider>
   </React.StrictMode>,
 );

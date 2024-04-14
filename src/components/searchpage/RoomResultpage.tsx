@@ -14,6 +14,7 @@ import { RoomResultRequestBody } from '../../types';
 import { fetchRoomResult } from '../../redux/thunks/fetchRoomResults';
 import { setBedTypes, setPriceSort, setRoomTypes } from '../../redux/reducers/filterSortReducer';
 import CustomStepper from './CustomStepper';
+import ReactGA from 'react-ga4';
 
 const RoomResultContainer = styled.div`
   padding-inline: 20px;
@@ -146,6 +147,11 @@ function RoomResultsPage() {
 
 
   const handleSearch = () => {
+    ReactGA.event({
+      category: 'User',
+      action: 'Search Rooms',
+      label: 'Search Rooms',
+    });
     const searchParams = convertStatesToQueryString(searchFormProps, filterSortProps);
     const requestBody: RoomResultRequestBody = requestBodyGenerator(searchFormProps, filterSortProps);
 

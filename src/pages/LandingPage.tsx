@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { RootState } from '../redux/store';
 import Footer from '../components/layout/Footer';
 import { clearLocalStorage } from '../utils/util';
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 // Styled component for the landing page container div
 const LandingPageContainer = styled.div<{ $backgroundImageUrl: string; }>`
@@ -28,7 +28,7 @@ const LandingPage: React.FC = () => {
   const bannerImageUrl = useSelector((state: RootState) => state.propertyConfig.property.bannerImageUrl);
 
   useEffect(() => {
-    ReactGA.pageview(window.location.pathname);
+    ReactGA.send({ hitType: "pageview", page: `${window.location.pathname}`, title: "Landing Page Visit" });
     clearLocalStorage();
   }, [])
 

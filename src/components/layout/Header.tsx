@@ -8,7 +8,7 @@ import LanguageIcon from "@mui/icons-material/Language";
 import { useTranslation } from "react-i18next";
 import { setActiveCurrency } from "../../redux/reducers/intelReducer";
 import { Currency } from "../../utils/enums";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 import {
   Button,

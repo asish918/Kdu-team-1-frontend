@@ -13,7 +13,7 @@ import { searchFieldParamsValidator } from '../../utils/validator';
 import { convertStatesToQueryString } from '../../utils/util';
 import MilitaryToggle from './MilitaryToggle';
 import SeniorCitizenToggle from './SeniorCitizenToggle';
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 const SearchForm: React.FC = () => {
    const { propertyName } = useSelector((state: RootState) => state.searchForm);

@@ -12,7 +12,7 @@ import { BookingRequest } from '../../types';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { createBooking } from '../../redux/thunks/createBooking';
 import { useTranslation } from 'react-i18next';
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 import toast, { Toaster } from 'react-hot-toast';
 
 const PaymentInfo: React.FC = () => {
@@ -62,7 +62,7 @@ const PaymentInfo: React.FC = () => {
       category: 'User',
       action: 'Purchase Item',
       label: 'Rooms',
-     });
+    });
 
     const bookingRequest: BookingRequest = {
       billing_info: {
@@ -115,7 +115,9 @@ const PaymentInfo: React.FC = () => {
 
   useEffect(() => {
     if (confirmationBooking.status === "success") {
-      navigate(`/confirmation?id=${confirmationBooking.result}`)
+      toast.success("Booking Successfull")
+
+      setTimeout(() => navigate(`/confirmation?id=${confirmationBooking.result}`), 2000)
     }
     if (confirmationBooking.status === "error") {
       toast.error(confirmationBooking.message);
