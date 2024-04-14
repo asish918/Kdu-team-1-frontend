@@ -222,6 +222,8 @@ export type GenericInfo = {
   nextBillingInfo: string;
   editTravellerInfo: string;
   nextPaymentInfo: string;
+  bookingsSubtitle: string;
+  booked: string;
 }
 
 export type ItenaryTranslation = {

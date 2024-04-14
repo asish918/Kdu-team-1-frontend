@@ -7,20 +7,20 @@ import { fetchExchangeRates } from "./redux/thunks/fetchExchangeRates";
 import AppProvider from "./providers/AppProvider";
 import { Outlet } from "react-router-dom";
 
-function App() {
-  useEffect(() => {
-    store.dispatch(fetchPropertyConfig());
-    store.dispatch(fetchPropertyList());
-    store.dispatch(fetchCalendarDates());
-    store.dispatch(fetchExchangeRates());
-  }, [])
+export async function loader() {
+  store.dispatch(fetchPropertyConfig());
+  store.dispatch(fetchPropertyList());
+  store.dispatch(fetchCalendarDates());
+  store.dispatch(fetchExchangeRates());
+  return null;
+}
 
+function App() {
   return (
-      
-      <AppProvider>
-        <Outlet />
-      </AppProvider>
-      
+    <AppProvider>
+      <Outlet />
+    </AppProvider>
+
   );
 }
 

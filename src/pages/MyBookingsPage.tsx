@@ -2,10 +2,6 @@ import { useState, useEffect } from 'react';
 import { Grid } from '@mui/material';
 import BookingCard from "../components/bookingpage/BookingCard";
 import Footer from "../components/layout/Footer";
-import image1 from "../components/bookingpage/GD1.jpg";
-import image2 from "../components/bookingpage/GD2.jpg";
-import image3 from "../components/bookingpage/FD1.jpg";
-import image4 from "../components/bookingpage/FD2.jpg";
 import MyBookingsTitle from '../components/bookingpage/MyBookingsTitle';
 import BookingCardSkeleton from '../components/layout/BookingCardSkeleton';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,7 +9,6 @@ import { fetchPersonalBookings } from '../redux/thunks/fetchPersonalBookings';
 import { RootState } from '../redux/store';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { itenaryDateFormat } from '../utils/util';
-import Map from '../components/layout/Map';
 
 export default function MyBookingsPage() {
     const [loginId, setLoginId] = useState<string>("");

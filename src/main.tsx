@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App.tsx";
+import App, { loader } from "./App.tsx";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import { Amplify } from 'aws-amplify';
 
@@ -41,6 +41,7 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
+    loader: loader,
     errorElement: <ErrorPage />,
     children: [
       {

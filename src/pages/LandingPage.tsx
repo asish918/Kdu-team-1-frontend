@@ -6,6 +6,7 @@ import { RootState } from '../redux/store';
 import Footer from '../components/layout/Footer';
 import { clearLocalStorage } from '../utils/util';
 import ReactGA from "react-ga4";
+import Spinner from '../components/layout/Spinner';
 
 // Styled component for the landing page container div
 const LandingPageContainer = styled.div<{ $backgroundImageUrl: string; }>`
@@ -26,6 +27,7 @@ const LandingPageContainer = styled.div<{ $backgroundImageUrl: string; }>`
 
 const LandingPage: React.FC = () => {
   const bannerImageUrl = useSelector((state: RootState) => state.propertyConfig.property.bannerImageUrl);
+  const status = useSelector((state: RootState) => state.propertyConfig.status);
 
   useEffect(() => {
     ReactGA.send({ hitType: "pageview", page: `${window.location.pathname}`, title: "Landing Page Visit" });
@@ -34,10 +36,18 @@ const LandingPage: React.FC = () => {
 
   return (
     <>
-      <LandingPageContainer $backgroundImageUrl={bannerImageUrl}>
-        <SearchForm />
-      </LandingPageContainer>
-      <Footer sticky={true} />
+      {
+        status === "loading" ?
+          <div>
+            <Spinner size={40} />
+          </div> :
+          <>
+            <LandingPageContainer $backgroundImageUrl={bannerImageUrl}>
+              <SearchForm />
+            </LandingPageContainer>
+            <Footer sticky={true} />
+          </>
+      }
     </>
   );
 };

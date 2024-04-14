@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import styled from 'styled-components';
 
 
@@ -47,13 +48,16 @@ const SubHeading = styled.h3`
 `;
 
 const MyBookingsPage: React.FC = () => {
- return (
-    <BookingContainer>
-      <MainHeading>MY BOOKINGS</MainHeading>
-      <SubHeading>Your Rooms are Available here!</SubHeading>
-      
-    </BookingContainer>
- );
+   const { t, i18n } = useTranslation();
+
+
+   return (
+      <BookingContainer>
+         <MainHeading>{i18n.t("header.myBookings")}</MainHeading>
+         <SubHeading>{i18n.t("generic.bookingsSubtitle")}</SubHeading>
+
+      </BookingContainer>
+   );
 };
 
 export default MyBookingsPage;

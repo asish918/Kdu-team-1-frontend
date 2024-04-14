@@ -66,7 +66,9 @@ export const en: LanguageType = {
       editTravellerInfo: "Edit Traveller Info",
       nextBillingInfo: "Next: Billing Info",
       nextPaymentInfo: "Next: Payment Info",
-      purchase: "Purchase"
+      purchase: "Purchase",
+      bookingsSubtitle: "Your Rooms are Available here!",
+      booked: "Booked"
     },
     itenary: {
       itenaryCheckout: "Checkout",

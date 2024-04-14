@@ -66,7 +66,9 @@ export const hn: LanguageType = {
       editTravellerInfo: "यात्री जानकारी संपादित करें",
       nextBillingInfo: "अगला: बिलिंग जानकारी",
       nextPaymentInfo: "अगला: भुगतान जानकारी",
-      purchase: "क्रय"
+      purchase: "क्रय",
+      bookingsSubtitle: "आपके कमरे यहाँ उपलब्ध हैं!",
+      booked: "बुक किया गया"
 
     },
     itenary: {

@@ -4,6 +4,11 @@ import Carousel from 'react-material-ui-carousel';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import QRCode from "react-qr-code";
+import { useTranslation } from 'react-i18next';
+import { ExchangeRateData } from '../../types';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../redux/store';
+import { formatCurrency } from '../../utils/i18next';
 
 interface BookingCardProps {
   roomName: string;
@@ -81,8 +86,13 @@ const StyledQRCode = styled(QRCode)`
 `
 
 const BookingCard: React.FC<BookingCardProps> = ({ roomName, roomLocation, bookingDates, costPerNight, images, booking, reservationId }) => {
-  const stickerText = !booking ? 'Booked' : 'Cancelled';
+  const { t, i18n } = useTranslation();
+  const exchangeRates: ExchangeRateData = useSelector((state: RootState) => state.intel.exchangeRates);
+  const activeCurrency: string = useSelector((state: RootState) => state.intel.activeCurrency);
+
+  const stickerText = !booking ? `${i18n.t("generic.booked")}` : `${i18n.t("confirmation.cancelled")}`;
   const stickerColor = !booking ? '#0e7d04' : '#FF5733';
+
 
   const navigate = useNavigate();
 
@@ -118,7 +128,7 @@ const BookingCard: React.FC<BookingCardProps> = ({ roomName, roomLocation, booki
           </IconTextContainer>
           <IconTextContainer>
             <StyledTypography variant="body1" color="text.primary" style={{ fontWeight: 'bold' }}>
-              ${costPerNight} per night
+              {formatCurrency(costPerNight, activeCurrency, exchangeRates, i18n)} {i18n.t("generic.perNight")}
             </StyledTypography>
           </IconTextContainer>
         </div>
