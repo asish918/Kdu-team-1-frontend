@@ -226,7 +226,20 @@ export default function PaymentForm({ handleEditBillingInfo, handlePurchase }: P
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText>
-                                {i18n.t("Terms and Conditions to be Mentioned Here...")}
+                                <br/>
+                                {i18n.t("Payment Obligation: Initiating a payment means agreeing to fulfill the payment in accordance with these terms.")}
+                                <br />
+                                <br />
+                                {i18n.t("Authorized Transactions: Only authorized individuals can make payments using valid payment methods.")}
+                                <br />
+                                <br />
+                                 {i18n.t("Accuracy of Information: You're responsible for providing correct payment details.")}
+                                <br />
+                                <br />
+                                {i18n.t("Payment Security: We employ industry-standard security measures but cannot guarantee absolute security.")}
+                                <br />
+                                <br />
+                                {i18n.t("Dispute Resolution: Any payment disputes must be raised promptly for resolution assistance.")}
                             </DialogContentText>
                         </DialogContent>
                     </Dialog>

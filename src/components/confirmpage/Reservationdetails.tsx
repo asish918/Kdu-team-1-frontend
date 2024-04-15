@@ -285,9 +285,23 @@ const ReservationDetails = () => {
                 </IconButton>
                 </DialogTitle>
                 <DialogContent>
-          <DialogContentText>
-                 Your cancellation policy details go here.
-          </DialogContentText>
+                <DialogContentText>
+                <br />
+                {i18n.t("Cancellation Policy: By making a reservation, you agree to adhere to the cancellation policy outlined herein.")}
+                 <br />
+                 <br />
+                {i18n.t("Cancellation Window: Cancellation requests must be made within the specified cancellation window to avoid penalties.")}
+                <br />
+                <br />
+                {i18n.t("Penalty Charges: Cancellation outside the specified window may incur penalty charges as per the hotel's cancellation policy.")}
+                <br />
+                <br />
+                {i18n.t("Refund Eligibility: Refunds, if applicable, will be issued according to the terms of the cancellation policy and the payment method used for booking.")}
+                <br />
+                <br />
+                {i18n.t("Cancellation Procedure: To cancel a reservation, contact the hotel directly or use the designated cancellation channels provided at the time of booking.")}
+              </DialogContentText>
+          
           </DialogContent>
           </Dialog>
 
